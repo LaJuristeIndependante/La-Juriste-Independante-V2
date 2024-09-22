@@ -1,27 +1,32 @@
 "use client";
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import {ProductDetail} from "@lib/ProductLib/type/Product";
+import { ProductDetail } from "@lib/ProductLib/type/Product";
 import Carousel from "@/components/utils/décors/Carroussel";
-import {bouncy} from 'ldrs'
-import {fetchProducts} from "@lib/ProductLib/service/produit";
+import { fetchProducts } from "@lib/ProductLib/service/produit";
 
-const ProductCard = ({product}: { product: ProductDetail }) => {
+const ProductCard = ({ product }: { product: ProductDetail }) => {
     const base64Image = product.image
-        ? `data:image/png;base64,${Buffer.from(product.image).toString('base64')}`
+        ? `data:image/png;base64,${product.image}` // Assure que `product.image` est déjà encodé en base64
         : '';
 
     return (
         <div className="flex flex-col items-center justify-center w-1/2 p-2">
             <div className="relative w-full h-0 pb-[100%] bg-tertiary border-2 rounded-lg overflow-hidden">
-                <Image
-                    src={base64Image}
-                    alt={product.name}
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-lg"
-                />
+                {base64Image ? (
+                    <Image
+                        src={base64Image}
+                        alt={product.name}
+                        fill
+                        objectFit="cover"
+                        className="rounded-lg"
+                    />
+                ) : (
+                    <div className="bg-gray-200 w-full h-full flex items-center justify-center">
+                        <p>Image non disponible</p>
+                    </div>
+                )}
                 <a
                     href={`/products/${product._id}`}
                     className="bg-secondary text-white py-2 px-4 rounded-lg absolute bottom-2 right-2 text-xs md:text-sm lg:text-base"
@@ -37,17 +42,13 @@ const ProductCard = ({product}: { product: ProductDetail }) => {
 };
 
 const SecondSection = () => {
-    bouncy.register();
-
-    const [products, setProducts] = useState<ProductDetail[]>([
-
-    ]);
+    const [products, setProducts] = useState<ProductDetail[]>([]);
 
     useEffect(() => {
         const fetchProd = async () => {
             try {
-                const data = await fetchProducts(); // Utilisation correcte de la fonction
-                setProducts(data); // Assigne la réponse à l'état 'products'
+                const data = await fetchProducts(); // Récupération des produits
+                setProducts(data); // Mise à jour de l'état 'products'
             } catch (error) {
                 console.error("Erreur lors de la récupération des produits:", error);
             }
@@ -70,7 +71,7 @@ const SecondSection = () => {
             {products.length > 0 ? (
                 <Carousel
                     items={products.map((product, index) => (
-                        <ProductCard key={product._id || index} product={product}/>
+                        <ProductCard key={product._id || index} product={product} />
                     ))}
                 />
             ) : (

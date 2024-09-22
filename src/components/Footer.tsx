@@ -1,41 +1,96 @@
+"use client";
 import React from 'react';
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
+import logo_la_juriste_independante from '../../../la-juriste-independant/public/assets/images/common/logo-white-la-juriste-indépendante.svg';
+import logo_fleo_web from '../../../la-juriste-independant/public/assets/images/common/logoSite.png';
+import linkedin_icon from '../../../la-juriste-independant/public/assets/images/common/linkedin-icon.svg';
+import website_icon from '../../../la-juriste-independant/public/assets/images/common/website-icon.svg';
+import Image from 'next/image';
+import useMediaQuery from 'react-responsive';
 
-const Footer = () => {
+function Footer() {
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+
     return (
-        <footer className="w-full bg-gray-800 text-white py-6">
-            <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-                {/* Social Media Links */}
-                <div className="flex space-x-4 mb-4 md:mb-0">
-                    <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500">
-                        <FaFacebookF size={24} />
-                    </a>
-                    <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400">
-                        <FaTwitter size={24} />
-                    </a>
-                    <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-pink-500">
-                        <FaInstagram size={24} />
-                    </a>
-                    <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-blue-700">
-                        <FaLinkedinIn size={24} />
-                    </a>
+        <footer className={`footer w-full bg-[#232222] text-white h-full ${isMobile ? ' py-10' : 'py-5 px-10'}`}>
+            <div className={`flex w-full h-full ${isMobile ? 'flex-col items-center justify-center' : ''}`}>
+                <div className="footer__content flex flex-col items-start justify-start px-4 w-1/4">
+                    <div className="footer__top flex items-start justify-start w-full">
+                        <div className="footer__logo flex flex-col items-start justify-start ml-5">
+                            <Image src={logo_la_juriste_independante} alt="logo la juriste indépendante" />
+                            {!isMobile && (
+                                <p className="footer__logo__text cursive-letters text-4xl">La Juriste Indépendante</p>
+                            )}
+                        </div>
+                    </div>
                 </div>
-
-                {/* Links */}
-                <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 text-sm">
-                    {/* eslint-disable-next-line react/no-unescaped-entities */}
-                    <Link href="/terms" className="hover:underline">Conditions d'utilisation</Link>
-                    <Link href="/privacy" className="hover:underline">Politique de confidentialité</Link>
-                    <Link href="/contact" className="hover:underline">Contact</Link>
-                    <Link href="/about" className="hover:underline">À propos</Link>
+                <div className={`flex w-full h-full ${isMobile ? 'flex-col items-start justify-center pl-5' : 'justify-evenly'}`}>
+                    {!isMobile && (
+                        <div className="footer_site-pages flex flex-col justify-start space-y-2">
+                            <h3 className="footer__site-pages__title font-semibold text-2xl">Plan du site</h3>
+                            <ul className="footer__site-pages__list space-y-1">
+                                <li className="footer__site-pages list__item">
+                                    <Link to="/">Accueil</Link>
+                                </li>
+                                <li className="footer__site-pages list__item">
+                                    <Link to="/contracts">Contrats</Link>
+                                </li>
+                                <li className="footer__site-pages list__item">
+                                    <Link to="/support">Support</Link>
+                                </li>
+                            </ul>
+                        </div>
+                    )}
+                    <div className="footer_legal-pages flex flex-col justify-start space-y-2 ">
+                        <h3 className="footer__legal-pages__title font-semibold text-2xl">Légal</h3>
+                        <ul className="footer__legal-pages__list space-y-1">
+                            <li className="footer__legal-pages list__item">
+                                <Link to="/privacy-policy">Politique de confidentialité</Link>
+                            </li>
+                            <li className="footer__legal-pages list__item">
+                                <Link to="/terms-of-use">Conditions d&apos;utilisation</Link>
+                            </li>
+                            <li className="footer__legal-pages list__item">
+                                <Link to="/terms-of-sale">Conditions de vente</Link>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="footer_social-links flex flex-col justify-start space-y-2">
+                        <h3 className="footer__social-links__title font-semibold text-2xl">Réseaux</h3>
+                        <ul className="footer__social-links__list space-y-1">
+                            <li className="footer__social-links list__item">
+                                <a href="https://instagram.com">Instagram</a>
+                            </li>
+                            <li className="footer__social-links list__item">
+                                <a href="https://facebook.com">Facebook</a>
+                            </li>
+                            <li className="footer__social-links list__item">
+                                <Link to="/contact-us">Nous contacter</Link>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div className="mt-4 text-center text-xs text-gray-400">
-                &copy; {new Date().getFullYear()} Fleo-Web. Tous droits réservés.
+            <hr className="footer__separator w-[98%] border border-[#4A4A4A] my-5 mx-auto" />
+            <div className="footer__fleo-pub flex items-center w-full pl-[1%] h-6 pt-2">
+                <Image src={logo_fleo_web} alt="logo fleo web" width={50} height={50} className='w-[50px] h-[50px]' />
+                <div className="footer__fleo-pub-content flex flex-col items-start">
+                    <p className="footer__fleo-pub__logo text-lg font-semibold">Conçu par Fleo-Web</p>
+                    <p className="footer__fleo-pub__text text-sm text-gray-500">Léo Torrès - Florian Filloux - Dorian Blanchet</p>
+                </div>
+                <div>
+                    <ul className="fleo-socials flex justify-between">
+                        <li><Image src={linkedin_icon} alt="LinkedIn" width={16} height={16} className='w-4 h-4' /></li>
+                        <li><Image src={website_icon} alt="Website" width={16} height={16} className='w-4 h-4' /></li>
+                        <li><Image src="" alt="" width={16} height={16} className='w-4 h-4' /></li>
+                        <li><Image src="" alt="" width={16} height={16} className='w-4 h-4' /></li>
+                        <li><Image src="" alt="" width={16} height={16} className='w-4 h-4' /></li>
+                        <li><Image src="" alt="" width={16} height={16} className='w-4 h-4' /></li>
+                    </ul>
+                </div>
             </div>
         </footer>
     );
-};
+}
 
 export default Footer;

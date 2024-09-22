@@ -1,33 +1,32 @@
-import type {Metadata} from 'next';
+import type { Metadata } from 'next';
 import React from "react";
-
 import '@/styles/globals.css';
-import {Provider} from "@/app/provider";
-import Footer from "@/components/Footer"
+import Footer from "../../../La-Juriste-Independante-V2/src/components/Footer";
 import ClientNavbar from "@/components/ClientNavBar";
 import CookiePopupManager from "@/components/utils/cookies/CookiePopupManager";
 import CleanUpOrders from "@lib/OrderLib/component/CleanupOrder";
+import ClientProviders from './(provider)/ClientProviders';  // New Client Component
 
 export const metadata: Metadata = {
-  title: "Fleo-base",
-  description: "Fleo web base pour tout les prochain site fleo",
+  title: "La juriste indépendante",
+  description: "Fleo web base pour tous les prochains sites Fleo",
   icons: {
     icon: "/favicon.ico",
   },
 };
 
-export default function RootLayout({children}: { children: React.ReactNode; }) {
+export default function RootLayout({ children }: { children: React.ReactNode; }) {
   return (
-      <html lang="fr">
+    <html lang="fr">
       <body className={`bodyGe`}>
-      <Provider>
-        <CleanUpOrders/>
-        <ClientNavbar/>
-        {children}
-        <Footer/>
-        <CookiePopupManager />
-      </Provider>
+        <ClientProviders>
+          <CleanUpOrders />
+          <ClientNavbar />
+          {children}
+          <Footer />
+          <CookiePopupManager />
+        </ClientProviders>
       </body>
-      </html>
+    </html>
   );
 }
