@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link  from 'next/link';
 import logo_la_juriste_independante from '../../../la-juriste-independant/public/assets/images/common/logo-white-la-juriste-indépendante.svg';
 import logo_fleo_web from '../../../la-juriste-independant/public/assets/images/common/logoSite.png';
 import linkedin_icon from '../../../la-juriste-independant/public/assets/images/common/linkedin-icon.svg';
@@ -30,13 +30,13 @@ function Footer() {
                             <h3 className="footer__site-pages__title font-semibold text-2xl">Plan du site</h3>
                             <ul className="footer__site-pages__list space-y-1">
                                 <li className="footer__site-pages list__item">
-                                    <Link to="/">Accueil</Link>
+                                    <Link href="/">Accueil</Link>
                                 </li>
                                 <li className="footer__site-pages list__item">
-                                    <Link to="/contracts">Contrats</Link>
+                                    <Link href="/contracts">Contrats</Link>
                                 </li>
                                 <li className="footer__site-pages list__item">
-                                    <Link to="/support">Support</Link>
+                                    <Link href="/support">Support</Link>
                                 </li>
                             </ul>
                         </div>
@@ -45,13 +45,13 @@ function Footer() {
                         <h3 className="footer__legal-pages__title font-semibold text-2xl">Légal</h3>
                         <ul className="footer__legal-pages__list space-y-1">
                             <li className="footer__legal-pages list__item">
-                                <Link to="/privacy-policy">Politique de confidentialité</Link>
+                                <Link href="/privacy-policy">Politique de confidentialité</Link>
                             </li>
                             <li className="footer__legal-pages list__item">
-                                <Link to="/terms-of-use">Conditions d&apos;utilisation</Link>
+                                <Link href="/terms-of-use">Conditions d&apos;utilisation</Link>
                             </li>
                             <li className="footer__legal-pages list__item">
-                                <Link to="/terms-of-sale">Conditions de vente</Link>
+                                <Link href="/terms-of-sale">Conditions de vente</Link>
                             </li>
                         </ul>
                     </div>
@@ -59,13 +59,13 @@ function Footer() {
                         <h3 className="footer__social-links__title font-semibold text-2xl">Réseaux</h3>
                         <ul className="footer__social-links__list space-y-1">
                             <li className="footer__social-links list__item">
-                                <a href="https://instagram.com">Instagram</a>
+                                <Link href="https://instagram.com">Instagram</Link>
                             </li>
                             <li className="footer__social-links list__item">
-                                <a href="https://facebook.com">Facebook</a>
+                                <Link href={"https://facebook.com"}>Facebook</Link>
                             </li>
                             <li className="footer__social-links list__item">
-                                <Link to="/contact-us">Nous contacter</Link>
+                                <Link href="/contact">Nous contacter</Link>
                             </li>
                         </ul>
                     </div>
