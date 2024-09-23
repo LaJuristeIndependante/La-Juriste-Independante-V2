@@ -72,7 +72,7 @@ export async function middleware(req: NextRequest) {
 export const config = {
     matcher: [
         '/',
-        '/about',
+        '/support',
         '/contact',
         '/products',
         '/paiement',
