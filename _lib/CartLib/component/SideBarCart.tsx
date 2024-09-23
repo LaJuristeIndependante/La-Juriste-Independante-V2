@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Image from 'next/image';
 import logo_sidebar from '@public/images/logo/fleo-web-reversed.png';
-import { useSession } from 'next-auth/react';
-import { useRouter } from "next/navigation";
+import {useSession} from 'next-auth/react';
+import {useRouter} from "next/navigation";
 import {CartItem, SidebarProps} from "../type/CartType";
 import Article from "./CartArticle";
 import {
@@ -15,11 +15,12 @@ import {
     removeCartItem
 } from "../service/cart";
 import {createOrder} from "@lib/OrderLib/service/orders";
+import EmptyCartSection from "@lib/CartLib/component/EmptyCartSection";
 
-const SideBarCart: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
+const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [total, setTotal] = useState<number>(0);
-    const { data: session } = useSession();
+    const {data: session} = useSession();
     const router = useRouter();
 
     useEffect(() => {
@@ -70,7 +71,7 @@ const SideBarCart: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             await decrementCartItemQuantity(productId, session?.user?.id as string, newQuantity); // Appel de la fonction service
 
             const updatedItems = cartItems.map((cartItem) =>
-                cartItem._id === id ? { ...cartItem, quantity: newQuantity } : cartItem
+                cartItem._id === id ? {...cartItem, quantity: newQuantity} : cartItem
             );
             setCartItems(updatedItems); // Met à jour l'état des items du panier
         } catch (error) {
@@ -93,7 +94,7 @@ const SideBarCart: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         try {
             await incrementCartItemQuantity(productId, session?.user?.id as string, newQuantity);
             const updatedItems = cartItems.map((cartItem) =>
-                cartItem._id === id ? { ...cartItem, quantity: newQuantity } : cartItem
+                cartItem._id === id ? {...cartItem, quantity: newQuantity} : cartItem
             );
             setCartItems(updatedItems);
         } catch (error) {
@@ -118,7 +119,6 @@ const SideBarCart: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             console.error('Error removing item from cart:', error);
         }
     };
-
 
     const handleCheckout = async () => {
         if (cartItems.length === 0) return;
@@ -153,7 +153,6 @@ const SideBarCart: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             }`}
             style={{maxHeight: '100vh'}} // Ensure it never grows beyond viewport height
         >
-            {/* Header Section */}
             <div className="flex items-center justify-between p-4 border-b bg-tertiary">
                 <h2 className="text-2xl font-bold text-text-primary">Mon Panier</h2>
                 <button
@@ -164,41 +163,50 @@ const SideBarCart: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 </button>
             </div>
 
-            {/* Cart Items Section */}
-            <div className="p-4 overflow-y-auto" style={{maxHeight: '60vh'}}>
-                {cartItems.length > 0 ? (
-                    <ul className="space-y-4">
-                        {cartItems.map((item, index) => (
-                            <Article
-                                key={index}
-                                item={item}
-                                onDecrement={handleDecrement}
-                                onIncrement={handleIncrement}
-                                onRemove={handleRemove}
-                            />
-                        ))}
-                    </ul>
-                ) : (
-                    <div className="text-center text-text-secondary">Votre panier est vide.</div>
-                )}
-            </div>
+            {!cartItems.length ? (
+                <EmptyCartSection closeSidebar={() => onClose()}/>
+            ) : (
+                <div>
+                    {/* Header Section */}
 
-            {/* Total Section */}
-            <div className="absolute bottom-0 w-full bg-gray-50 p-4 border-t">
-                <div className="flex items-center justify-between mb-4">
-                    <Image src={logo_sidebar} alt="logo" width={50} height={50}/>
-                    <div>
-                        <span className="text-sm text-text-secondary">Total</span>
-                        <p className="text-xl font-semibold text-text-primary">€ {total.toFixed(2)}</p>
+
+                    {/* Cart Items Section */}
+                    <div className="p-4 overflow-y-auto" style={{maxHeight: '60vh'}}>
+                        {cartItems.length > 0 ? (
+                            <ul className="space-y-4">
+                                {cartItems.map((item, index) => (
+                                    <Article
+                                        key={index}
+                                        item={item}
+                                        onDecrement={handleDecrement}
+                                        onIncrement={handleIncrement}
+                                        onRemove={handleRemove}
+                                    />
+                                ))}
+                            </ul>
+                        ) : (
+                            <div className="text-center text-text-secondary">Votre panier est vide.</div>
+                        )}
+                    </div>
+
+                    {/* Total Section */}
+                    <div className="absolute bottom-0 w-full bg-gray-50 p-4 border-t">
+                        <div className="flex items-center justify-between mb-4">
+                            <Image src={logo_sidebar} alt="logo" width={50} height={50}/>
+                            <div>
+                                <span className="text-sm text-text-secondary">Total</span>
+                                <p className="text-xl font-semibold text-text-primary">€ {total.toFixed(2)}</p>
+                            </div>
+                        </div>
+                        <button
+                            className="text-black bg-red-600 font-semibold w-full py-3 rounded-lg hover:bg-bg-tertiary transition-colors"
+                            onClick={handleCheckout}
+                        >
+                            Passer la commande
+                        </button>
                     </div>
                 </div>
-                <button
-                    className="text-black bg-red-600 font-semibold w-full py-3 rounded-lg hover:bg-bg-tertiary transition-colors"
-                    onClick={handleCheckout}
-                >
-                    Passer la commande
-                </button>
-            </div>
+            )}
         </div>
     );
 };

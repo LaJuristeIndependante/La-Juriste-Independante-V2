@@ -1,25 +1,37 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-import SideBarCart from '@lib/CartLib/component/SideBarCart';
-import BurgerMenu from './MenuBurger';
 import Link from 'next/link';
-import logo from '@/../public/images/logo/fleo-web-reversed.png';
-import cart from "@/../public/images/Utils/black-cart-icon.png";
-import { AiOutlineUser } from "react-icons/ai";
+import Image from 'next/image';
+import { useMediaQuery } from 'react-responsive';
+import { useRouter, usePathname } from 'next/navigation';
+import logo_la_juriste_independante from '@public/images/common/logo-la-juriste-indépendante.svg';
+import AuthButton from '@/components/common/button/AuthButton';
+import MenuBurgerButton from '@/components/common/button/MenuBurgerButton';
+import SideBar from "@/components/utils/NavBar/SideBar";
+import CartSideBar from "@lib/CartLib/component/SideBarCart";
+import cart_icon from '@public/images/common/cart-icon.svg';
 
-export default function Navbar() {
-    const [isBlurred, setIsBlurred] = useState(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+function Navbar() {
     const router = useRouter();
-    const { data: session } = useSession();
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+    const pathname = usePathname();
+    const [isSidebarVisible, setSidebarVisible] = useState<boolean>(false);
+    const [typeButton, setTypeButton] = useState<'auth' | 'cart' | 'menuBurger'>('auth');
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    const toggleSidebar = (buttonType: 'auth' | 'cart' | 'menuBurger') => {
+        setSidebarVisible(!isSidebarVisible);
+        setTypeButton(buttonType);
+    };
+
+    const closeSidebar = () => {
+        setSidebarVisible(false);
+    };
 
     useEffect(() => {
         const handleScroll = () => {
             const scrollPosition = window.scrollY;
-            setIsBlurred(scrollPosition > 50);
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -45,63 +57,51 @@ export default function Navbar() {
         }, 100);
     };
 
-    return (
-        <header
-            className={`fixed top-0 left-0 right-0 transition-all duration-300 ${isBlurred ? 'bg-black bg-opacity-50 backdrop-blur-md' : 'bg-transparent'} z-50`}>
-            <nav className="font-thin text-2xl py-2">
-                <div className="flex items-center justify-between">
-                    <div className="flex w-1/3 justify-start items-center pl-1">
-                        <Link href="/">
-                            <Image src={logo} alt="logo" width={60} height={60}/>
-                        </Link>
-                    </div>
 
-                    <div className="hidden md:flex flex-1 justify-center">
-                        <ul className="flex items-center justify-center space-x-8">
-                            <li className="whitespace-nowrap">
+    return (
+        <header>
+            <nav className="flex items-center justify-between w-full">
+                {!isMobile ? (
+                    <>
+                        <Link href="/">
+                            <Image src={logo_la_juriste_independante} alt="logo-juriste_independante" className="ml-4" />
+                        </Link>
+                        <ul className="flex justify-between w-1/4 items-center">
+                            <li className={`${pathname === '/' ? 'font-bold' : ''} text-center w-[100px]`}>
                                 <Link href="/">Accueil</Link>
                             </li>
-                            <li className="whitespace-nowrap cursor-pointer text-stroke-black"
-                                onClick={() => handleNavClick("products")}>Produits
+                            <li className={`${pathname === '/templates' ? 'font-bold' : ''} text-center w-auto min-w-[150px]`}>
+                                <Link href="/products">Templates types</Link>
                             </li>
-                            <li className="whitespace-nowrap">
-                                <Link href="/about">A propos</Link>
-                            </li>
-                            <li className="whitespace-nowrap">
-                                <Link href="/contact">Contact</Link>
+                            <li className={`${pathname === '/support' ? 'font-bold' : ''} text-center w-[100px]`}>
+                                <Link href="/support">Support</Link>
                             </li>
                         </ul>
-                    </div>
+                    </>
+                ) : (
+                    <>
+                        <Link href="/public" className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-special cursive-letters text-center mt-1">
 
-                    {/* Cart and Profile or Burger Menu */}
-                    <div className="flex w-1/3 justify-end items-center pr-2 space-x-2">
-                        <button onClick={() => setIsSidebarOpen(true)}>
-                            <Image src={cart} alt="cart" width={40} height={40}/>
-                        </button>
-
-                        {/* Profile button hidden on mobile and tablet screens, Burger Menu visible */}
-                        <div className="hidden md:block">
-                            {!session?.user ? (
-                                <Link href="/login" className="bg-secondary text-primary rounded-xl px-4 py-2">Se
-                                    connecter</Link>
-                            ) : (
-                                <Link href="/profile"
-                                      className="bg-secondary text-primary rounded-xl px-4 py-2 flex items-center">
-                                    <AiOutlineUser size={35}/>
-                                </Link>
-                            )}
-                        </div>
-
-                        {/* Burger Menu for mobile and tablet screens */}
-                        <div className="md:hidden">
-                            <BurgerMenu/>
-                        </div>
-                    </div>
+                            La juriste indépendante
+                        </Link>
+                    </>
+                )}
+                <div className={`flex items-center ${!isMobile && 'mr-2'}`}>
+                    <button onClick={() => setIsSidebarOpen(true)} className="btn btn-primary btn-lg cart_button mr-3" >
+                         <span className="fa fa-shopping-cart">
+                             <Image src={cart_icon} alt="cart-icon" className='w-6 h-6' />
+                        </span>
+                    </button>
+                    <AuthButton toggleSidebar={() => toggleSidebar('auth')} />
+                    {isMobile && <MenuBurgerButton toggleSidebar={() => toggleSidebar('menuBurger')} />}
                 </div>
             </nav>
 
-            <SideBarCart isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+            <SideBar isOpen={isSidebarVisible} closeSidebar={closeSidebar} typeButton={typeButton} />
+            <CartSideBar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
         </header>
-
     );
 }
+
+export default Navbar;
+
