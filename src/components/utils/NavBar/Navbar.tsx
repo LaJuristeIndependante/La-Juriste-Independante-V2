@@ -11,7 +11,6 @@ import SideBar from "@/components/utils/NavBar/SideBar";
 import CartSideBar from "@lib/CartLib/component/SideBarCart";
 import cart_icon from '@public/images/common/cart-icon.svg';
 
-
 function Navbar() {
     const router = useRouter();
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
@@ -80,8 +79,7 @@ function Navbar() {
                     </>
                 ) : (
                     <>
-                        <Link href="/public" className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-special cursive-letters text-center mt-1">
-
+                        <Link href="/" className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-special cursive-letters text-center mt-1">
                             La juriste indépendante
                         </Link>
                     </>
