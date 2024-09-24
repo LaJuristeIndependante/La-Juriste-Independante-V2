@@ -156,7 +156,7 @@ export default function TestimonialsSection() {
                 />
             </div>
 
-            {/* Bouton pour ajouter un commentaire */}
+            {session?.user ? (
             <button
                 className="mt-10 bg-blue-500 hover:bg-blue-600 text-white px-5 py-3 rounded-lg shadow-md transition duration-300"
                 onClick={() => {
@@ -167,6 +167,9 @@ export default function TestimonialsSection() {
             >
                 Ajouter un commentaire
             </button>
+            ) : (
+                <p>Connecté vous pour ajouté un commentaire</p>
+            )}
 
             {/* Popup personnalisée pour ajouter ou modifier un commentaire */}
             {isPopupOpen && (
