@@ -8,6 +8,10 @@ export interface ProductDetail {
     createdAt: Date;
 }
 
+export interface TitleSectionModelsProps {
+    professionName: string;
+}
+
 export interface ProductData {
     name: string;
     price: number;

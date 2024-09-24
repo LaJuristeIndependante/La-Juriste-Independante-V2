@@ -41,7 +41,6 @@ export async function addToCart({userId, productId, quantity}: AddToCartParams):
     }
 }
 
-
 /**
  * Récupère les items du panier pour un utilisateur spécifique.
  *
