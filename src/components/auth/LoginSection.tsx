@@ -1,15 +1,12 @@
-"use client";
+"use client"
+
 import React, { useState } from 'react';
 import Image from 'next/image';
 import logo_la_juriste_independante from '@public/images/common/logo-la-juriste-indépendante.svg';
 import RegisterForm from '@/components/auth/form/RegisterForm';
 import LoginForm from '@/components/auth/form/LoginForm';
 
-interface LoginSectionProps {
-    onLoginSuccess: () => void;
-}
-
-function LoginSection({ onLoginSuccess }: LoginSectionProps): JSX.Element {
+function LoginSection() {
     const [registerSection, setRegisterSection] = useState(false);
 
     const handleOnRegisterClick = () => {
@@ -28,7 +25,7 @@ function LoginSection({ onLoginSuccess }: LoginSectionProps): JSX.Element {
             <Image src={logo_la_juriste_independante} alt="logo la juriste indépendante" />
             <p className="font-special cursive-letters text-4xl mt-1">La Juriste indépendante</p>
             {!registerSection ? (
-                <LoginForm handleOnRegisterClick={handleOnRegisterClick} onLoginSuccess={onLoginSuccess} />
+                <LoginForm handleOnRegisterClick={handleOnRegisterClick} />
             ) : (
                 <RegisterForm handleOnLoginClick={handleOnLoginClick} />
 

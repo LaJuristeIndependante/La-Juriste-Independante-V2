@@ -1,6 +1,5 @@
 "use client";
 import React, { FormEvent, useState, ChangeEvent } from 'react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
@@ -13,10 +12,9 @@ import PasswordAnimation from '../../common/input/PasswordAnimation';
 
 interface LoginFormProps {
     handleOnRegisterClick: () => void;
-    onLoginSuccess: () => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick, onLoginSuccess }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick }) => {
     const [identifiant, setIdentifiant] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [showPassword, setShowPassword] = useState(false);
@@ -42,7 +40,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick, onLoginSuc
         if (res?.error) {
             setErrorMessage(res.error);
         } else if (res?.ok) {
-            onLoginSuccess();
             router.push('/validation');
         }
     };

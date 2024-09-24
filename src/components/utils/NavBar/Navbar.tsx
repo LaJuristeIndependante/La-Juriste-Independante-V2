@@ -16,23 +16,24 @@ function Navbar() {
     const router = useRouter();
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
     const pathname = usePathname();
-    const [isSidebarVisible, setSidebarVisible] = useState<boolean>(false);
+    const [isAuthSideBarVisible, setAuthSideBarVisible] = useState<boolean>(false);
     const [typeButton, setTypeButton] = useState<'auth' | 'cart' | 'menuBurger'>('auth');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [menuBurgerIsVisible, setMenuBurgerIsVisible] = useState<boolean>(false);
 
-    const toggleSidebar = (buttonType: 'auth' | 'cart' | 'menuBurger') => {
-        setSidebarVisible(!isSidebarVisible);
-        setTypeButton(buttonType);
+    const authSidebar = () => {
+        setAuthSideBarVisible(!isAuthSideBarVisible);
+    };
+
+    const closeAuthSidebar = () => {
+        setAuthSideBarVisible(false);
     };
 
     const menuIsVisible = () => {
         setMenuBurgerIsVisible(true);
     }
 
-    const closeSidebar = () => {
-        setSidebarVisible(false);
-    };
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -96,12 +97,12 @@ function Navbar() {
                              <Image src={cart_icon} alt="cart-icon" className='w-6 h-6' />
                         </span>
                     </button>
-                    <AuthButton toggleSidebar={() => toggleSidebar('auth')} />
+                    <AuthButton toggleSidebar={() => authSidebar()} />
                     {isMobile && <MenuBurgerButton toggleSidebar={menuIsVisible} />}
                 </div>
             </nav>
             <MenuBurger isOpen={menuBurgerIsVisible} onClose={() => setMenuBurgerIsVisible(false)} />
-            <AuthSideBar isOpen={isSidebarVisible} closeSidebar={closeSidebar} />
+            <AuthSideBar isOpen={isAuthSideBarVisible} closeSidebar={closeAuthSidebar} />
             <CartSideBar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
         </header>
     );

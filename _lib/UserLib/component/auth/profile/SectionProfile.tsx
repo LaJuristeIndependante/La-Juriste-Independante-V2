@@ -114,9 +114,9 @@ const SectionProfile: React.FC = () => {
     };
 
     return (
-        <section className="min-h-screen flex flex-col justify-center text-center items-center w-full">
+        <section className="flex flex-col justify-center text-center items-center w-full">
             <h2 className="text-2xl font-bold text-center mb-8">Profil</h2>
-            <div className="shadow-2xl w-1/4 rounded-lg p-8 bg-white bg-opacity-80 flex flex-col items-center">
+            <div className="rounded-lg p-8 bg-opacity-80 flex flex-col items-center">
                 <div className="mb-8">
                     <FaUserCircle className="text-gray-700 w-36 h-36"/>
                 </div>

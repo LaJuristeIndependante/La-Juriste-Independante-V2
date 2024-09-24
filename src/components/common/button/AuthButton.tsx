@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import auth_icon from '@public/images/common/auth-icon.svg';
+
 interface AuthButtonProps {
     toggleSidebar: () => void;
 }
