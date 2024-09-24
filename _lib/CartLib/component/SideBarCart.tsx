@@ -146,11 +146,37 @@ const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
         }
     };
 
+    const [isVisible, setIsVisible] = useState(false);
+    const [shouldRender, setShouldRender] = useState(isOpen); // Pour gérer le moment où l'élément est dans le DOM
+
+    useEffect(() => {
+        if (isOpen) {
+            // Quand isOpen devient vrai, rendre visible et commencer l'animation
+            setShouldRender(true);
+            // Attendre un court instant avant d'appliquer `flex` pour éviter les sauts
+            const timeout = setTimeout(() => {
+                setIsVisible(true);
+            }, 10); // Petit délai pour permettre l'application de la classe CSS d'animation
+
+            return () => clearTimeout(timeout);
+        } else {
+            // Quand isOpen devient faux, lancer l'animation de fermeture puis cacher l'élément
+            setIsVisible(false);
+            const timeout = setTimeout(() => {
+                setShouldRender(false); // Retirer complètement l'élément après l'animation
+            }, 300); // Correspond à la durée de l'animation (300ms)
+
+            return () => clearTimeout(timeout);
+        }
+    }, [isOpen]);
+
+    if (!shouldRender) return null; // Ne pas rendre la div si elle ne doit pas être visible
+
     return (
         <div
-            className={`absolute top-0 right-0 min-h-screen h-full w-96 bg-white shadow-xl transform transition-transform ease-in-out duration-300 z-50 ${
-                isOpen ? 'translate-x-0' : 'translate-x-full'
-            }`}
+            className={`absolute top-0 right-0 min-h-screen h-full w-96 bg-white shadow-xl transform transition-transform ease-in-out duration-300 z-50
+                ${isVisible ? 'translate-x-0 flex flex-col' : 'translate-x-full'}
+            `}
             style={{maxHeight: '100vh'}} // Ensure it never grows beyond viewport height
         >
             <div className="flex items-center justify-between p-4 border-b bg-tertiary">
