@@ -1,39 +1,32 @@
 "use client";
 import React from 'react';
 import ProfileSection from '@/components/SideSection/ProfileSection';
-import MenuBurgerSection from '@/components/SideSection/MenuBurgerSection';
 
-type TypeButton = 'auth' | 'cart' | 'menuBurger';
 
 interface SideBarProps {
     isOpen: boolean;
     closeSidebar: () => void;
-    typeButton: TypeButton;
 }
 
-const SideBar: React.FC<SideBarProps> = ({ isOpen, closeSidebar, typeButton }) => {
+const AuthSideBar: React.FC<SideBarProps> = ({ isOpen, closeSidebar }) => {
     return (
         <div
             className={`w-[300px] h-[100vh] bg-white p-[20px] z-50 transition-transform duration-300 ${isOpen ? 'translate-x-0 x-99' : 'translate-x-full'}`}
             style={{ position: 'fixed', top: 0, right: 0, zIndex: 10, borderLeft: '1px solid #a0aec0' }}
         >
-            {typeButton === 'auth' ? (
-                <ProfileSection closeSidebar={closeSidebar} />
-            ) : typeButton === 'menuBurger' ? (
-                <MenuBurgerSection closeSidebar={closeSidebar} />
-            ) : null}
+            <ProfileSection closeSidebar={closeSidebar} />
         </div>
     );
 }
 
-export default SideBar;
+export default AuthSideBar;
 
 
 // import React, { useState, useEffect } from 'react';
 // import Image from 'next/image';
 // import { useRouter } from 'next/navigation';
 // import { useSession } from 'next-auth/react';
-// import Sidebar from './SideBar';
+// import Sidebar from './AuthSideBar';
 // import BurgerMenu from './MenuBurger';
 // import Link from 'next/link';
 // import logo from '../../../../public/assets/images/logo/La Juriste indépendante.png';

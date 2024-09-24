@@ -7,9 +7,10 @@ import { useRouter, usePathname } from 'next/navigation';
 import logo_la_juriste_independante from '@public/images/common/logo-la-juriste-indépendante.svg';
 import AuthButton from '@/components/common/button/AuthButton';
 import MenuBurgerButton from '@/components/common/button/MenuBurgerButton';
-import SideBar from "@/components/utils/NavBar/SideBar";
+import AuthSideBar from "@/components/utils/NavBar/AuthSideBar";
 import CartSideBar from "@lib/CartLib/component/SideBarCart";
 import cart_icon from '@public/images/common/cart-icon.svg';
+import MenuBurger from "@/components/utils/NavBar/MenuBurger";
 
 function Navbar() {
     const router = useRouter();
@@ -18,11 +19,16 @@ function Navbar() {
     const [isSidebarVisible, setSidebarVisible] = useState<boolean>(false);
     const [typeButton, setTypeButton] = useState<'auth' | 'cart' | 'menuBurger'>('auth');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [menuBurgerIsVisible, setMenuBurgerIsVisible] = useState<boolean>(false);
 
     const toggleSidebar = (buttonType: 'auth' | 'cart' | 'menuBurger') => {
         setSidebarVisible(!isSidebarVisible);
         setTypeButton(buttonType);
     };
+
+    const menuIsVisible = () => {
+        setMenuBurgerIsVisible(true);
+    }
 
     const closeSidebar = () => {
         setSidebarVisible(false);
@@ -91,11 +97,11 @@ function Navbar() {
                         </span>
                     </button>
                     <AuthButton toggleSidebar={() => toggleSidebar('auth')} />
-                    {isMobile && <MenuBurgerButton toggleSidebar={() => toggleSidebar('menuBurger')} />}
+                    {isMobile && <MenuBurgerButton toggleSidebar={menuIsVisible} />}
                 </div>
             </nav>
-
-            <SideBar isOpen={isSidebarVisible} closeSidebar={closeSidebar} typeButton={typeButton} />
+            <MenuBurger isOpen={menuBurgerIsVisible} onClose={() => setMenuBurgerIsVisible(false)} />
+            <AuthSideBar isOpen={isSidebarVisible} closeSidebar={closeSidebar} />
             <CartSideBar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
         </header>
     );
