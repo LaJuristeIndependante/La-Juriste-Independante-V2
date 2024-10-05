@@ -1,10 +1,10 @@
 "use client";
 import React from 'react';
 import Link  from 'next/link';
-import logo_la_juriste_independante from '../../../la-juriste-independant/public/assets/images/common/logo-white-la-juriste-indépendante.svg';
-import logo_fleo_web from '../../../la-juriste-independant/public/assets/images/common/logoSite.png';
-import linkedin_icon from '../../../la-juriste-independant/public/assets/images/common/linkedin-icon.svg';
-import website_icon from '../../../la-juriste-independant/public/assets/images/common/website-icon.svg';
+import logo_la_juriste_independante from '@public/images/common/logo-white-la-juriste-indépendante.svg';
+import logo_fleo_web from '@public/images/common/logoSite.png';
+import linkedin_icon from '@public/images/common/linkedin-icon.svg';
+import website_icon from '@public/images/common/website-icon.svg';
 import Image from 'next/image';
 import useMediaQuery from 'react-responsive';
 
@@ -12,7 +12,7 @@ function Footer() {
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
     return (
-        <footer className={`footer w-full bg-[#232222] text-white h-full ${isMobile ? ' py-10' : 'py-5 px-10'}`}>
+        <footer className={`z-50 relative w-full bg-[#232222] text-white h-full ${isMobile ? ' py-10' : 'py-5 px-10'}`}>
             <div className={`flex w-full h-full ${isMobile ? 'flex-col items-center justify-center' : ''}`}>
                 <div className="footer__content flex flex-col items-start justify-start px-4 w-1/4">
                     <div className="footer__top flex items-start justify-start w-full">
@@ -33,7 +33,7 @@ function Footer() {
                                     <Link href="/">Accueil</Link>
                                 </li>
                                 <li className="footer__site-pages list__item">
-                                    <Link href="/contracts">Contrats</Link>
+                                    <Link href="/products">Contrats</Link>
                                 </li>
                                 <li className="footer__site-pages list__item">
                                     <Link href="/support">Support</Link>
@@ -45,13 +45,13 @@ function Footer() {
                         <h3 className="footer__legal-pages__title font-semibold text-2xl">Légal</h3>
                         <ul className="footer__legal-pages__list space-y-1">
                             <li className="footer__legal-pages list__item">
-                                <Link href="/privacy-policy">Politique de confidentialité</Link>
+                                <Link href="/privacy">Politique de confidentialité</Link>
                             </li>
                             <li className="footer__legal-pages list__item">
-                                <Link href="/terms-of-use">Conditions d&apos;utilisation</Link>
+                                <Link href="/terms-of-uses">Conditions d&apos;utilisation</Link>
                             </li>
                             <li className="footer__legal-pages list__item">
-                                <Link href="/terms-of-sale">Conditions de vente</Link>
+                                <Link href="/terms-of-sales">Conditions de vente</Link>
                             </li>
                         </ul>
                     </div>

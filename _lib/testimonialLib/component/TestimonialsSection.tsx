@@ -6,6 +6,7 @@ import { CommentaireDocument } from "@lib/testimonialLib/type/Testimonial";
 import { useSession } from "next-auth/react";
 import Carroussel from "@/components/utils/décors/Carroussel";
 import UserInitials from "@lib/UserLib/component/UserInitials";
+import BubbleBackground from "@/components/utils/décors/BubbleBackground";
 
 export default function TestimonialsSection() {
     const [commentaires, setCommentaires] = useState<CommentaireDocument[]>([]);

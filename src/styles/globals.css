@@ -108,11 +108,9 @@ body {
   width: 100px;
 }
 
-
 .productCard_circle>p {
   display: none;
 }
-
 
 .title_section>span::after {
   background: url(/public/images/landing-page/signature.svg) no-repeat right center;
