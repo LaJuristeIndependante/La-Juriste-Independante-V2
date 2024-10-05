@@ -48,7 +48,6 @@ function SecondSectionComponent() : React.ReactElement {
                     protection et la réussite de votre entreprise.
                 </p>
             </div>
-
         </div>
     );
 }

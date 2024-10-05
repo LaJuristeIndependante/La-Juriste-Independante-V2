@@ -1,9 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { createTestimonial, getTestimonials, deleteTestimonial, updateTestimonial } from '@lib/testimonialLib/service/testimonials';
-import { CommentaireDocument } from "@lib/testimonialLib/type/Testimonial";
-import { useSession } from "next-auth/react";
+import React, {useEffect, useState} from 'react';
+import {
+    createTestimonial,
+    getTestimonials,
+    deleteTestimonial,
+    updateTestimonial
+} from '@lib/testimonialLib/service/testimonials';
+import {CommentaireDocument} from "@lib/testimonialLib/type/Testimonial";
+import {useSession} from "next-auth/react";
 import Carroussel from "@/components/utils/décors/Carroussel";
 import UserInitials from "@lib/UserLib/component/UserInitials";
 import BubbleBackground from "@/components/utils/décors/BubbleBackground";
@@ -11,10 +16,10 @@ import BubbleBackground from "@/components/utils/décors/BubbleBackground";
 export default function TestimonialsSection() {
     const [commentaires, setCommentaires] = useState<CommentaireDocument[]>([]);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false); // Pour la popup
-    const [newComment, setNewComment] = useState({ objet: '', message: '', note: 0 });
+    const [newComment, setNewComment] = useState({objet: '', message: '', note: 0});
     const [isEditing, setIsEditing] = useState<boolean>(false); // Détermine si on est en mode édition
     const [editingCommentId, setEditingCommentId] = useState<string | null>(null); // Stocke l'ID du commentaire à modifier
-    const { data: session } = useSession(); // Récupère les données de session
+    const {data: session} = useSession(); // Récupère les données de session
 
     // Charger les commentaires depuis l'API
     useEffect(() => {
@@ -107,15 +112,22 @@ export default function TestimonialsSection() {
     };
 
     return (
-        <section className="min-h-screen bg-white flex flex-col justify-center items-center py-10">
-            <h2 className="text-4xl font-bold mb-10 text-gray-800">Témoignages</h2>
-
+        <section className="relative min-h-screen bg-white flex flex-col justify-center items-center py-10">
+            <div className="absolute top-0 left-0">
+                <hr
+                    className="w-full md:w-[500px] border-[12px] md:border-l-8 rounded-r-xl border-special-red my-10 mx-auto"
+                />
+            </div>
+            <div className={`flex w-full px-10 py-0 text-start`}>
+                <h2 className="text-4xl font-bold mb-10 text-gray-800">Voici ce que disent mes clients :</h2>
+            </div>
             {/* Carrousel des commentaires */}
             <div className="w-full max-w-lg p-4 ">
                 <Carroussel
                     items={commentaires.map((commentaire, index) => (
                         <div key={index} className="p-4 ">
-                            <div className="bg-white shadow-lg rounded-lg p-6 space-y-4 transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+                            <div
+                                className="bg-white shadow-lg rounded-lg p-6 space-y-4 transform transition duration-300 hover:scale-105 hover:shadow-2xl">
                                 {/* User Initials */}
                                 <div className="flex justify-center mb-4">
                                     <UserInitials
@@ -158,16 +170,16 @@ export default function TestimonialsSection() {
             </div>
 
             {session?.user ? (
-            <button
-                className="mt-10 bg-blue-500 hover:bg-blue-600 text-white px-5 py-3 rounded-lg shadow-md transition duration-300"
-                onClick={() => {
-                    setIsEditing(false); // Sort du mode édition
-                    setIsPopupOpen(true); // Ouvre la popup pour l'ajout
-                    setNewComment({ objet: '', message: '', note: 0 }); // Réinitialise les champs
-                }}
-            >
-                Ajouter un commentaire
-            </button>
+                <button
+                    className="mt-10 bg-blue-500 hover:bg-blue-600 text-white px-5 py-3 rounded-lg shadow-md transition duration-300"
+                    onClick={() => {
+                        setIsEditing(false); // Sort du mode édition
+                        setIsPopupOpen(true); // Ouvre la popup pour l'ajout
+                        setNewComment({objet: '', message: '', note: 0}); // Réinitialise les champs
+                    }}
+                >
+                    Ajouter un commentaire
+                </button>
             ) : (
                 <p>Connecté vous pour ajouté un commentaire</p>
             )}
@@ -192,7 +204,7 @@ export default function TestimonialsSection() {
                                     type="text"
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     value={newComment.objet}
-                                    onChange={(e) => setNewComment({ ...newComment, objet: e.target.value })}
+                                    onChange={(e) => setNewComment({...newComment, objet: e.target.value})}
                                     required
                                 />
                             </div>
@@ -201,7 +213,7 @@ export default function TestimonialsSection() {
                                 <textarea
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     value={newComment.message}
-                                    onChange={(e) => setNewComment({ ...newComment, message: e.target.value })}
+                                    onChange={(e) => setNewComment({...newComment, message: e.target.value})}
                                     required
                                 ></textarea>
                             </div>
@@ -213,7 +225,7 @@ export default function TestimonialsSection() {
                                     min={1}
                                     max={5}
                                     value={newComment.note}
-                                    onChange={(e) => setNewComment({ ...newComment, note: +e.target.value })}
+                                    onChange={(e) => setNewComment({...newComment, note: +e.target.value})}
                                     required
                                 />
                             </div>

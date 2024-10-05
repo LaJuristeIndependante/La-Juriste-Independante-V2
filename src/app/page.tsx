@@ -13,7 +13,7 @@ export default function Home() {
             <SecondSection/>
             {/*<ProductSection/>*/}
             <TestimonialsSection/>
-            <BubbleBackground size={56} position={"left-0 -bottom-10"}/>
+            <BubbleBackground size={96} position={"-left-24 -bottom-24"}/>
         </main>
     );
 }
