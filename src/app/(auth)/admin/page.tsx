@@ -1,64 +1,90 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import BubbleBackground from "@/components/utils/décors/BubbleBackground";
+import { FaGraduationCap, FaFileContract, FaUser, FaCommentDots } from "react-icons/fa";
+import { IoIosArrowForward } from "react-icons/io";
 
 const AdminPage: React.FC = () => {
     const router = useRouter();
 
-    const handleUser = () => {
-        router.push("/admin/users");
+    const handleProfessions = () => {
+        router.push("/admin/profession");
     };
 
-    const handleProduct = () => {
+    const handleContrats = () => {
         router.push("/admin/product");
     };
 
-    const handleCommande = () => {
-        router.push("/admin/Commande");
+    const handleComptes = () => {
+        router.push("/admin/users");
     };
 
-    const handleNews = () => {
-        router.push("/admin/newsLetter");
+    const handleCommentaires = () => {
+        router.push("/admin/testimonials");
     };
 
     return (
         <main className="relative flex text-center items-center justify-center min-h-screen w-full">
-            <div className="m-5 mt-20 mb-10 relative z-10 w-full px-6 py-10 md:px-10 md:py-20 backdrop-blur-md rounded-xl flex flex-col items-center">
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center">
-                    {/* eslint-disable-next-line react/no-unescaped-entities */}
-                    BIENVENUE dans l'espace /Admin.
-                </h1>
-                <p className="text-base md:text-lg text-gray-700 text-center max-w-3xl mb-8 md:mb-10">
-                    Ici, vous pouvez éditer vos produits, consulter vos ventes annuelles
-                    et mensuelles, et supprimer des utilisateurs.
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-3/4">
+            <div className="m-5 mt-20 mb-10 relative z-10 w-full px-6 py-10 md:px-10 md:py-20 rounded-xl flex flex-col items-center">
+                <h1 className={"text-6xl font-bold p-10"}>Bienvenue sur la page administrateur</h1>
+                <div className="flex flex-col space-y-4 w-full">
                     <button
-                        onClick={handleUser}
-                        className="h-24 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-colors duration-300"
+                        onClick={handleProfessions}
+                        className="flex items-center justify-between w-full h-24 bg-gray-100 hover:bg-gray-200 font-bold py-2 px-4 rounded-lg shadow-lg transition-colors duration-300"
                     >
-                        Utilisateurs
+                        <div className="flex items-center space-x-4">
+                            <FaGraduationCap className="text-3xl" />
+                            <div className="text-left">
+                                <p className="text-lg font-semibold">Professions</p>
+                                <p className="text-sm text-gray-600">14 disponibles, 2 masquées</p>
+                            </div>
+                        </div>
+                        <IoIosArrowForward className="text-2xl" />
                     </button>
                     <button
-                        onClick={handleProduct}
-                        className="h-24 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-colors duration-300"
+                        onClick={handleContrats}
+                        className="flex items-center justify-between w-full h-24 bg-gray-100 hover:bg-gray-200 font-bold py-2 px-4 rounded-lg shadow-lg transition-colors duration-300"
                     >
-                        Produits
+                        <div className="flex items-center space-x-4">
+                            <FaFileContract className="text-3xl" />
+                            <div className="text-left">
+                                <p className="text-lg font-semibold">Contrats</p>
+                                <p className="text-sm text-gray-600">27 disponibles, 14 réservés</p>
+                            </div>
+                        </div>
+                        <IoIosArrowForward className="text-2xl" />
                     </button>
                     <button
-                        onClick={handleCommande}
-                        className="h-24 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-colors duration-300"
+                        onClick={handleComptes}
+                        className="flex items-center justify-between w-full h-24 bg-gray-100 hover:bg-gray-200 font-bold py-2 px-4 rounded-lg shadow-lg transition-colors duration-300"
                     >
-                        Commandes
+                        <div className="flex items-center space-x-4">
+                            <FaUser className="text-3xl" />
+                            <div className="text-left">
+                                <p className="text-lg font-semibold">Comptes</p>
+                                <p className="text-sm text-gray-600">48 actifs, 2 en attente, 1 désactivé</p>
+                            </div>
+                        </div>
+                        <IoIosArrowForward className="text-2xl" />
                     </button>
                     <button
-                        onClick={handleNews}
-                        className="h-24 bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-colors duration-300"
+                        onClick={handleCommentaires}
+                        className="flex items-center justify-between w-full h-24 bg-gray-100 hover:bg-gray-200 font-bold py-2 px-4 rounded-lg shadow-lg transition-colors duration-300"
                     >
-                        News Letter
+                        <div className="flex items-center space-x-4">
+                            <FaCommentDots className="text-3xl" />
+                            <div className="text-left">
+                                <p className="text-lg font-semibold">Commentaires</p>
+                                <p className="text-sm text-gray-600">154 postés, 17 suspects</p>
+                            </div>
+                        </div>
+                        <IoIosArrowForward className="text-2xl" />
                     </button>
                 </div>
             </div>
+            <BubbleBackground size={400} position={"-left-16 -bottom-16"} />
+            <BubbleBackground size={300} position={"-right-16 -bottom-16"} />
         </main>
     );
 };
