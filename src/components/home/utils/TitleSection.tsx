@@ -1,5 +1,5 @@
 import React from 'react';
-import line from "@public/images/home/redline.png"
+import line from "@public/images/Utils/redline.png"
 import Image from "next/image";
 
 const TitleSection: React.FC = () => {

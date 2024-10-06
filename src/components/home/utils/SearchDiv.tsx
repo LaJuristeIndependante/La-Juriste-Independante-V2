@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
 import Image from "next/image";
-import loupe from "@public/images/home/loupe.png"
-import React, {useState} from "react";
-import {FaChevronLeft, FaChevronRight} from "react-icons/fa";
-import {useRouter} from "next/navigation";
+import loupe from "@public/images/Utils/loupe.png";
+import React, { useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 const professions = [
     "Secrétaire assistante / virtuelle",
@@ -35,7 +35,7 @@ export default function SearchDiv() {
     };
 
     const redirect = (param: string) => {
-        router.push(`/product&param=${param}`);
+        router.push(`/products?profession=${encodeURIComponent(param)}`);
     };
 
     return (
@@ -46,15 +46,13 @@ export default function SearchDiv() {
                     placeholder="Quelle est votre profession ?"
                     className="flex-1 bg-transparent border-none outline-none px-2 text-lg"
                 />
-                <button
-                    className="text-lg"
-                >
-                    <Image src={loupe} alt={"loupe"}/>
+                <button className="text-lg">
+                    <Image src={loupe} alt={"loupe"} />
                 </button>
             </div>
             <div className="relative w-full overflow-hidden">
                 <div className="flex transition-transform duration-500 ease-in-out"
-                     style={{transform: `translateX(-${currentIndex * 100}%)`}}>
+                     style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
                     {professions.map((profession, index) => (
                         <div key={index} className="min-w-full flex justify-center items-center p-4">
                             <button
@@ -70,13 +68,13 @@ export default function SearchDiv() {
                     className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md"
                     onClick={handlePrev}
                 >
-                    <FaChevronLeft/>
+                    <FaChevronLeft />
                 </button>
                 <button
                     className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md"
                     onClick={handleNext}
                 >
-                    <FaChevronRight/>
+                    <FaChevronRight />
                 </button>
             </div>
         </div>

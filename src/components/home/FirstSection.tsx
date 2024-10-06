@@ -5,11 +5,11 @@ import SearchDiv from "@/components/home/utils/SearchDiv";
 
 const FirstSectionComponent: React.FC = () => {
     return (
-        <div className="first-section w-full h-screen relative">
-            <TitleSection/>
-            <SearchDiv/>
+        <div className="first-section w-full h-[70vh] relative">
+                <TitleSection/>
+                <SearchDiv/>
             {/*<ProfessionSearchComponent />*/}
-            <div className="absolute bottom-[3vh] right-0">
+            <div className="absolute bottom-0 right-0">
                 <hr
                     className="w-full md:w-[500px] border-[12px] md:border-l-8 rounded-l-xl border-special-red my-10 mx-auto"
                 />
