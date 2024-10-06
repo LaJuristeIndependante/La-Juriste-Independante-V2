@@ -33,8 +33,6 @@ function Navbar() {
         setMenuBurgerIsVisible(true);
     }
 
-
-
     useEffect(() => {
         const handleScroll = () => {
             const scrollPosition = window.scrollY;
