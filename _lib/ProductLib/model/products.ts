@@ -1,11 +1,12 @@
 import mongoose, { Schema, model, Document } from "mongoose";
-import * as buffer from "node:buffer";
+import { IProfession } from '@lib/ProfessionLib/model/Profession'; // Import the IProfession interface
 
 interface ProductDocument extends Document {
     name: string;
     description: string;
     price: number;
     image: Buffer;
+    profession: IProfession["_id"];
     createdAt: Date;
 }
 
@@ -24,9 +25,13 @@ const ProductSchema = new Schema<ProductDocument>({
     },
     image: {
         type: Buffer,  // Utilisation du type Buffer pour stocker les données binaires
-        required: true // Facultatif, vous pouvez l'ajuster selon vos besoins
+        required: true
+    },
+    profession: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Profession',  // Reference to the Profession model
+        required: false // Set this to true if every product must have a profession
     }
-
 }, {
     timestamps: true,
 });

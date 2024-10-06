@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Product from "@/../_lib/ProductLib/model/products";
 import { connectDB } from "@/../_lib/MongoLib/mongodb";
+import Profession from "@lib/ProfessionLib/model/Profession";
 
 // GET: Récupérer tous les produits
 export async function GET() {
@@ -9,7 +10,6 @@ export async function GET() {
     return NextResponse.json(products);
 }
 
-// POST: Créer un nouveau produit
 export async function POST(req: Request) {
     try {
         await connectDB();
@@ -19,6 +19,7 @@ export async function POST(req: Request) {
         const description = formData.get("description") as string;
         const price = parseFloat(formData.get("price") as string);
         const imageFile = formData.get("image") as File;
+        const professionId = formData.get("profession") as string; // Extract the profession ID from the form data
 
         let imageBuffer: Buffer | undefined;
         if (imageFile) {
@@ -26,11 +27,21 @@ export async function POST(req: Request) {
             imageBuffer = Buffer.from(arrayBuffer);
         }
 
+        // Validate that the profession exists if provided
+        let profession;
+        if (professionId) {
+            profession = await Profession.findById(professionId);
+            if (!profession) {
+                return NextResponse.json({ error: "Invalid profession ID" }, { status: 400 });
+            }
+        }
+
         const product = new Product({
             name,
             description,
             price,
             image: imageBuffer,
+            profession: profession ? profession._id : undefined // Include the profession reference if available
         });
 
         await product.save();
