@@ -174,7 +174,7 @@ const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
 
     return (
         <div
-            className={`absolute top-0 right-0 min-h-screen h-full w-96 bg-white shadow-xl transform transition-transform ease-in-out duration-300 z-50
+            className={`fixed top-0 right-0 min-h-screen h-full w-96 bg-white shadow-xl transform transition-transform ease-in-out duration-300 z-50
                 ${isVisible ? 'translate-x-0 flex flex-col' : 'translate-x-full'}
             `}
             style={{maxHeight: '100vh'}} // Ensure it never grows beyond viewport height
