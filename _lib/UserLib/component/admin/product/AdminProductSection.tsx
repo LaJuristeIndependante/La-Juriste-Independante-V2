@@ -1,9 +1,13 @@
 "use client";
 
-import React, {useState, useEffect} from "react";
-import {FaEdit} from "react-icons/fa";
-import {addProduct, deleteProduct, fetchProducts, updateProduct} from "@lib/ProductLib/service/produit";
-import {ProductDetail} from "@lib/ProductLib/type/Product";
+import React, { useState, useEffect } from "react";
+import { FaEdit } from "react-icons/fa";
+import { addProduct, deleteProduct, fetchProducts, updateProduct } from "@lib/ProductLib/service/produit";
+import { ProductDetail } from "@lib/ProductLib/type/Product";
+import Image from "next/image";
+
+import contract from "@public/images/Utils/contract-icon.png";
+import productContract from "@public/images/Utils/Contract.png";
 
 const ProductManagement: React.FC = () => {
     const [products, setProducts] = useState<ProductDetail[]>([]);
@@ -54,6 +58,7 @@ const ProductManagement: React.FC = () => {
         setDescription("");
         setPrice("");
         setImage(null);
+        setIsSuccess(false);
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,7 +89,6 @@ const ProductManagement: React.FC = () => {
                     formData.append("price", price);
                     formData.append("image", image);
 
-                    // Use the existing addProduct function to update the product with an image
                     await updateProduct(selectedProduct._id, formData as unknown as Partial<ProductDetail>);
                 } else {
                     // Update without an image change
@@ -95,7 +99,7 @@ const ProductManagement: React.FC = () => {
                 setProducts((prevProducts) =>
                     prevProducts.map((product) =>
                         product._id === selectedProduct._id
-                            ? {...product, name, description, price: parseFloat(price)}
+                            ? { ...product, name, description, price: parseFloat(price) }
                             : product
                     )
                 );
@@ -109,14 +113,15 @@ const ProductManagement: React.FC = () => {
                     formData.append("image", image);
                 }
 
-                await addProduct(formData);
+                // Ensure that the return type is typed correctly
+                const newProduct: ProductDetail = await addProduct(formData);
 
-                // Fetch all products again to include the newly added one
-                const newProducts = await fetchProducts();
-                setProducts(newProducts);
+                // Update the local products state to include the newly added product
+                setProducts((prevProducts) => [...prevProducts, newProduct]);
             }
 
             setIsSuccess(true);
+            // Close the popup after successfully adding/updating the product
             closePopup();
         } catch (error) {
             console.error("Erreur lors de l'ajout ou de la modification du produit:", error);
@@ -124,6 +129,7 @@ const ProductManagement: React.FC = () => {
             setIsLoading(false);
         }
     };
+
 
     const handleDelete = async (id: string) => {
         try {
@@ -135,16 +141,20 @@ const ProductManagement: React.FC = () => {
     };
 
     return (
-        <section
-            className="flex flex-col text-black min-h-screen p-8 w-full space-y-10 z-0">
-            <div>
-                <h2 className="font-jost text-4xl font-bold mb-6">Gestionnaire de contrats</h2>
-                <button
-                    onClick={() => openPopup()}
-                    className="mb-6 px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400 transition"
-                >
-                    Ajouter un contrat +
-                </button>
+        <section className="flex flex-col text-black min-h-screen p-8 w-full space-y-10 z-0">
+            <div className={"flex justify-between"}>
+                <div className={"h-full w-full"}>
+                    <h2 className="font-jost text-4xl font-bold mb-6">Gestionnaire de contrats</h2>
+                    <button
+                        onClick={() => openPopup()}
+                        className="mb-6 px-4 py-2 bg-[#D9D9D9] text-black rounded-lg text-md hover:bg-gray-400 transition"
+                    >
+                        Ajouter un contrat +
+                    </button>
+                </div>
+                <div className={"flex justify-center h-full pr-20"}>
+                    <Image src={contract} alt={"contract"} className={"h-28 w-auto"} />
+                </div>
             </div>
 
             <div className="space-y-4 w-full">
@@ -153,8 +163,8 @@ const ProductManagement: React.FC = () => {
                         key={product._id}
                         className="flex justify-between items-center p-4 bg-gray-100 rounded-md shadow"
                     >
-                        <div className="flex items-center">
-                            <FaEdit className="mr-3 text-gray-600"/>
+                        <div className="flex items-center space-x-5">
+                            <Image src={productContract} alt={"productContract"} className={"h-10 w-auto"} />
                             <span className="font-semibold">{product.name}</span>
                         </div>
                         <div className="flex space-x-4">
@@ -175,8 +185,7 @@ const ProductManagement: React.FC = () => {
                 ))}
             </div>
             {showPopup && (
-                <div
-                    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center backdrop-blur z-50">
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center backdrop-blur z-50">
                     <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl m-8">
                         <h2 className="text-3xl font-bold mb-6">
                             {selectedProduct ? "Modifier le produit" : "Ajouter un nouveau produit"}
