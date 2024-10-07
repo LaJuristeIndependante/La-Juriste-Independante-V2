@@ -61,7 +61,6 @@ function Navbar() {
         }, 100);
     };
 
-
     return (
         <header>
             <nav className="flex items-center justify-between w-full">

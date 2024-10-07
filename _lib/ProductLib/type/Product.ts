@@ -1,6 +1,6 @@
 
 export interface ProductDetail {
-    description: string | undefined;
+    description: string;
     image: Buffer;
     name: string;
     price: number;

@@ -25,8 +25,8 @@ const AdminPage: React.FC = () => {
     };
 
     return (
-        <main className="relative flex text-center items-center justify-center min-h-screen w-full">
-            <div className="m-5 mt-20 mb-10 relative z-10 w-full px-6 py-10 md:px-10 md:py-20 rounded-xl flex flex-col items-center">
+        <main className="relative flex text-center items-center justify-center min-h-screen w-full z-20">
+            <div className="m-5 mt-20 mb-10 relative  w-full px-6 py-10 md:px-10 md:py-20 rounded-xl z-20 flex flex-col items-center">
                 <h1 className={"text-6xl font-bold p-10"}>Bienvenue sur la page administrateur</h1>
                 <div className="flex flex-col space-y-4 w-full">
                     <button
