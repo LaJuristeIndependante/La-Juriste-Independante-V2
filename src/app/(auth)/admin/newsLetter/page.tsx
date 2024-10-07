@@ -1,6 +1,10 @@
 "use client";
 
-import NewsLetterForm from "@lib/UserLib/component/admin/newsLetter/newsLetterForm";
+import dynamic from 'next/dynamic';
+
+const NewsLetterForm = dynamic(() => import('@lib/UserLib/component/admin/newsLetter/newsLetterForm'), {
+    ssr: false, // Désactive le rendu côté serveur
+});
 
 const AdminCommandePage: React.FC = () => {
     return (

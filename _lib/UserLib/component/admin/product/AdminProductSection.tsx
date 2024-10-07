@@ -5,10 +5,10 @@ import {useRouter} from "next/navigation";
 import Image from 'next/image';
 import {FaEdit, FaTrash} from "react-icons/fa";
 import {leapfrog} from 'ldrs';
-import product from "../../../../../public/images/Utils/product.png";
+import product from "@public/images/Utils/product.png";
 import RedirectionArrow from "@lib/UserLib/component/admin/RedirectionArrow";
 import {addProduct, deleteProduct, fetchProducts, updateProduct} from "@lib/ProductLib/service/produit";
-import {ProductDetail} from "../../../../ProductLib/type/Product";
+import {ProductDetail} from "@lib/ProductLib/type/Product";
 
 const ProductManagement: React.FC = () => {
     leapfrog.register();

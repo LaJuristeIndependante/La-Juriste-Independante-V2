@@ -1,6 +1,10 @@
 "use client";
 
-import CommandeForm from "@lib/StripeLib/components/CommandeForm";
+import dynamic from "next/dynamic";
+
+const CommandeForm = dynamic(() => import("@lib/StripeLib/components/CommandeForm"), {
+    ssr: false, // Désactive le rendu côté serveur
+});
 
 const CommandePage: React.FC = () => {
     return (
