@@ -1,10 +1,9 @@
 "use client";
 
 import React, {useState, useEffect} from "react";
-import {FaEdit, FaTrash} from "react-icons/fa";
+import {FaEdit} from "react-icons/fa";
 import {addProduct, deleteProduct, fetchProducts, updateProduct} from "@lib/ProductLib/service/produit";
 import {ProductDetail} from "@lib/ProductLib/type/Product";
-import axios from "axios";
 
 const ProductManagement: React.FC = () => {
     const [products, setProducts] = useState<ProductDetail[]>([]);
@@ -126,35 +125,6 @@ const ProductManagement: React.FC = () => {
         }
     };
 
-
-    // const handleSubmit = async (e: React.FormEvent) => {
-    //     e.preventDefault();
-    //     setIsLoading(true);
-    //     setIsSuccess(false);
-    //
-    //     const formData = new FormData();
-    //     formData.append("name", name);
-    //     formData.append("description", description);
-    //     formData.append("price", price);
-    //     if (image) {
-    //         formData.append("image", image);
-    //     }
-    //
-    //     try {
-    //         await addProduct(formData);
-    //         setIsSuccess(true);
-    //         setName("");
-    //         setDescription("");
-    //         setPrice("");
-    //         setImage(null);
-    //         window.location.reload(); // Refresh to show the new product
-    //     } catch (error: any) {
-    //         console.error("Erreur lors de l'ajout du produit", error);
-    //     } finally {
-    //         setIsLoading(false);
-    //     }
-    // };
-
     const handleDelete = async (id: string) => {
         try {
             await deleteProduct(id);
@@ -168,7 +138,7 @@ const ProductManagement: React.FC = () => {
         <section
             className="flex flex-col text-black min-h-screen p-8 w-full space-y-10 z-0">
             <div>
-                <h2 className="text-2xl font-bold mb-6">Gestionnaire de contrats</h2>
+                <h2 className="font-jost text-4xl font-bold mb-6">Gestionnaire de contrats</h2>
                 <button
                     onClick={() => openPopup()}
                     className="mb-6 px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400 transition"
