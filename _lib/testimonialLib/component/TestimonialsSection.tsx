@@ -12,6 +12,7 @@ import {useSession} from "next-auth/react";
 import Carroussel from "@/components/utils/décors/Carroussel";
 import UserInitials from "@lib/UserLib/component/UserInitials";
 import BubbleBackground from "@/components/utils/décors/BubbleBackground";
+import Carroussel3D from "@/components/utils/décors/Carroussel3D";
 
 export default function TestimonialsSection() {
     const [commentaires, setCommentaires] = useState<CommentaireDocument[]>([]);
@@ -115,7 +116,7 @@ export default function TestimonialsSection() {
         <section className="relative min-h-screen bg-white flex flex-col justify-center items-center py-10">
             <div className="absolute top-0 left-0">
                 <hr
-                    className="w-full md:w-[500px] border-[12px] md:border-l-8 rounded-r-xl border-special-red my-10 mx-auto"
+                    className="w-full md:w-[500px] border-[12px] md:border-l-8 rounded-r-xl border-[#DA1A32] my-10 mx-auto"
                 />
             </div>
             <div className={`flex w-full px-10 py-0 text-start`}>

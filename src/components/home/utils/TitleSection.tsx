@@ -5,7 +5,7 @@ import Image from "next/image";
 const TitleSection: React.FC = () => {
     return (
         <div className='min-h-[350px] flex flex-col justify-center items-center'>
-            <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-bold text-center mt-20 mb-6 title_section">
+            <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-bold text-center mt-20 mb-6">
                 Le droit à <span className={"relative"}>porter de main <Image src={line} alt={"line"} className={"absolute right-0"}/></span>
             </h1>
 
