@@ -4,19 +4,20 @@
 
 @font-face {
   font-family: 'Jost';
-  src: url('/public/font/Jost/Jost-VariableFont_wght.ttf') format('truetype');
+  src: url('/font/Jost/Jost-VariableFont_wght.ttf') format('truetype');
   font-weight: 100 900;
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'IslandMoments';
+  src: url('/font/Island-Moments/IslandMoments-Regular.ttf') format('truetype');
+}
+
+
 :root {
   --base-font-size: 16px;
   --font-size-multiplier: 0.02;
-}
-
-body {
-  @apply font-sans;
-  font-family: 'Jost', sans-serif;
 }
 
 /* Utilisez Tailwind pour gérer les classes, en évitant les mélanges inutiles */
@@ -42,18 +43,13 @@ body {
           rgb(var(--background-end-rgb))
   )
   rgb(var(--background-start-rgb));
-  font-family: var(--font-primary);
+  font-family: var(--font-primary), serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-}
-
-@font-face {
-  font-family: 'IslandMoments';
-  src: url('/public/font/Island-Moments/IslandMoments-Regular.ttf') format('truetype');
 }
 
 .iconFunny {
