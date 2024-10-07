@@ -49,7 +49,7 @@ const ProductCard = ({ product }: { product: ProductDetail }) => {
     );
 };
 
-export default function ProductPage() {
+export default function ProductSection() {
     const searchParams = useSearchParams();
     const profession = searchParams.get("profession");
     const router = useRouter();
