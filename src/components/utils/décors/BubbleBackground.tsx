@@ -15,7 +15,7 @@ export default function BubbleBackground({
                                          }: BubbleBackgroundProps) {
     return (
         <div
-            className={`absolute rounded-full z-1 flex ${position} ${shadow ? "shadow-lg" : ""}`}
+            className={`absolute rounded-full z-10 flex ${position} ${shadow ? "shadow-lg" : ""}`}
             style={{
                 width: `${size}px`,
                 height: `${size}px`,

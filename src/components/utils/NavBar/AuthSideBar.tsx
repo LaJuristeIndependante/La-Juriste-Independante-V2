@@ -2,17 +2,16 @@
 import React from 'react';
 import ProfileSection from '@/components/SideSection/ProfileSection';
 
-
 interface SideBarProps {
     isOpen: boolean;
     closeSidebar: () => void;
 }
 
-const AuthSideBar: React.FC<SideBarProps> = ({ isOpen, closeSidebar }) => {
+const AuthSideBar: React.FC<SideBarProps> = ({isOpen, closeSidebar}) => {
     return (
         <div
-            className={`w-1/8 h-[100vh] bg-white p-[20px] z-50 transition-transform duration-300 ${isOpen ? 'translate-x-0 x-99' : 'translate-x-full'}`}
-            style={{position: 'fixed', top: 0, right: 0, zIndex: 10, borderLeft: '1px solid #a0aec0'}}
+            className={`w-1/8 h-[100vh] bg-white p-[20px] z-50 transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            style={{position: 'fixed', top: 0, right: 0, borderLeft: '1px solid #a0aec0'}}
         >
             <div className="flex items-center justify-between p-4 border-b bg-tertiary">
                 <button
@@ -26,6 +25,6 @@ const AuthSideBar: React.FC<SideBarProps> = ({ isOpen, closeSidebar }) => {
             <ProfileSection closeSidebar={closeSidebar}/>
         </div>
     );
-}
+};
 
 export default AuthSideBar;

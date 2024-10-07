@@ -12,7 +12,7 @@ const ProfileSection: React.FC<{ closeSidebar: () => void }> = ({ closeSidebar }
 
     if (session) {
         return (
-            <div className="sideBar_container flex flex-col">
+            <div className="flex flex-col">
                 <SectionProfile/>
             </div>
         );

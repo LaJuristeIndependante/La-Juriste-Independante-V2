@@ -21,7 +21,7 @@ function LoginSection() {
 
 
     return (
-        <div className="sideBar_logo-section flex flex-col items-center justify-center w-full mb-6">
+        <div className="flex flex-col items-center justify-center w-full mb-6">
             <Image src={logo_la_juriste_independante} alt="logo la juriste indépendante" />
             <p className="font-special cursive-letters text-4xl mt-1">La Juriste indépendante</p>
             {!registerSection ? (
