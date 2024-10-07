@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import React from "react";
 import '@/styles/globals.css';
-import Footer from "../../../La-Juriste-Independante-V2/src/components/Footer";
+import Footer from "@/components/Footer";
 import ClientNavbar from "@/components/ClientNavBar";
 import CookiePopupManager from "@/components/utils/cookies/CookiePopupManager";
 import CleanUpOrders from "@lib/OrderLib/component/CleanupOrder";
