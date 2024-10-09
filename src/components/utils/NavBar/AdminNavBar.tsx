@@ -59,8 +59,8 @@ export default function AdminNavbar() {
                             <li className={`${pathname === '/admin/product' ? 'font-bold' : ''} text-center w-auto min-w-[150px]`}>
                                 <Link href="/admin/product">Contrat</Link>
                             </li>
-                            <li className={`${pathname === '/admin/product' ? 'font-bold' : ''} text-center w-auto min-w-[150px]`}>
-                                <Link href="/admin/product">Utilisateur</Link>
+                            <li className={`${pathname === '/admin/users' ? 'font-bold' : ''} text-center w-auto min-w-[150px]`}>
+                                <Link href="/admin/users">Utilisateur</Link>
                             </li>
                             <li className={`${pathname === '/admin/testimonials' ? 'font-bold' : ''} text-center w-auto min-w-[150px]`}>
                                 <Link href="/admin/testimonials">Commentaire</Link>
