@@ -21,6 +21,13 @@ export async function middleware(req: NextRequest) {
         isVerified = userPayload.isVerified;
     }
 
+    if(!token && url.pathname === '/admin'){
+        url.pathname = '/';
+        const response = NextResponse.redirect(url)
+        response.cookies.set('flashMessage', 'Vous avez déjà vérifié votre compte.', { path: '/' })
+        return response;
+    }
+
     // Bloquer l'accès à /validation si l'utilisateur est déjà vérifié
     if (token && isVerified && url.pathname === '/validation') {
         url.pathname = '/';
