@@ -3,7 +3,6 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface IProfession extends Document {
     name: string;
     description: string;
-    yearsOfExperience: number;
     isActive: boolean;
     createdAt: Date;
     updatedAt: Date;
