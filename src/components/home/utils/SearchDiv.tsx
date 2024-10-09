@@ -2,25 +2,30 @@
 
 import Image from "next/image";
 import loupe from "@public/images/Utils/loupe.png";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-
-const professions = [
-    "Secrétaire assistante / virtuelle",
-    "Ménage",
-    "Décorateur d'intérieur",
-    "Développeur web",
-    "Graphiste",
-    "Consultant RH",
-    "Photographe",
-    "Rédacteur",
-    "Designer UX/UI"
-];
+import {getAllProfessions} from "@lib/ProfessionLib/service/professionService";
+import {Profession} from "@lib/ProfessionLib/type/Profession";
 
 export default function SearchDiv() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const router = useRouter();
+    const [professions, setProfessions] = useState<Profession[]>([]);
+
+    useEffect(() => {
+        // Fetch all professions on component mount
+        const fetchProfessions = async () => {
+            try {
+                const professionsData = await getAllProfessions();
+                setProfessions(professionsData);
+            } catch (error) {
+                console.error("Erreur lors de la récupération des professions:", error);
+            }
+        };
+
+        fetchProfessions();
+    }, []);
 
     const handlePrev = () => {
         setCurrentIndex((prevIndex) =>
@@ -57,9 +62,9 @@ export default function SearchDiv() {
                         <div key={index} className="min-w-full flex justify-center items-center p-4">
                             <button
                                 className="bg-gray-100 rounded-full px-6 py-3 shadow text-lg"
-                                onClick={() => redirect(profession)}
+                                onClick={() => redirect(profession.name)}
                             >
-                                {profession}
+                                {profession.name}
                             </button>
                         </div>
                     ))}
