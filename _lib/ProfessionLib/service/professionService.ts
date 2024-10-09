@@ -9,7 +9,7 @@ import {Profession} from "@lib/ProfessionLib/type/Profession";
  */
 export async function getAllProfessions(): Promise<Profession[]> {
     try {
-        const response = await fetch('/api/professions', {
+        const response = await fetch('/api/profession', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export async function getAllProfessions(): Promise<Profession[]> {
  */
 export async function getProfessionById(id: string): Promise<Profession> {
     try {
-        const response = await fetch(`/api/professions/${id}`, {
+        const response = await fetch(`/api/profession/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ export async function addProfession(
     data: Omit<Profession, '_id' | 'createdAt' | 'updatedAt'>
 ): Promise<Profession> {
     try {
-        const response = await fetch('/api/professions', {
+        const response = await fetch('/api/profession', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ export async function updateProfession(
     data: Partial<Omit<Profession, '_id' | 'createdAt' | 'updatedAt'>>
 ): Promise<Profession> {
     try {
-        const response = await fetch(`/api/professions/${id}`, {
+        const response = await fetch(`/api/profession/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -125,7 +125,7 @@ export async function updateProfession(
  */
 export async function deleteProfession(id: string): Promise<void> {
     try {
-        const response = await fetch(`/api/professions/${id}`, {
+        const response = await fetch(`/api/profession/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
