@@ -3,9 +3,15 @@ export interface ProfessionData {
     description?: string;
 }
 
-// Types pour les professions
+/**
+ * Services pour interagir avec les routes API des professions.
+ */
 export interface Profession {
-    id: number;
+    _id?: string;
     name: string;
     description: string;
+    yearsOfExperience: number;
+    isActive?: boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
