@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { FaEdit } from "react-icons/fa";
 import { addProduct, deleteProduct, fetchProducts, updateProduct } from "@lib/ProductLib/service/produit";
 import { ProductDetail } from "@lib/ProductLib/type/Product";
 import Image from "next/image";
@@ -18,16 +17,17 @@ const ProductManagement: React.FC = () => {
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [price, setPrice] = useState("");
+    const [price, setPrice] = useState(0);
     const [image, setImage] = useState<File | null>(null);
 
     useEffect(() => {
+        // Récupérer tous les produits lors du montage du composant
         const loadProducts = async () => {
             try {
                 const data = await fetchProducts();
                 setProducts(data);
             } catch (error) {
-                console.error("Erreur lors de la récupération des produits:", error);
+                console.error("Erreur lors de la récupération des produits", error);
             }
         };
 
@@ -35,18 +35,19 @@ const ProductManagement: React.FC = () => {
     }, []);
 
     const openPopup = (product?: ProductDetail) => {
+        setIsSuccess(false);
         if (product) {
-            // Editing an existing product
             setSelectedProduct(product);
             setName(product.name);
             setDescription(product.description);
-            setPrice(product.price.toString());
+            setPrice(product.price);
+            setImage(null); // Par défaut, l'image n'est pas chargée pour modification
         } else {
-            // Adding a new product
             setSelectedProduct(null);
             setName("");
             setDescription("");
-            setPrice("");
+            setPrice(0);
+            setImage(null);
         }
         setShowPopup(true);
     };
@@ -54,11 +55,6 @@ const ProductManagement: React.FC = () => {
     const closePopup = () => {
         setShowPopup(false);
         setSelectedProduct(null);
-        setName("");
-        setDescription("");
-        setPrice("");
-        setImage(null);
-        setIsSuccess(false);
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,73 +66,39 @@ const ProductManagement: React.FC = () => {
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
-        setIsSuccess(false);
 
         try {
-            if (selectedProduct) {
-                // Update product: Prepare a Partial<ProductDetail> object
-                const updatedProduct: Partial<ProductDetail> = {
-                    name,
-                    description,
-                    price: parseFloat(price),
-                };
-
-                if (image) {
-                    // If there's a new image, we need to include it
-                    const formData = new FormData();
-                    formData.append("name", name);
-                    formData.append("description", description);
-                    formData.append("price", price);
-                    formData.append("image", image);
-
-                    await updateProduct(selectedProduct._id, formData as unknown as Partial<ProductDetail>);
-                } else {
-                    // Update without an image change
-                    await updateProduct(selectedProduct._id, updatedProduct);
-                }
-
-                // Update the local product state
-                setProducts((prevProducts) =>
-                    prevProducts.map((product) =>
-                        product._id === selectedProduct._id
-                            ? { ...product, name, description, price: parseFloat(price) }
-                            : product
-                    )
-                );
-            } else {
-                // Add new product: Use FormData as required
-                const formData = new FormData();
-                formData.append("name", name);
-                formData.append("description", description);
-                formData.append("price", price);
-                if (image) {
-                    formData.append("image", image);
-                }
-
-                // Ensure that the return type is typed correctly
-                const newProduct: ProductDetail = await addProduct(formData);
-
-                // Update the local products state to include the newly added product
-                setProducts((prevProducts) => [...prevProducts, newProduct]);
+            const formData = new FormData();
+            formData.append("name", name);
+            formData.append("description", description);
+            formData.append("price", price.toString());
+            if (image) {
+                formData.append("image", image);
             }
 
+            if (selectedProduct) {
+                await updateProduct(selectedProduct._id!, { name, description, price });
+            } else {
+                await addProduct(formData);
+            }
             setIsSuccess(true);
-            // Close the popup after successfully adding/updating the product
             closePopup();
+            const updatedProducts = await fetchProducts();
+            setProducts(updatedProducts);
         } catch (error) {
-            console.error("Erreur lors de l'ajout ou de la modification du produit:", error);
+            console.error("Erreur lors de l'ajout ou de la mise à jour du produit", error);
         } finally {
             setIsLoading(false);
         }
     };
 
-
     const handleDelete = async (id: string) => {
         try {
             await deleteProduct(id);
+            // Actualiser la liste des produits après suppression
             setProducts((prevProducts) => prevProducts.filter((product) => product._id !== id));
         } catch (error) {
-            console.error("Erreur lors de la suppression du produit:", error);
+            console.error("Erreur lors de la suppression du produit", error);
         }
     };
 
@@ -175,7 +137,7 @@ const ProductManagement: React.FC = () => {
                                 Modifier
                             </button>
                             <button
-                                onClick={() => handleDelete(product._id)}
+                                onClick={() => handleDelete(product._id!)}
                                 className="px-4 py-2 bg-[#DD2A27] text-white rounded transition"
                             >
                                 Supprimer
@@ -184,6 +146,7 @@ const ProductManagement: React.FC = () => {
                     </div>
                 ))}
             </div>
+
             {showPopup && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center backdrop-blur z-50">
                     <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl m-8">
@@ -216,7 +179,7 @@ const ProductManagement: React.FC = () => {
                                 <input
                                     type="number"
                                     value={price}
-                                    onChange={(e) => setPrice(e.target.value)}
+                                    onChange={(e) => setPrice(Number(e.target.value))}
                                     step="0.01"
                                     className="w-full p-2 border border-gray-300 rounded"
                                     required
