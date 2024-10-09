@@ -1,50 +1,45 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { RiPencilLine } from 'react-icons/ri';
-import { useRouter } from 'next/navigation';
+import React, {useEffect, useState} from 'react';
+import {useSearchParams} from 'next/navigation';
+import {RiPencilLine} from 'react-icons/ri';
+import {useRouter} from 'next/navigation';
 
-import { ProductDetail } from "@lib/ProductLib/type/Product";
-import { fetchProducts } from "@lib/ProductLib/service/produit";
+import {ProductDetail} from "@lib/ProductLib/type/Product";
+import {fetchProducts} from "@lib/ProductLib/service/produit";
 
 import Image from "next/image";
 import BackgroundBubbles from "@/components/utils/décors/BubbleBackground";
+import BubbleDecoration from "@lib/ProductLib/component/BubbleDecoration";
 
 import line from "@public/images/Utils/redline.png"
 import loopPaper from "@public/images/Utils/loopPaper.png"
-
-const ProductCard = ({ product }: { product: ProductDetail }) => {
-    const base64Image = product.image
-        ? `data:image/png;base64,${product.image}` // Assure que `product.image` est déjà encodé en base64
-        : '';
+import right from "@public/images/Utils/right-icon.svg"
+import {SlArrowRight} from "react-icons/sl";
+const ProductCard = ({product}: { product: ProductDetail }) => {
 
     return (
-        <div className="flex flex-col items-center justify-center p-2 border border-gray-300 rounded-lg">
-            <div className="relative w-full h-0 pb-[100%] bg-tertiary border-2 rounded-lg overflow-hidden">
-                {base64Image ? (
-                    <Image
-                        src={base64Image}
-                        alt={product.name}
-                        fill
-                        objectFit="cover"
-                        className="rounded-lg"
-                    />
-                ) : (
-                    <div className="bg-gray-200 w-full h-full flex items-center justify-center">
-                        <p>Image non disponible</p>
-                    </div>
-                )}
-                <a
-                    href={`/products/${product._id}`}
-                    className="bg-secondary text-white py-2 px-4 rounded-lg absolute bottom-2 right-2 text-xs md:text-sm lg:text-base"
-                >
-                    En savoir plus
-                </a>
+        <div className="relative">
+            <div
+                className="relative flex flex-col items-center justify-center p-2 pb-0 bg-[#EAEAEA] rounded-lg cursor-pointer transition shadow-lg hover:shadow-xl overflow-hidden"> {/* Ajout de `overflow-hidden` */}
+                <p className="font-bold text-xl p-5 ">{product.name}</p>
+                <div className="flex flex-col items-start justify-start w-full p-5 pl-0 pt-0">
+                    <p className="text-sm justify-start">{product.description}</p>
+                    <a
+                        href={`/products/${product._id}`}
+                        className="text-[#DD2A27] font-bold text-xs md:text-sm flex justify-center p-2 pl-0"
+                    >
+                        Aperçu <span className={"bg-white p-1"}><SlArrowRight /></span>
+                    </a>
+                </div>
+                <div className={"mt-10"}>
+                    <BubbleDecoration size={70} position="-right-5 -bottom-2" opacity={0.5}/>
+                    <BubbleDecoration size={70} position="right-5 -bottom-6" opacity={0.3}/>
+                </div>
             </div>
-            <p className="text-primary text-left mt-4 text-sm md:text-lg lg:text-xl font-bimbo text-stroke-black-2">
-                {product.name}
-            </p>
+            <div className={"shadow-6xl flex flex-col items-center justify-center absolute -bottom-5 w-full"}>
+                <p className={"text-center font-bold bg-[#F8F8F8] rounded-full p-2 w-2/3 items-center"}>{product.price} €</p>
+            </div>
         </div>
     );
 };
@@ -112,7 +107,7 @@ export default function ProductSection() {
             {products.length > 0 ? (
                 <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {products.map((product, index) => (
-                        <ProductCard key={product._id || index} product={product} />
+                        <ProductCard key={product._id || index} product={product}/>
                     ))}
                 </div>
             ) : (
@@ -121,7 +116,7 @@ export default function ProductSection() {
                 </div>
             )}
 
-            <BackgroundBubbles size={96} position={"-right-16 -bottom-16"} />
+            <BackgroundBubbles size={96} position={"-right-16 -bottom-16"}/>
         </section>
     );
 }
