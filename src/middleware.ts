@@ -21,26 +21,6 @@ export async function middleware(req: NextRequest) {
         isVerified = userPayload.isVerified;
     }
 
-    // Permettre l'accès aux pages de login et register
-    if (!token && (url.pathname === '/login' || url.pathname === '/register')) {
-        return NextResponse.next();
-    }
-
-    // Rediriger vers login si non authentifié
-    if (!token && url.pathname === '/profile') {
-        const response = NextResponse.redirect(new URL('/login', req.url));
-        response.cookies.set('flashMessage', 'Vous devez être connecté pour accéder à cette page.', { path: '/' });
-        return response;
-    }
-
-    // Rediriger les utilisateurs connectés essayant d'accéder à /login ou /register
-    if (token && (url.pathname === '/login' || url.pathname === '/register')) {
-        url.pathname = '/';
-        const response = NextResponse.redirect(url);
-        response.cookies.set('flashMessage', 'Vous êtes déjà connecté.', { path: '/' });
-        return response;
-    }
-
     // Bloquer l'accès à /validation si l'utilisateur est déjà vérifié
     if (token && isVerified && url.pathname === '/validation') {
         url.pathname = '/';
@@ -77,9 +57,6 @@ export const config = {
         '/products',
         '/paiement',
         '/admin/:path*',
-        '/profile',
-        '/login',
-        '/register',
         '/validation',
     ],
 };
