@@ -1,5 +1,6 @@
 import axios from 'axios';
-import type {ProductDetail} from "../type/Product";
+import {ProductData, ProductDetail} from "../type/Product";
+import Product from "@lib/ProductLib/model/products";
 
 /**
  * Récupère les détails d'un produit spécifique par son identifiant.
@@ -37,12 +38,27 @@ export const fetchProductById = async (gameId: string): Promise<ProductDetail | 
 }
 
 /**
+ * Récupère la liste des produits exposable au client.
+ *
+ * @returns {Promise<Product[]>} - Une promesse qui se résout avec un tableau de produits.
+ * @throws {Error} - Lance une erreur si la récupération échoue.
+ */
+export async function fetchProductsForClient(): Promise<ProductData[]> {
+    try {
+        const response = await axios.get('/api/products');
+        return response.data;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.message || 'Erreur lors de la récupération des produits');
+    }
+}
+
+/**
  * Récupère la liste des produits.
  *
  * @returns {Promise<Product[]>} - Une promesse qui se résout avec un tableau de produits.
  * @throws {Error} - Lance une erreur si la récupération échoue.
  */
-export async function fetchProducts(): Promise<ProductDetail[]> {
+export async function fetchProductsForAdmin(): Promise<ProductDetail[]> {
     try {
         const response = await axios.get('/api/products');
         return response.data;
@@ -106,11 +122,11 @@ export async function deleteProduct(id: string): Promise<void> {
  *   .then((updatedProduct) => console.log('Produit mis à jour:', updatedProduct))
  *   .catch((error) => console.error('Erreur lors de la mise à jour du produit:', error));
  */
-export async function updateProduct(id: string, updatedProduct: Partial<ProductDetail>): Promise<ProductDetail> {
+export async function updateProduct(id: string, updatedProduct: FormData): Promise<ProductDetail> {
     try {
         const response = await axios.patch(`/api/products/${id}`, updatedProduct, {
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'multipart/form-data', // Set correct content type for FormData
             },
         });
 
@@ -119,4 +135,5 @@ export async function updateProduct(id: string, updatedProduct: Partial<ProductD
         throw new Error(error.response?.data?.message || 'Erreur lors de la mise à jour du produit');
     }
 }
+
 
