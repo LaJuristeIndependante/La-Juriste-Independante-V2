@@ -7,7 +7,6 @@ import {ProductDetail, ProductPageProps} from "@/../_lib/ProductLib/type/Product
 import {fetchProductById} from "@/../_lib/ProductLib/service/produit";
 import {createOrder} from "@/../_lib/OrderLib/service/orders";
 import {FaShoppingCart} from "react-icons/fa";
-import Image from "next/image";
 import {addToCart} from "@/../_lib/CartLib/service/cart";
 
 export default function ProductPage({params}: ProductPageProps) {
@@ -55,7 +54,6 @@ export default function ProductPage({params}: ProductPageProps) {
                         productId: product._id,
                         name: product.name,
                         price: product.price,
-                        image: base64Image,
                         quantity: 1,
                     });
                 }
@@ -108,28 +106,9 @@ export default function ProductPage({params}: ProductPageProps) {
         return notFound();
     }
 
-    const base64Image = product.image
-        ? `data:image/png;base64,${Buffer.from(product.image).toString('base64')}`
-        : '';
-
     return (
         <main className="relative min-h-screen flex items-center justify-center">
             <section className="flex flex-col lg:flex-row items-center justify-center p-8 z-10 w-full max-w-7xl">
-                <div className="flex-1 flex justify-center mb-8 lg:mb-0 lg:pr-8">
-                    <div className="relative w-[350px] h-[350px] lg:w-[500px] lg:h-[500px]">
-                        {base64Image && (
-                            <Image
-                                src={base64Image}
-                                alt={`${product.name}`}
-                                fill
-                                style={{objectFit: 'contain'}}
-                                quality={100}
-                                className="rounded-lg shadow-lg"
-                            />
-                        )}
-                    </div>
-                </div>
-
                 <div className="flex-1 p-8 text-center lg:text-left">
                     <h1 className="text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
                     <p className="text-lg text-gray-700 mb-6">{product.description}</p>
