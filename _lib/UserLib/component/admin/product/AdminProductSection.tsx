@@ -1,15 +1,17 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { addProduct, deleteProduct, fetchProducts, updateProduct } from "@lib/ProductLib/service/produit";
 import { ProductDetail } from "@lib/ProductLib/type/Product";
+import { addProduct, deleteProduct, fetchProductsForAdmin, updateProduct } from "@lib/ProductLib/service/produit";
+import { getAllProfessions } from "@lib/ProfessionLib/service/professionService";
+import { Profession } from "@lib/ProfessionLib/type/Profession";
 import Image from "next/image";
-
 import contract from "@public/images/Utils/contract-icon.png";
-import productContract from "@public/images/Utils/Contract.png";
+import productIcon from "@public/images/Utils/Contract.png";
 
 const ProductManagement: React.FC = () => {
     const [products, setProducts] = useState<ProductDetail[]>([]);
+    const [professions, setProfessions] = useState<Profession[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
@@ -18,20 +20,30 @@ const ProductManagement: React.FC = () => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
-    const [image, setImage] = useState<File | null>(null);
+    const [selectedProfession, setSelectedProfession] = useState<string>("");
+    const [pdfFile, setPdfFile] = useState<File | null>(null);
 
     useEffect(() => {
-        // Récupérer tous les produits lors du montage du composant
         const loadProducts = async () => {
             try {
-                const data = await fetchProducts();
+                const data = await fetchProductsForAdmin();
                 setProducts(data);
             } catch (error) {
                 console.error("Erreur lors de la récupération des produits", error);
             }
         };
 
+        const loadProfessions = async () => {
+            try {
+                const data = await getAllProfessions();
+                setProfessions(data);
+            } catch (error) {
+                console.error("Erreur lors de la récupération des professions", error);
+            }
+        };
+
         loadProducts();
+        loadProfessions();
     }, []);
 
     const openPopup = (product?: ProductDetail) => {
@@ -41,13 +53,13 @@ const ProductManagement: React.FC = () => {
             setName(product.name);
             setDescription(product.description);
             setPrice(product.price);
-            setImage(null); // Par défaut, l'image n'est pas chargée pour modification
+            setSelectedProfession(product.profession?._id || "");
         } else {
             setSelectedProduct(null);
             setName("");
             setDescription("");
             setPrice(0);
-            setImage(null);
+            setSelectedProfession("");
         }
         setShowPopup(true);
     };
@@ -55,12 +67,6 @@ const ProductManagement: React.FC = () => {
     const closePopup = () => {
         setShowPopup(false);
         setSelectedProduct(null);
-    };
-
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setImage(e.target.files[0]);
-        }
     };
 
     const handleFormSubmit = async (e: React.FormEvent) => {
@@ -72,18 +78,20 @@ const ProductManagement: React.FC = () => {
             formData.append("name", name);
             formData.append("description", description);
             formData.append("price", price.toString());
-            if (image) {
-                formData.append("image", image);
-            }
+            formData.append("profession", selectedProfession);
 
+            if (pdfFile) {
+                formData.append("pdfFile", pdfFile);
+            }
             if (selectedProduct) {
-                await updateProduct(selectedProduct._id!, { name, description, price });
+                await updateProduct(selectedProduct._id!, formData);
             } else {
                 await addProduct(formData);
             }
             setIsSuccess(true);
             closePopup();
-            const updatedProducts = await fetchProducts();
+
+            const updatedProducts = await fetchProductsForAdmin();
             setProducts(updatedProducts);
         } catch (error) {
             console.error("Erreur lors de l'ajout ou de la mise à jour du produit", error);
@@ -93,12 +101,21 @@ const ProductManagement: React.FC = () => {
     };
 
     const handleDelete = async (id: string) => {
+        setIsLoading(true);
         try {
             await deleteProduct(id);
-            // Actualiser la liste des produits après suppression
-            setProducts((prevProducts) => prevProducts.filter((product) => product._id !== id));
+            const updatedProducts = await fetchProductsForAdmin();
+            setProducts(updatedProducts);
         } catch (error) {
-            console.error("Erreur lors de la suppression du produit", error);
+            console.error("Erreur lors de la suppression du produit:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handlePdfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setPdfFile(e.target.files[0]);
         }
     };
 
@@ -106,12 +123,12 @@ const ProductManagement: React.FC = () => {
         <section className="flex flex-col text-black min-h-screen p-8 w-full space-y-10 z-0">
             <div className={"flex justify-between"}>
                 <div className={"h-full w-full"}>
-                    <h2 className="font-jost text-4xl font-bold mb-6">Gestionnaire de contrats</h2>
+                    <h2 className="font-jost text-4xl font-bold mb-6">Gestionnaire de produits</h2>
                     <button
                         onClick={() => openPopup()}
                         className="mb-6 px-4 py-2 bg-[#D9D9D9] text-black rounded-lg text-md hover:bg-gray-400 transition"
                     >
-                        Ajouter un contrat +
+                        Ajouter un produit +
                     </button>
                 </div>
                 <div className={"flex justify-center h-full pr-20"}>
@@ -126,7 +143,7 @@ const ProductManagement: React.FC = () => {
                         className="flex justify-between items-center p-4 bg-gray-100 rounded-md shadow"
                     >
                         <div className="flex items-center space-x-5">
-                            <Image src={productContract} alt={"productContract"} className={"h-10 w-auto"} />
+                            <Image src={productIcon} alt={"productIcon"} className={"h-10 w-auto"} />
                             <span className="font-semibold">{product.name}</span>
                         </div>
                         <div className="flex space-x-4">
@@ -186,11 +203,27 @@ const ProductManagement: React.FC = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label className="block text-lg font-medium mb-2">Image:</label>
+                                <label className="block text-lg font-medium mb-2">Profession:</label>
+                                <select
+                                    value={selectedProfession}
+                                    onChange={(e) => setSelectedProfession(e.target.value)}
+                                    className="w-full p-2 border border-gray-300 rounded"
+                                    required
+                                >
+                                    <option value="">Sélectionner une profession</option>
+                                    {professions.map((profession) => (
+                                        <option key={profession._id} value={profession._id}>
+                                            {profession.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-lg font-medium mb-2">Télécharger un PDF:</label>
                                 <input
                                     type="file"
-                                    accept="image/*"
-                                    onChange={handleImageChange}
+                                    accept="application/pdf"
+                                    onChange={handlePdfChange}
                                     className="w-full p-2 border border-gray-300 rounded"
                                 />
                             </div>

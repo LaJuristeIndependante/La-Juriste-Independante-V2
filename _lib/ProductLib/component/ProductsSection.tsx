@@ -5,8 +5,8 @@ import {useSearchParams} from 'next/navigation';
 import {RiPencilLine} from 'react-icons/ri';
 import {useRouter} from 'next/navigation';
 
-import {ProductDetail} from "@lib/ProductLib/type/Product";
-import {fetchProducts} from "@lib/ProductLib/service/produit";
+import {ProductData, ProductDetail} from "@lib/ProductLib/type/Product";
+import {fetchProductsForClient} from "@lib/ProductLib/service/produit";
 
 import Image from "next/image";
 import BackgroundBubbles from "@/components/utils/décors/BubbleBackground";
@@ -16,7 +16,7 @@ import line from "@public/images/Utils/redline.png"
 import loopPaper from "@public/images/Utils/loopPaper.png"
 import right from "@public/images/Utils/right-icon.svg"
 import {SlArrowRight} from "react-icons/sl";
-const ProductCard = ({product}: { product: ProductDetail }) => {
+const ProductCard = ({product}: { product: ProductData }) => {
 
     return (
         <div className="relative">
@@ -53,12 +53,12 @@ export default function ProductSection() {
         router.push('/products');
     };
 
-    const [products, setProducts] = useState<ProductDetail[]>([]);
+    const [products, setProducts] = useState<ProductData[]>([]);
 
     useEffect(() => {
         const fetchProd = async () => {
             try {
-                const data = await fetchProducts(); // Récupération des produits
+                const data = await fetchProductsForClient(); // Récupération des produits
                 setProducts(data); // Mise à jour de l'état 'products'
             } catch (error) {
                 console.error("Erreur lors de la récupération des produits:", error);
