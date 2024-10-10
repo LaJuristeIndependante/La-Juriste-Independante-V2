@@ -29,7 +29,7 @@ export async function middleware(req: NextRequest) {
     }
 
     // Bloquer l'accès à /validation si l'utilisateur est déjà vérifié
-    if (token && isVerified && url.pathname === '/validation') {
+    if (token && token.isVerified && url.pathname === '/validation') {
         url.pathname = '/';
         const response = NextResponse.redirect(url);
         response.cookies.set('flashMessage', 'Vous avez déjà vérifié votre compte.', { path: '/' });
@@ -37,7 +37,7 @@ export async function middleware(req: NextRequest) {
     }
 
     // Rediriger les utilisateurs non-vérifiés vers la page de validation
-    if (token && !isVerified && url.pathname !== '/validation' && !url.pathname.startsWith('/admin')) {
+    if (token && !isVerified && url.pathname !== '/validation') {
         url.pathname = '/validation';
         const response = NextResponse.redirect(url);
         response.cookies.set('flashMessage', 'Veuillez vérifier votre compte.', { path: '/' });

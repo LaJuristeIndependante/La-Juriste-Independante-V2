@@ -18,16 +18,9 @@ export async function POST(req: Request) {
         const name = formData.get("name") as string;
         const description = formData.get("description") as string;
         const price = parseFloat(formData.get("price") as string);
-        const imageFile = formData.get("image") as File;
-        const professionId = formData.get("profession") as string; // Extract the profession ID from the form data
+        const professionId = formData.get("profession") as string;
+        const pdfFile = formData.get("pdfFile") as File | null;
 
-        let imageBuffer: Buffer | undefined;
-        if (imageFile) {
-            const arrayBuffer = await imageFile.arrayBuffer();
-            imageBuffer = Buffer.from(arrayBuffer);
-        }
-
-        // Validate that the profession exists if provided
         let profession;
         if (professionId) {
             profession = await Profession.findById(professionId);
@@ -36,15 +29,21 @@ export async function POST(req: Request) {
             }
         }
 
-        const product = new Product({
+        const productData: any = {
             name,
             description,
             price,
-            image: imageBuffer,
-            profession: profession ? profession._id : undefined // Include the profession reference if available
-        });
+            profession: profession ? profession._id : undefined
+        };
 
+        if (pdfFile) {
+            const pdfBuffer = await pdfFile.arrayBuffer();
+            productData.pdfFile = Buffer.from(pdfBuffer);
+        }
+
+        const product = new Product(productData);
         await product.save();
+
         return NextResponse.json(product, { status: 201 });
     } catch (error) {
         console.error("Error in POST API:", error);
