@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 /**
  * Service pour envoyer le formulaire de contact à l'API.
  *
@@ -15,6 +16,25 @@ export const sendContactForm = async (formData: {
     name: string;
     email: string;
     message: string;
+    consent: boolean;
+}): Promise<{ success: boolean; message: string }> => {
+    try {
+        const response = await axios.post("/api/contact", formData, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error("Erreur lors de l'envoi du formulaire de contact");
+    }
+};
+
+export const sendContactFormLJI = async (formData: {
+    name: string;
+    email: string;
+    message: string;
+    objet: string;
     consent: boolean;
 }): Promise<{ success: boolean; message: string }> => {
     try {
