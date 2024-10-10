@@ -1,4 +1,4 @@
-import ProductSection from "@lib/ProductLib/component/ProductSection";
+import ProductSection from "@lib/ProductLib/component/ProductsSection";
 import NewsLetterSection from "@lib/NewsLetterLib/component/NewsLetterSection";
 import TestimonialsSection from "@lib/testimonialLib/component/TestimonialsSection";
 import FirstSection from "@/components/home/FirstSection";
