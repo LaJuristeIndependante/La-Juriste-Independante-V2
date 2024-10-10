@@ -5,6 +5,7 @@ import FirstSection from "@/components/home/FirstSection";
 import SecondSection from "@/components/home/SecondSection";
 import BubbleBackground from "@/components/utils/décors/BubbleBackground";
 import React from "react";
+import "@/styles/index.css";
 
 export default function Home() {
     return (
@@ -13,7 +14,7 @@ export default function Home() {
             <SecondSection/>
             {/*<ProductSection/>*/}
             <TestimonialsSection/>
-            <BubbleBackground size={400} position={"-left-24 -bottom-24"}/>
+            <BubbleBackground page="landing"/>
         </main>
     );
 }

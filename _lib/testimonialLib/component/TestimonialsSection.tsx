@@ -1,26 +1,27 @@
 "use client";
 
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     createTestimonial,
     getTestimonials,
     deleteTestimonial,
     updateTestimonial
 } from '@lib/testimonialLib/service/testimonials';
-import {CommentaireDocument} from "@lib/testimonialLib/type/Testimonial";
-import {useSession} from "next-auth/react";
+import { CommentaireDocument } from "@lib/testimonialLib/type/Testimonial";
+import { useSession } from "next-auth/react";
 import Carroussel from "@/components/utils/décors/Carroussel";
 import UserInitials from "@lib/UserLib/component/UserInitials";
-import BubbleBackground from "@/components/utils/décors/BubbleBackground";
-import Carroussel3D from "@/components/utils/décors/Carroussel3D";
+import Image from 'next/image';
+import comment_icon from '@public/images/common/comment-icon.svg';
+
 
 export default function TestimonialsSection() {
     const [commentaires, setCommentaires] = useState<CommentaireDocument[]>([]);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false); // Pour la popup
-    const [newComment, setNewComment] = useState({objet: '', message: '', note: 0});
+    const [newComment, setNewComment] = useState({ objet: '', message: '', note: 0 });
     const [isEditing, setIsEditing] = useState<boolean>(false); // Détermine si on est en mode édition
     const [editingCommentId, setEditingCommentId] = useState<string | null>(null); // Stocke l'ID du commentaire à modifier
-    const {data: session} = useSession(); // Récupère les données de session
+    const { data: session } = useSession(); // Récupère les données de session
 
     // Charger les commentaires depuis l'API
     useEffect(() => {
@@ -113,7 +114,7 @@ export default function TestimonialsSection() {
     };
 
     return (
-        <section className="relative min-h-screen bg-white flex flex-col justify-center items-center py-10">
+        <section className="relative min-h-screen bg-white flex flex-col justify-center items-center py-10 z-50">
             <div className="absolute top-0 left-0">
                 <hr
                     className="w-full md:w-[500px] border-[12px] md:border-l-8 rounded-r-xl border-[#DA1A32] my-10 mx-auto"
@@ -122,31 +123,59 @@ export default function TestimonialsSection() {
             <div className={`flex w-full px-10 py-0 text-start`}>
                 <h2 className="text-4xl font-bold mb-10 text-gray-800">Voici ce que disent mes clients :</h2>
             </div>
-            {/* Carrousel des commentaires */}
-            <div className="w-full max-w-lg p-4 ">
+            <div className="w-full max-w-lg p-4">
                 <Carroussel
                     items={commentaires.map((commentaire, index) => (
-                        <div key={index} className="p-4 ">
-                            <div
-                                className="bg-white shadow-lg rounded-lg p-6 space-y-4 transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-                                {/* User Initials */}
-                                <div className="flex justify-center mb-4">
-                                    <UserInitials
-                                        firstName={session?.user.firstName || "D"}
-                                        lastName={session?.user.lastName || "N"}
-                                    />
-                                </div>
+                        <div key={index} className="p-4">
+                            <div className="border-2 border-black first-card bg-[#D9D9D9] flex flex-col items-center justify-between w-[250px] h-[300px] min-w-[250px] min-h-[300px] rounded-md shadow-lg p-4 relative">
+                                <div className="flex flex-col w-full">
+                                    <div className="flex justify-between w-full items-center">
+                                        <div className="flex flex-col items-center justify-center relative">
+                                            <div className="flex items-center justify-center mb-2 relative ml-[-10px]">
+                                                <Image
+                                                    src={comment_icon}
+                                                    alt="comment-icon1"
+                                                    className="w-9 h-9 ml-[5px]"
+                                                />
+                                                <Image
+                                                    src={comment_icon}
+                                                    alt="comment-icon2"
+                                                    className="w-9 h-9 ml-[-10px]"
+                                                />
+                                            </div>
+                                            <p className="text-lg font-semibold w-[100px] md:w-auto ml-[80px] md:ml-0 absolute top-1/4 transform -translate-y-1/3 text-white bg-opacity-50 text-stroke">
+                                                {commentaire.User.username}
+                                            </p>
+                                        </div>
+                                        <div className="flex justify-center mb-4">
+                                            <UserInitials
+                                                firstName={session?.user.firstName || "D"}
+                                                lastName={session?.user.lastName || "N"}
+                                            />
+                                        </div>
+                                    </div>
 
-                                {/* Commentaire Body */}
-                                <h3 className="text-2xl font-semibold text-gray-800">{commentaire.objet}</h3>
-                                <p className="text-md text-gray-600">{commentaire.message}</p>
-                                <p className="text-md text-gray-500">Note: {commentaire.note}/5</p>
-                                <p className="text-sm italic text-gray-400">- {commentaire.User.username}</p>
+                                    {/* Étoiles de notation */}
+                                    <div className="mt-4 flex items-center justify-center">
+                                        {Array.from({ length: 5 }, (_, i) => (
+                                            <span
+                                                key={i}
+                                                className={`text-[#8A6300] text-2xl ${i < commentaire.note ? 'star' : 'star-outline'}`}
+                                            >
+                                                ★
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    {/* Message du commentaire */}
+                                    <div className="text-center text-sm text-gray-700 mt-2 break-all overflow-hidden" style={{ wordWrap: 'break-word' }}>
+                                        <p>{commentaire.message}</p>
+                                    </div>
+                                </div>
 
                                 {/* Boutons Modifier et Supprimer */}
                                 {(session?.user?.id === commentaire.User._id || session?.user?.isAdmin) && (
                                     <div className="flex justify-center items-center space-x-4 mt-4">
-                                        {/* Bouton Modifier */}
                                         <button
                                             className="flex items-center text-blue-500 hover:text-blue-600 text-lg p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition duration-300"
                                             onClick={() => handleEditComment(commentaire)} // Passe en mode édition
@@ -154,10 +183,8 @@ export default function TestimonialsSection() {
                                             ✏️
                                         </button>
 
-                                        {/* Bouton Supprimer */}
                                         <button
-                                            className="flex items-center text-red-500 hover:text-red-600 text-lg p-2 rounded-full bg-red-
-                                            100 hover:bg-red-200 transition duration-300"
+                                            className="flex items-center text-red-500 hover:text-red-600 text-lg p-2 rounded-full bg-red-100 hover:bg-red-200 transition duration-300"
                                             onClick={() => handleDeleteComment(commentaire._id)}
                                         >
                                             🗑️
@@ -168,15 +195,16 @@ export default function TestimonialsSection() {
                         </div>
                     ))}
                 />
+
             </div>
 
             {session?.user ? (
                 <button
                     className="mt-10 bg-blue-500 hover:bg-blue-600 text-white px-5 py-3 rounded-lg shadow-md transition duration-300"
                     onClick={() => {
-                        setIsEditing(false); // Sort du mode édition
-                        setIsPopupOpen(true); // Ouvre la popup pour l'ajout
-                        setNewComment({objet: '', message: '', note: 0}); // Réinitialise les champs
+                        setIsEditing(false);  
+                        setIsPopupOpen(true); 
+                        setNewComment({ objet: '', message: '', note: 0 });  
                     }}
                 >
                     Ajouter un commentaire
@@ -205,7 +233,7 @@ export default function TestimonialsSection() {
                                     type="text"
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     value={newComment.objet}
-                                    onChange={(e) => setNewComment({...newComment, objet: e.target.value})}
+                                    onChange={(e) => setNewComment({ ...newComment, objet: e.target.value })}
                                     required
                                 />
                             </div>
@@ -214,7 +242,7 @@ export default function TestimonialsSection() {
                                 <textarea
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     value={newComment.message}
-                                    onChange={(e) => setNewComment({...newComment, message: e.target.value})}
+                                    onChange={(e) => setNewComment({ ...newComment, message: e.target.value })}
                                     required
                                 ></textarea>
                             </div>
@@ -226,7 +254,7 @@ export default function TestimonialsSection() {
                                     min={1}
                                     max={5}
                                     value={newComment.note}
-                                    onChange={(e) => setNewComment({...newComment, note: +e.target.value})}
+                                    onChange={(e) => setNewComment({ ...newComment, note: +e.target.value })}
                                     required
                                 />
                             </div>

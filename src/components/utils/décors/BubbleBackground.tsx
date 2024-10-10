@@ -1,26 +1,20 @@
 import React from "react";
 
 interface BubbleBackgroundProps {
-    size: number;
-    position: string;
-    color?: string; // optionnel, pour changer la couleur par défaut
-    shadow?: boolean; // optionnel, pour activer/désactiver l'ombre
+    page: string;
 }
 
-export default function BubbleBackground({
-                                             size,
-                                             position,
-                                             color = "#DA1A32",
-                                             shadow = true
-                                         }: BubbleBackgroundProps) {
+export default function BubbleBackground({ page }: BubbleBackgroundProps) {
+    console.log(page);
+
     return (
-        <div
-            className={`absolute rounded-full z-10 flex ${position} ${shadow ? "shadow-lg" : ""}`}
-            style={{
-                width: `${size}px`,
-                height: `${size}px`,
-                backgroundColor: color,
-            }}
-        />
+        <>
+            <div className={`bubble ${page === 'landing' ? 'bubble1 z-0' : ''}`}></div>
+            <div className={`bubble ${page === 'specContract' ? 'bubble2 z-0' : ''}`}></div>
+            <div className={`bubble ${page === 'contracts' ? 'bubble3 z-0' : ''}`}></div>
+
+            {/*<div className={`bubble ${page === 'landing' ? 'bubble2' : 'z-0 bubble4'}`}></div>*/}
+        </>
     );
 }
+

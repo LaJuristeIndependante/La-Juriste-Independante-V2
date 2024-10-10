@@ -34,12 +34,9 @@
 /* Styles globaux */
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-          to bottom,
-          transparent,
-          rgb(var(--background-end-rgb))
-  )
-  rgb(var(--background-start-rgb));
+  background: linear-gradient(to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
   font-family: var(--font-primary), serif;
 }
 
@@ -113,8 +110,8 @@ body {
   transition: 0.2s ease all;
 }
 
-.input:focus ~ label,
-.input:valid ~ label {
+.input:focus~label,
+.input:valid~label {
   top: -25px;
   font-size: 16px;
   color: #000;
@@ -148,7 +145,7 @@ body {
   border-radius: 50%;
 }
 
-.productCard_circle > p {
+.productCard_circle>p {
   display: none;
 }
 
@@ -227,6 +224,7 @@ body {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -236,6 +234,7 @@ body {
   from {
     background: #F5F5F5;
   }
+
   to {
     width: 0;
     background: transparent;
@@ -246,9 +245,11 @@ body {
   0% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(40px);
   }
+
   100% {
     transform: translateY(0);
   }
@@ -259,6 +260,7 @@ body {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     transform: translateY(0) scale(1);
   }
+
   100% {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     transform: translateY(1px) scale(1.04);
@@ -269,6 +271,7 @@ body {
   0% {
     transform: scale(1);
   }
+
   100% {
     transform: scale(1.4);
   }
@@ -279,6 +282,7 @@ body {
     transform: translateX(100%);
     opacity: 0;
   }
+
   100% {
     transform: translateX(0);
     opacity: 1;
@@ -289,6 +293,7 @@ body {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(-360deg);
   }
@@ -322,5 +327,64 @@ body {
 
   .gif-models {
     display: none;
+  }
+}
+
+.bubble {
+  z-index: -1;
+  position: absolute;
+  bottom: -15vw;
+  left: -5vw;
+  transform: translate(-50%, 50%);
+  background-color: #DA1A32;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.bubble1 {
+  height: 25vw;
+  width: 25vw;
+  animation: floating 5s infinite;
+}
+
+
+.bubble2 {
+  width: 25vw;
+  height: 25vw;
+  bottom: 0vw;
+  left: 5vw;
+  animation: floating 7s infinite;
+}
+
+
+.bubble3 {
+  width: 30vw;
+  height: 30vw;
+  position: absolute;
+  top: 0;
+  left: 84%;
+  transform: translateX(-40%);
+  z-index: -1111;
+}
+
+.bubble4 {
+  width: 42.96875vw;
+  height: 42.96875vw;
+  top: -30vw;
+  right: -20vw;
+  animation: floating 7s infinite;
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(40px);
+  }
+
+  100% {
+    transform: translateY(0);
   }
 }

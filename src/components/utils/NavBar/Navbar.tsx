@@ -64,29 +64,27 @@ function Navbar() {
     return (
         <header>
             <nav className="flex items-center justify-between w-full">
-                {!isMobile ? (
-                    <>
-                        <Link href="/">
-                            <Image src={logo_la_juriste_independante} alt="logo-juriste_independante" className="ml-4" />
-                        </Link>
-                        <ul className="flex justify-between w-1/4 items-center">
-                            <li className={`${pathname === '/' ? 'font-bold' : ''} text-center w-[100px]`}>
-                                <Link href="/">Accueil</Link>
-                            </li>
-                            <li className={`${pathname === '/templates' ? 'font-bold' : ''} text-center w-auto min-w-[150px]`}>
-                                <Link href="/products">Templates types</Link>
-                            </li>
-                            <li className={`${pathname === '/support' ? 'font-bold' : ''} text-center w-[100px]`}>
-                                <Link href="/support">Support</Link>
-                            </li>
-                        </ul>
-                    </>
-                ) : (
-                    <>
-                        <Link href="/" className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-special cursive-letters text-center mt-1">
+                <Link href="/">
+                    {!isMobile ? (
+                        <Image src={logo_la_juriste_independante} alt="logo-juriste_independante" className="ml-4" />
+                    ) : (
+                        <Link className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-special cursive-letters text-center mt-1" href="/">
                             La juriste indépendante
                         </Link>
-                    </>
+                    )}
+                </Link>
+                {!isMobile && (
+                    <ul className="flex justify-between w-1/4 items-center">
+                        <li className={`${pathname === '/' ? 'font-bold' : ''} text-center w-[100px]`}>
+                            <Link href="/">Accueil</Link>
+                        </li>
+                        <li className={`${pathname === '/templates' ? 'font-bold' : ''} text-center w-auto min-w-[150px]`}>
+                            <Link href="/products">Templates types</Link>
+                        </li>
+                        <li className={`${pathname === '/support' ? 'font-bold' : ''} text-center w-[100px]`}>
+                            <Link href="/support">Support</Link>
+                        </li>
+                    </ul>
                 )}
                 <div className={`flex items-center ${!isMobile && 'mr-2'}`}>
                     <button onClick={() => setIsSidebarOpen(true)} className="btn btn-primary btn-lg cart_button mr-3" >
@@ -106,4 +104,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
