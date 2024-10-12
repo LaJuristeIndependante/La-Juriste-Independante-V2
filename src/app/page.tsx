@@ -5,7 +5,6 @@ import FirstSection from "@/components/home/FirstSection";
 import SecondSection from "@/components/home/SecondSection";
 import BubbleBackground from "@/components/utils/décors/BubbleBackground";
 import React from "react";
-import "@/styles/index.css";
 
 export default function Home() {
     return (

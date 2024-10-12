@@ -8,9 +8,8 @@ import FleoComponent from './FleoComponent';
 
 function Footer() {
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
-    console.log("isMobile", isMobile);
     return (
-        <footer className={`footer w-full bg-[#232222] text-white h-full ${isMobile ? ' py-10' : 'py-5 px-10'}`}>
+        <footer className={`footer relative  w-full bg-[#232222] z-10 text-white h-full ${isMobile ? ' py-10' : 'py-5 px-10'}`}>
             <div className={`flex w-full h-full flex-col md:flex-row items-start justify-start`}>
                 <div className="footer__content flex md:flex-col md:items-start items-center justify-center md:justify-start px-4 w-full md:w-1/4">
                     <div className="footer__top flex items-center md:items-start justify-center md:justify-start md:w-[450px]">

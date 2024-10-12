@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import React from "react";
 import '@/styles/globals.css';
-import "@/styles/index.css";
 import Footer from "@/components/Footer";
 import ClientNavbar from "@/components/ClientNavBar";
 import CookiePopupManager from "@/components/utils/cookies/CookiePopupManager";

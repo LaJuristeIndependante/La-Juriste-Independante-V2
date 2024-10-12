@@ -1,21 +1,28 @@
 "use client";
+import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
+import { useSession } from "next-auth/react";
+import { notFound, useRouter } from "next/navigation";
+import { ProductDetail, ProductPageProps } from "@/../_lib/ProductLib/type/Product";
+import { fetchProductById } from "@/../_lib/ProductLib/service/produit";
+import { createOrder } from "@/../_lib/OrderLib/service/orders";
+import { FaShoppingCart } from "react-icons/fa";
+import { useMediaQuery } from "react-responsive";
+import { addToCart } from "@/../_lib/CartLib/service/cart";
+import left_arrow_icon from '@public/images/common/left-arrow-icon2.svg';
+import arrow_right_icon from '@public/images/common/arrow-right-icon.svg';
+import card_icon from '@public/images/common/cart-icon.svg';
+import BubbleDecoration from "@/../_lib/ProductLib/component/BubbleDecoration";
+import BackgroundBubbles from "@/components/utils/décors/BubbleBackground";
 
-import React, {useState, useEffect} from 'react';
-import {useSession} from "next-auth/react";
-import {notFound, useRouter} from "next/navigation";
-import {ProductDetail, ProductPageProps} from "@/../_lib/ProductLib/type/Product";
-import {fetchProductById} from "@/../_lib/ProductLib/service/produit";
-import {createOrder} from "@/../_lib/OrderLib/service/orders";
-import {FaShoppingCart} from "react-icons/fa";
-import {addToCart} from "@/../_lib/CartLib/service/cart";
-
-export default function ProductPage({params}: ProductPageProps) {
+export default function ProductPage({ params }: ProductPageProps) {
     const [product, setProduct] = useState<ProductDetail>()
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<boolean>(false);
     const [message, setMessage] = useState<string | null>(null);
     const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
-    const {data: session} = useSession();
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+    const { data: session } = useSession();
     const router = useRouter();
 
     useEffect(() => {
@@ -107,40 +114,83 @@ export default function ProductPage({params}: ProductPageProps) {
     }
 
     return (
-        <main className="relative min-h-screen flex items-center justify-center">
-            <section className="flex flex-col lg:flex-row items-center justify-center p-8 z-10 w-full max-w-7xl">
-                <div className="flex-1 p-8 text-center lg:text-left">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
-                    <p className="text-lg text-gray-700 mb-6">{product.description}</p>
-                    <div className="flex flex-col lg:flex-row items-center justify-between mt-4">
-                        <div className={`flex space-x-2`}>
-                            <button
-                                className="bg-white text-black border border-black hover:text-white py-4 px-4 rounded-lg mb-4 lg:mb-0 hover:bg-red-600 transition duration-300 flex items-center justify-center text-center"
-                                onClick={handleCart}
-                            >
-                                <FaShoppingCart className=""/>
-                            </button>
-                            <button
-                                className="bg-red-500 text-white py-2 px-6 rounded-lg mb-4 lg:mb-0 hover:bg-red-600 transition duration-300"
-                                onClick={handleOrder}
-                            >
-                                Acheter maintenant
-                            </button>
+        <main className="relative min-h-screen flex items-start justify-center">
+            <div className="w-full">
+                <div className="flex justify-between items-center w-full">
+                    <div className="flex items-center justify-start">
+                        <button onClick={() => window.history.back()} className='flex items-center ml-6'>
+                            <Image src={left_arrow_icon} alt="left arrow icon" className='w-12 h-12' />
+                        </button>
+                        <div className="flex flex-col mt-20 ml-3">
+                            <h1 className='text-3xl font-semibold text-center mt-10 mb-10 ml-3'>
+                                {!product ? (
+                                    <span>Modèle</span>
+                                ) : (
+                                    <span>{product.name}</span>
+                                )}
+                            </h1>
+                            <p className='bg-gray-200 p-2 rounded-lg text-center ml-3 mb-8'>
+                                {product && (
+                                    <span className='w-full text-center'>
+                                        {product.profession && typeof product.profession === 'string' ? product.profession : ''}
+                                    </span>
+                                )}
+                            </p>
                         </div>
-                        <span className="text-3xl font-bold text-gray-900">{product.price}€</span>
+                    </div>
+                    <hr className="w-1/4 md:w-[400px] border-[#DA1A32] border-[12px] md:border-l-8 rounded-l-xl border-special-red my-10" />
+                </div>
+                <div className="flex flex-col md:flex-row items-center h-full w-full justify-between">
+                    <div className="w-2/3 flex items-center h-full justify-center">
+                        <ModelCart3 product={product} />
+                    </div>
+                    <div className="flex flex-col items-center justify-center w-full h-full">
+                        {!isMobile ? (
+                            <p className='max-w-[700px] text-lg xs:text-xl md:text-xl xl:text-xl text-justify'>
+                                {product.description || 'Description non disponible'}
+                            </p>
+                        ) : (
+                            <details className='mt-20 mb-5'>
+                                <summary className='text-lg font-bold text-center'>Description</summary>
+                                <p className='text-center'>
+                                    {product.description || 'Description non disponible'}
+                                </p>
+                            </details>
+                        )}
+                        
                     </div>
                 </div>
-
-                {message && (
-                    <div
-                        className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 p-4 rounded-lg text-white transition-opacity duration-300 ease-in-out ${
-                            isSuccess ? 'bg-green-500' : 'bg-red-500'
-                        } ${message ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-                    >
-                        {message}
-                    </div>
-                )}
-            </section>
+                <BackgroundBubbles page='contracts' />
+            </div>
         </main>
     );
+}
+
+const ModelCart3 = ({ product }: { product: ProductDetail }) => {
+
+    return (
+        <div className='relative'>
+            <div className="relative flex -z-10 flex-col items-center justify-center w-[300px] p-2 pb-0 bg-[#EAEAEA] rounded-lg cursor-pointer transition shadow-lg hover:shadow-xl overflow-hidden">
+                <div className='flex flex-col relative items-center justify-center h-[320px] w-[250px] md:w-[400px]'>
+                    <div className={"mt-5"}>
+                        <BubbleDecoration size={70} position="-right-5 -bottom-2" opacity={0.5} />
+                        <BubbleDecoration size={70} position="right-5 -bottom-6" opacity={0.3} />
+                    </div>
+                    <div className="flex flex-col border border-gray-200 rounded-lg overflow-hidden h-full w-full md:w-[400px]">
+                        <div className="flex items-center justify-center w-full border-1 border-black h-full">
+                            <div className="flex-col items-center justify-center w-full h-full mt-10">
+                                <h2 className="text-xl font-bold text-center  mb-[35px]">{product.name}</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div className={"shadow-xl flex flex-col bg-[#F8F8F8] rounded-full items-center ml-[18%] justify-center mt-[-7%] z-50 w-[190px]"}>
+                <p className='font-bold text-2xl p-2 text-center'>
+                    {product.price} €
+                </p>
+            </div>
+        </div>
+    )
 }

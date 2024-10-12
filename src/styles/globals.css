@@ -331,19 +331,18 @@ body {
 }
 
 .bubble {
-  z-index: 1;
   position: absolute;
-  bottom: -15vw;
-  left: -5vw;
-  transform: translate(-50%, 50%);
   background-color: #DA1A32;
   border-radius: 50%;
   pointer-events: none;
 }
 
 .bubble1 {
-  height: 25vw;
-  width: 25vw;
+  transform: translate(-50%, 50%);
+  height: 35vw;
+  bottom: -10vw;
+  left: -5vw;
+  width: 35vw;
   animation: floating 5s infinite;
 }
 
@@ -352,19 +351,19 @@ body {
   width: 25vw;
   height: 25vw;
   bottom: 0vw;
-  left: 5vw;
+  right: -20vw;
   animation: floating 7s infinite;
 }
 
 
 .bubble3 {
-  width: 30vw;
-  height: 30vw;
   position: absolute;
-  top: 0;
-  left: 84%;
+  width: 370px;
+  height: 370px;
+  bottom: -10vw;
+  right: -11.5vw;
   transform: translateX(-40%);
-  z-index: -1111;
+  z-index: -111;
 }
 
 .bubble4 {
@@ -374,6 +373,8 @@ body {
   right: -20vw;
   animation: floating 7s infinite;
 }
+
+
 
 @keyframes floating {
   0% {
@@ -387,4 +388,77 @@ body {
   100% {
     transform: translateY(0);
   }
+}
+
+.group {
+  position: relative;
+}
+
+.input {
+  display: block;
+  border: none;
+  background: transparent;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.label-p {
+  color: #999;
+  font-size: calc(18px - 2px);
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 7px;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+.input:focus~label,
+.input:valid~label {
+  top: -25px;
+  font-size: 16px;
+  color: #000;
+}
+
+.bar {
+  position: relative;
+  display: block;
+  width: 200px;
+}
+
+.bar:before,
+.bar:after {
+  content: '';
+  height: 2px;
+  width: 0;
+  bottom: 1px;
+  position: absolute;
+  background: #F5F5F5;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+.bar:before {
+  left: 50%;
+}
+
+.bar:after {
+  right: 50%;
+}
+
+.input:focus~.bar:before,
+.input:focus~.bar:after {
+  width: 50%;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0;
 }
