@@ -13,7 +13,7 @@ const AuthSideBar: React.FC<SideBarProps> = ({isOpen, closeSidebar}) => {
             className={`w-1/8 h-[100vh] bg-white p-[20px] z-50 transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
             style={{position: 'fixed', top: 0, right: 0, borderLeft: '1px solid #a0aec0'}}
         >
-            <div className="flex items-center justify-between p-4 border-b bg-tertiary">
+            <div className="flex items-end justify-end bg-tertiary">
                 <button
                     className="text-4xl font-bold text-text-secondary hover:text-text-quinary transition-colors"
                     onClick={() => closeSidebar()}

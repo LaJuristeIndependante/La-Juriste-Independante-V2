@@ -11,6 +11,7 @@ export default function SearchDiv() {
     const [searchString, setSearchString] = useState('');
     const [filteredProfessions, setFilteredProfessions] = useState<Profession[]>([]);
     const [inputClicked, setInputClicked] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const divRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
@@ -22,6 +23,8 @@ export default function SearchDiv() {
                 setProfessions(professionsData);
             } catch (error) {
                 console.error('Erreur lors de la récupération des professions:', error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -119,24 +122,28 @@ export default function SearchDiv() {
                 </button>
             </form>
 
-            <div className="relative w-full flex items-center justify-center md:justify-start">
-                <div className="overflow-hidden whitespace-nowrap scrollbar-hide" ref={scrollContainerRef}>
-                    <div className="inline-flex space-x-1">
-                        {filteredProfessions.map(profession => (
-                            <div
-                                key={profession._id}
-                                className="bg-[#E8E8E8] p-3 rounded-xl cursor-pointer"
-                                onClick={() => handleSelectProfession(profession.name)}
-                            >
-                                {profession.name}
-                            </div>
-                        ))}
+            {isLoading ? (
+                <div className="mt-4">Chargement...</div>
+            ) : (
+                <div className="relative w-full flex items-center justify-center md:justify-start">
+                    <div className="overflow-x-scroll whitespace-nowrap scrollbar-hide" ref={scrollContainerRef}>
+                        <div className="inline-flex space-x-1">
+                            {filteredProfessions.map(profession => (
+                                <div
+                                    key={profession._id}
+                                    className="bg-[#E8E8E8] p-3 rounded-xl cursor-pointer"
+                                    onClick={() => handleSelectProfession(profession.name)}
+                                >
+                                    {profession.name}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
 
             {inputClicked && filteredProfessions.length > 0 && (
-                <ul className={`bg-white border mt-12 border-gray-300 shadow-md absolute xl:w-[575px] search-results w-[90%] md:w-[575px]`}>
+                <ul className={`bg-white border mt-28 border-gray-300 shadow-md absolute xl:w-[575px] search-results w-[90%] md:w-[575px]`}>
                     {filteredProfessions.map((profession, index) => (
                         <li
                             key={index}

@@ -68,7 +68,7 @@ function Navbar() {
                     {!isMobile ? (
                         <Image src={logo_la_juriste_independante} alt="logo-juriste_independante" className="ml-4" />
                     ) : (
-                        <Link className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-special cursive-letters text-center mt-1" href="/">
+                        <Link className="text-3xl sm:text-2xl md:text-3xl ml-2 lg:text-4xl xl:text-5xl font-special cursive-letters text-center mt-3" href="/">
                             La juriste indépendante
                         </Link>
                     )}

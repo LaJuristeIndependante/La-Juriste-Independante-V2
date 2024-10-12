@@ -5,7 +5,6 @@ interface BubbleBackgroundProps {
 }
 
 export default function BubbleBackground({ page }: BubbleBackgroundProps) {
-    console.log(page);
 
     return (
         <>
