@@ -14,7 +14,7 @@ export interface CreateOrderParams {
 export interface OrderDetails {
     _id: string;
     amount: number;
-    status: "pending" | "paid" | "shipped" | "completed";
+    status: "pending" | "paid" ;
     items: OrderItem[];
     createdAt: string;
 }

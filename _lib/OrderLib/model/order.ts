@@ -20,7 +20,7 @@ interface IOrder extends Document {
         price: number;
         quantity: number;
     }>;
-    status: 'pending' | 'paid' | 'shipped' | 'completed' | 'cancelled';
+    status: 'pending' | 'paid' ;
     createdAt: Date;
 }
 
@@ -46,7 +46,7 @@ const orderSchema: Schema = new Schema({
             quantity: { type: Number, required: true },
         },
     ],
-    status: { type: String, default: 'pending', enum: ['pending', 'paid', 'shipped', 'completed', 'cancelled'] },
+    status: { type: String, default: 'pending', enum: ['pending', 'paid'] },
     createdAt: { type: Date, default: Date.now },
 });
 

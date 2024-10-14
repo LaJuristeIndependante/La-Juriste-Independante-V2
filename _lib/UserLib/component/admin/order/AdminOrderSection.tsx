@@ -31,19 +31,6 @@ const AdminOrderSection = () => {
         }
     };
 
-    const handleMarkAsShipped = async (orderId: string) => {
-        try {
-            const updatedOrder = await markOrderAsShipped(orderId);
-            setOrders((prevOrders) =>
-                prevOrders.map((order) =>
-                    order._id === updatedOrder._id ? updatedOrder : order
-                )
-            );
-        } catch (error) {
-            console.error('Erreur lors de la mise à jour de la commande:', error);
-        }
-    };
-
     const renderOrdersByStatus = (status: OrderDetails["status"], title: string) => {
         const filteredOrders = orders.filter((order) => order.status === status);
 
@@ -69,15 +56,6 @@ const AdminOrderSection = () => {
                                     >
                                         <FaTrashAlt className="mr-2" />
                                         Delete
-                                    </button>
-                                )}
-                                {order.status === "paid" && (
-                                    <button
-                                        onClick={() => handleMarkAsShipped(order._id)}
-                                        className="flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"
-                                    >
-                                        <FaTruck className="mr-2" />
-                                        Mark as Shipped
                                     </button>
                                 )}
                             </div>
@@ -110,7 +88,6 @@ const AdminOrderSection = () => {
                     ) : (
                         <>
                             {renderOrdersByStatus("paid", "Paid Orders")}
-                            {renderOrdersByStatus("shipped", "Shipped Orders")}
                             {renderOrdersByStatus("pending", "Pending Orders")}
                         </>
                     )}
