@@ -2,19 +2,18 @@
 
 import Image from "next/image";
 import loupe from "@public/images/Utils/loupe.png";
-import React, {useEffect, useState} from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import {getAllProfessions} from "@lib/ProfessionLib/service/professionService";
-import {Profession} from "@lib/ProfessionLib/type/Profession";
+import { getAllProfessions } from "@lib/ProfessionLib/service/professionService";
+import { Profession } from "@lib/ProfessionLib/type/Profession";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 export default function SearchDiv() {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const router = useRouter();
     const [professions, setProfessions] = useState<Profession[]>([]);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const router = useRouter();
 
     useEffect(() => {
-        // Fetch all professions on component mount
         const fetchProfessions = async () => {
             try {
                 const professionsData = await getAllProfessions();
@@ -27,20 +26,20 @@ export default function SearchDiv() {
         fetchProfessions();
     }, []);
 
-    const handlePrev = () => {
-        setCurrentIndex((prevIndex) =>
-            prevIndex === 0 ? professions.length - 1 : prevIndex - 1
-        );
+    const scrollLeft = () => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollBy({ left: -200, behavior: "smooth" });
+        }
     };
 
-    const handleNext = () => {
-        setCurrentIndex((prevIndex) =>
-            prevIndex === professions.length - 1 ? 0 : prevIndex + 1
-        );
+    const scrollRight = () => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollBy({ left: 200, behavior: "smooth" });
+        }
     };
 
-    const redirect = (param: string) => {
-        router.push(`/products?profession=${encodeURIComponent(param)}`);
+    const navigate = (path: string) => {
+        router.push(path);
     };
 
     return (
@@ -55,29 +54,31 @@ export default function SearchDiv() {
                     <Image src={loupe} alt={"loupe"} />
                 </button>
             </div>
-            <div className="relative w-full overflow-hidden">
-                <div className="flex transition-transform duration-500 ease-in-out"
-                     style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-                    {professions.map((profession, index) => (
-                        <div key={index} className="min-w-full flex justify-center items-center p-4">
-                            <button
-                                className="bg-gray-100 rounded-full px-6 py-3 shadow text-lg"
-                                onClick={() => redirect(profession.name)}
-                            >
-                                {profession.name}
-                            </button>
-                        </div>
-                    ))}
-                </div>
+            <div className="relative max-w-56 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-[25%] mt-2">
                 <button
-                    className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md"
-                    onClick={handlePrev}
+                    className="scroll-button left-scroll"
+                    onClick={scrollLeft}
+                    aria-label="Scroll left"
                 >
                     <FaChevronLeft />
                 </button>
+                <div className="scroll-container overflow-x-auto" ref={scrollContainerRef}>
+                    <div className="scroll-content flex">
+                        {professions.map((profession) => (
+                            <div
+                                key={profession._id}
+                                className="menu-item bg-[#E8E8E8] p-3 m-1 rounded-xl cursor-pointer"
+                                onClick={() => navigate(`/models/search/${profession.name}`)}
+                            >
+                                {profession.name}
+                            </div>
+                        ))}
+                    </div>
+                </div>
                 <button
-                    className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md"
-                    onClick={handleNext}
+                    className="scroll-button right-scroll"
+                    onClick={scrollRight}
+                    aria-label="Scroll right"
                 >
                     <FaChevronRight />
                 </button>
