@@ -11,7 +11,7 @@ const FirstSectionComponent: React.FC = () => {
             {/*<ProfessionSearchComponent />*/}
             <div className="absolute bottom-8 right-0">
                 <hr
-                    className="w-full md:w-[500px] border-[12px] md:border-l-8 rounded-l-xl border-[#DA1A32] my-10 mx-auto"
+                    className="w-[250px] md:w-[500px] border-[12px] md:border-l-8 rounded-l-xl border-[#DA1A32] my-10 mx-auto"
                 />
             </div>
         </div>

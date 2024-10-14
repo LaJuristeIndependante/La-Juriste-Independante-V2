@@ -35,9 +35,7 @@ const MenuBurger: React.FC<SidebarProps> = ({isOpen, onClose}) => {
     const menuItems = [
         { label: 'Accueil', href: '/' },
         { label: 'Produits', href: '/products' },
-        { label: 'A propos', href: '/about' },
         { label: 'Contact', href: '/contact' },
-        { label: 'Profil', href: '/profile', icon: FaUserCircle },
     ];
 
     return (
@@ -58,17 +56,17 @@ const MenuBurger: React.FC<SidebarProps> = ({isOpen, onClose}) => {
             <nav className="flex-grow flex flex-col justify-center items-center space-y-8">
                 {menuItems.map((item, index) => (
                     <Link key={index} href={item.href}>
-                        <div className="px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer rounded text-xl transition-colors duration-200 ease-in-out">
-                            {item.icon && <item.icon className="inline-block mr-2" />}
+                        <div 
+                            className="px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer rounded text-xl transition-colors duration-200 ease-in-out"
+                            onClick={onClose}
+                        >
                             {item.label}
                         </div>
                     </Link>
                 ))}
             </nav>
         </div>
-    );
+    );  
 };
-
-
 
 export default MenuBurger;

@@ -29,8 +29,8 @@ const InputAnimation: React.FC<InputAnimationProps> = ({ icon, utility, type, la
                         type={type}
                         name={name}
                         value={value}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)} // Type casting pour input
-                        placeholder={placeholder || label}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)}
+                        placeholder={label === 'Date de naissance' ? '' : (placeholder || label)}
                         className='input w-full p-2 bg-[#F5F5F5]'
                         required
                         autoComplete="off"
@@ -39,7 +39,7 @@ const InputAnimation: React.FC<InputAnimationProps> = ({ icon, utility, type, la
                         spellCheck="false"
                     />
                 )}
-                <label className='label-p'>{label}</label>
+                <label className='label-p'>{label === 'Date de naissance' ? '' : label}</label>
             </div>
             <span className="flex-shrink-0 ml-2">
                 <Image src={icon} alt={`${utility} icon`} className='w-7 h-7 bg-[#F5F5F5]' />

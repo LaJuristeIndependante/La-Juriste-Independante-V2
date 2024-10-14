@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Image from "next/image";
-
 import left from "@/../public/images/Utils/left-icon.svg";
-import right from "@/../public/images/Utils/right-icon.svg";
+import { useMediaQuery } from 'react-responsive';
+// import right from "@/../public/images/Utils/right-icon.svg";
 
 interface CarouselProps {
     items: React.ReactNode[];
@@ -10,6 +10,7 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = ({ items }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
     const handlePrev = () => {
         setCurrentIndex((prevIndex) =>
@@ -30,6 +31,7 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
                     className="flex transition-transform duration-500 ease-in-out"
                     style={{
                         transform: `translateX(-${currentIndex * 100}%)`,
+                        width: `${items.length * (isMobile ? 20 : 35)}%`,
                     }}
                 >
                     {items.map((item, index) => (
@@ -54,9 +56,9 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
             {/* Flèche droite */}
             <button
                 onClick={handleNext}
-                className="absolute top-1/2 right-4 transform -translate-y-1/2 p-3 bg-gray-700 bg-opacity-50 hover:bg-opacity-100 transition duration-300 text-white rounded-full shadow-md focus:outline-none"
+                className="absolute top-1/2 right-4 transform -translate-y-1/2 -rotate-180 p-3 bg-gray-700 bg-opacity-50 hover:bg-opacity-100 transition duration-300 text-white rounded-full shadow-md focus:outline-none"
             >
-                <Image src={right} alt="Suivant" width={24} height={24} />
+                <Image src={left} alt="Suivant" width={24} height={24} />
             </button>
 
             {/* Pagination des points */}

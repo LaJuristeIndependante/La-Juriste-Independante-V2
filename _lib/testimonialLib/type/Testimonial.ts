@@ -8,3 +8,7 @@ export interface CommentaireDocument extends Document {
     note: number;           // Note attribuée au témoignage (de 0 à 5 par exemple)
     dateEnvoie: Date;       // Date d'envoi ou de création du témoignage
 }
+
+export interface Commentaire extends CommentaireDocument {
+    _id: string;
+}
