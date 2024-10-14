@@ -1,40 +1,48 @@
-import mongoose, { Schema, model, Document } from "mongoose";
+import mongoose, { Schema, model, Document, Types } from 'mongoose';
 import { IProfession } from '@lib/ProfessionLib/model/Profession'; // Import the IProfession interface
 
+// Interface pour le document produit
 interface ProductDocument extends Document {
     name: string;
     description: string;
     price: number;
-    pdfFile?: Buffer;  // Ajouter le champ pour stocker le PDF sous forme de buffer
-    profession: IProfession['_id'];  // Référence à la profession
+    pdfFile?: Buffer;  // Fichier PDF optionnel
+    profession: Types.ObjectId;  // Référence à Profession (_id)
     createdAt: Date;
+    updatedAt: Date;
 }
 
+// Définition du schéma du produit
 const ProductSchema = new Schema<ProductDocument>({
     name: {
         type: String,
-        required: [true, "Le nom du produit est obligatoire"]
+        required: [true, 'Le nom du produit est obligatoire'],
+        trim: true,  // Nettoyage des espaces inutiles
     },
-    description : {
+    description: {
         type: String,
-        required: true,
+        required: [true, 'La description du produit est obligatoire'],
+        trim: true,
     },
-    price : {
+    price: {
         type: Number,
-        required: true,
+        required: [true, 'Le prix du produit est obligatoire'],
+        min: 0,  // Assurer que le prix est toujours positif
     },
-    pdfFile: {  // Champ pour stocker le fichier PDF
-        type: Buffer,
-        required: false,  // Optionnel si un produit n'a pas de PDF
+    pdfFile: {
+        type: Buffer,  // Stocker le PDF sous forme de buffer
+        required: false,  // Optionnel
     },
-    profession: {  // Référence à une profession via son ID
+    profession: {
         type: Schema.Types.ObjectId,
-        ref: 'Profession',
-        required: true,  // Rendre la profession obligatoire si nécessaire
-    }
+        ref: 'Profession',  // Référence à la collection "Profession"
+        required: [true, 'La profession est obligatoire'],
+    },
 }, {
-    timestamps: true,
+    timestamps: true,  // Crée automatiquement `createdAt` et `updatedAt`
 });
 
-const Product = mongoose.models?.Product || model<ProductDocument>('Product', ProductSchema);
+// Vérification pour éviter de redéfinir le modèle lors de multiples importations
+const Product = mongoose.models.Product || model<ProductDocument>('Product', ProductSchema);
+
 export default Product;

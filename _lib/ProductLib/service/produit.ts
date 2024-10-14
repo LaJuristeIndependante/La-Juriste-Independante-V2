@@ -126,14 +126,14 @@ export async function updateProduct(id: string, updatedProduct: FormData): Promi
     try {
         const response = await axios.patch(`/api/products/${id}`, updatedProduct, {
             headers: {
-                'Content-Type': 'multipart/form-data', // Set correct content type for FormData
+                'Content-Type': 'multipart/form-data',  // Let Axios handle this correctly
             },
         });
-
         return response.data;
     } catch (error: any) {
         throw new Error(error.response?.data?.message || 'Erreur lors de la mise à jour du produit');
     }
 }
+
 
 
