@@ -11,9 +11,6 @@ const Article: React.FC<{
     onIncrement: (id: string) => void
 }> = ({ item, onDecrement, onRemove, onIncrement }) => {
     const { product, quantity } = item;
-    const base64Image = product.image
-        ? `data:image/png;base64,${Buffer.from(product.image).toString('base64')}`
-        : '';
 
     return (
         <li className="flex items-center justify-between p-2 mb-4 bg-white rounded-lg shadow-sm z-100">
@@ -45,22 +42,6 @@ const Article: React.FC<{
             </div>
 
             <div className="flex space-x-6 ml-4">
-                {base64Image ? (
-                    <div className="relative w-14 h-14 rounded-lg shadow-md overflow-hidden">
-                        <Image
-                            src={base64Image}
-                            alt={`Image of ${product.name}`}
-                            fill
-                            style={{ objectFit: 'cover' }}
-                            quality={100}
-                            className="rounded-lg"
-                        />
-                    </div>
-                ) : (
-                    <div className="w-14 h-14 bg-gray-200 rounded-lg flex items-center justify-center">
-                        <span className="text-gray-500">No Image</span>
-                    </div>
-                )}
                 <div>
                     <p className="text-lg font-semibold text-gray-800">{product.name}</p>
                     <p className="text-sm text-gray-600">€ {(product.price * quantity).toFixed(2)}</p>

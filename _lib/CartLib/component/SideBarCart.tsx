@@ -43,7 +43,8 @@ const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
 
     useEffect(() => {
         const totalPrice = cartItems.reduce((acc, item) => {
-            const itemPrice = Number(item.product.price);
+            // Add null checks for item.product and item.product.price
+            const itemPrice = item.product && item.product.price ? Number(item.product.price) : 0;
             const itemQuantity = Number(item.quantity);
             return acc + (isNaN(itemPrice) || isNaN(itemQuantity) ? 0 : itemPrice * itemQuantity);
         }, 0);

@@ -11,7 +11,6 @@ const AdminProductPage: React.FC = () => {
     return (
         <main className="relative flex items-center justify-center min-h-screen z-1">
             <ProductForm />
-            <BubbleBackground page={'landing'}/>
             <BubbleBackground page={'contracts'}/>
         </main>
     );
