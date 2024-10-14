@@ -62,8 +62,8 @@ function Navbar() {
     };
 
     return (
-        <header>
-            <nav className="flex items-center justify-between w-full">
+        <header className=' '>
+            <nav className="flex items-center z-50 justify-between w-full">
                 <Link href="/">
                     {!isMobile ? (
                         <Image src={logo_la_juriste_independante} alt="logo-juriste_independante" className="ml-4" />
@@ -78,11 +78,11 @@ function Navbar() {
                         <li className={`${pathname === '/' ? 'font-bold' : ''} text-center w-[100px]`}>
                             <Link href="/">Accueil</Link>
                         </li>
-                        <li className={`${pathname === '/templates' ? 'font-bold' : ''} text-center w-auto min-w-[150px]`}>
+                        <li className={`${pathname === '/products' ? 'font-bold' : ''} text-center w-auto min-w-[150px]`}>
                             <Link href="/products">Templates types</Link>
                         </li>
-                        <li className={`${pathname === '/support' ? 'font-bold' : ''} text-center w-[100px]`}>
-                            <Link href="/support">Support</Link>
+                        <li className={`${pathname === '/contact' ? 'font-bold' : ''} text-center w-[100px]`}>
+                            <Link href="/contact    ">Contact</Link>
                         </li>
                     </ul>
                 )}

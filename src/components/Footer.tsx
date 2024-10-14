@@ -32,7 +32,7 @@ function Footer() {
                                 <Link href="/contracts">Contrats</Link>
                             </li>
                             <li className="footer__site-pages list__item">
-                                <Link href="/support">Support</Link>
+                                <Link href="/contact">Contact</Link>
                             </li>
                         </ul>
                     </div>

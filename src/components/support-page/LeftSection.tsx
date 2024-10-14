@@ -23,9 +23,9 @@ function LeftSection() {
   }, []);
 
   return (
-    <div className={` bg-[#232222] flex flex-col text-white p-4 h-auto md:h-[490px] ${isMobile ? 'text-sm w-5/6 rounded-b-xl ' : 'text-base w-1/3 rounded-l-xl '}`}>
+    <div className={` bg-[#232222] z-30 flex flex-col text-white p-4 h-auto md:h-[470px] ${isMobile ? 'text-sm w-5/6 rounded-b-xl ' : 'text-base w-1/3 rounded-l-xl '}`}>
       <div className='ml-4'>
-        <h2 className={`mt-6 mb-8 ${isMobile ? 'text-3xl' : 'text-5xl'} font-bold`}>
+        <h2 className={`mt-1 mb-8 ${isMobile ? 'text-3xl' : 'text-5xl'} font-bold`}>
           Mes coordonnées
         </h2>
         <p className={`mt-1 w-11/12 ${isMobile ? 'text-xs' : 'text-base'}`}>

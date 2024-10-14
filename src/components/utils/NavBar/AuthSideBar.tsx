@@ -9,7 +9,7 @@ interface SideBarProps {
 
 const AuthSideBar: React.FC<SideBarProps> = ({isOpen, closeSidebar}) => {
     return (
-        <div
+        <aside
             className={`w-1/8 h-[100vh] bg-white p-[20px] z-50 transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
             style={{position: 'fixed', top: 0, right: 0, borderLeft: '1px solid #a0aec0'}}
         >
@@ -23,7 +23,7 @@ const AuthSideBar: React.FC<SideBarProps> = ({isOpen, closeSidebar}) => {
             </div>
 
             <ProfileSection closeSidebar={closeSidebar}/>
-        </div>
+        </aside>
     );
 };
 

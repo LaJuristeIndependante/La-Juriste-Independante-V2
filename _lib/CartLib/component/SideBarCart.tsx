@@ -173,16 +173,14 @@ const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
     if (!shouldRender) return null; // Ne pas rendre la div si elle ne doit pas être visible
 
     return (
-        <div
-            className={`fixed top-0 right-0 min-h-screen h-full w-96 bg-white shadow-xl transform transition-transform ease-in-out duration-300 z-50
-                ${isVisible ? 'translate-x-0 flex flex-col' : 'translate-x-full'}
-            `}
-            style={{maxHeight: '100vh'}} // Ensure it never grows beyond viewport height
+        <aside
+        className={`w-1/8 h-[100vh] bg-white p-[20px] z-50 transition-transform duration-300 ${isVisible ? 'translate-x-0' : 'translate-x-full'}`}
+        style={{position: 'fixed', top: 0, right: 0, borderLeft: '1px solid #a0aec0'}}
         >
             <div className="flex items-center justify-between p-4 border-b bg-tertiary">
-                <h2 className="text-2xl font-bold text-text-primary">Mon Panier</h2>
+                <h2 className="text-2xl mt-[-2.5%] font-bold text-text-primary">Mon Panier</h2>
                 <button
-                    className="text-4xl font-bold text-text-secondary hover:text-text-quinary transition-colors"
+                    className="text-4xl font-bold text-text-secondary absolute top-5 right-4 hover:text-text-quinary transition-colors"
                     onClick={() => onClose()}
                 >
                     &times;
@@ -193,7 +191,6 @@ const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
                 <EmptyCartSection closeSidebar={() => onClose()}/>
             ) : (
                 <div>
-                    {/* Header Section */}
 
 
                     {/* Cart Items Section */}
@@ -233,7 +230,7 @@ const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
                     </div>
                 </div>
             )}
-        </div>
+        </aside>
     );
 };
 
