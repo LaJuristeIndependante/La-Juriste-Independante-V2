@@ -83,8 +83,8 @@ const AdminPage: React.FC = () => {
                     </button>
                 </div>
             </div>
-            <BubbleBackground size={400} position={"-left-16 -bottom-16"} />
-            <BubbleBackground size={300} position={"-right-16 -bottom-16"} />
+            {/*<BubbleBackground size={400} position={"-left-16 -bottom-16"} />*/}
+            {/*<BubbleBackground size={300} position={"-right-16 -bottom-16"} />*/}
         </main>
     );
 };

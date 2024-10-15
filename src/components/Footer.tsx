@@ -43,7 +43,7 @@ function Footer() {
                                 <Link href="/privacy-policy">Politique de confidentialité</Link>
                             </li>
                             <li className="footer__legal-pages list__item">
-                                <Link href="/terms-of-use">Conditions d'utilisation</Link>
+                                <Link href="/terms-of-use">Conditions d&apos;utilisation</Link>
                             </li>
                             <li className="footer__legal-pages list__item">
                                 <Link href="/terms-of-sale">Conditions de vente</Link>
