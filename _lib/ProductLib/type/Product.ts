@@ -1,16 +1,14 @@
+import {Profession} from "@lib/ProfessionLib/type/Profession";
 
 export interface ProductDetail {
     _id: string;
     name: string;
     description: string;
     price: number;
-    profession?: {
-        _id: string;
-        name: string;
-    }; // Lien vers la profession associée (optionnel)
-    pdfFile?: Buffer; // PDF stocké sous forme de Buffer (optionnel)
+    pdfFile?: string;
+    profession: Profession | string; // Peut être un objet Profession ou un ID
     createdAt: Date;
-    updatedAt?: Date;
+    updatedAt: Date;
 }
 
 export interface TitleSectionModelsProps {

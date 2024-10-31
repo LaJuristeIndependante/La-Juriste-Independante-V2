@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {ProductData, ProductDetail} from "../type/Product";
-import Product from "@lib/ProductLib/model/products";
+import { saveAs } from 'file-saver';
 
 /**
  * Récupère les détails d'un produit spécifique par son identifiant.
@@ -135,5 +135,23 @@ export async function updateProduct(id: string, updatedProduct: FormData): Promi
     }
 }
 
+/**
+ * Télécharge le PDF d'un produit spécifique par son identifiant.
+ *
+ * @param {string} productId - L'identifiant du produit.
+ * @param {string} productName - Le nom du produit pour nommer le fichier téléchargé.
+ * @returns {Promise<void>} - Une promesse qui se résout lorsque le téléchargement est terminé.
+ * @throws {Error} - Lance une erreur si le téléchargement échoue.
+ */
+export async function downloadProductPdf(productId: string, productName: string): Promise<void> {
+    try {
+        const response = await axios.get(`/api/products/${productId}/pdf`, {
+            responseType: 'blob', // Important pour gérer les données binaires
+        });
 
-
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        saveAs(blob, `${productName}.pdf`);
+    } catch (error: any) {
+        throw new Error(error.response?.data?.message || 'Erreur lors du téléchargement du PDF');
+    }
+}

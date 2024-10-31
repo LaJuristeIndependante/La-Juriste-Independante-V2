@@ -1,3 +1,5 @@
+//api/route.ts
+
 import { NextResponse } from "next/server";
 import Product from "@/../_lib/ProductLib/model/products";
 import { connectDB } from "@/../_lib/MongoLib/mongodb";
@@ -5,9 +7,16 @@ import Profession from "@lib/ProfessionLib/model/Profession";
 
 // GET: Récupérer tous les produits
 export async function GET() {
-    await connectDB();
-    const products = await Product.find();
-    return NextResponse.json(products);
+    try {
+        await connectDB();
+        const products = await Product.find();
+        if (!products || products.length === 0) {
+            return NextResponse.json({ message: "Aucun produit trouvé" }, { status: 404 });
+        }
+        return NextResponse.json(products, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({ error: "Erreur interne du serveur" }, { status: 500 });
+    }
 }
 
 export async function POST(req: Request) {

@@ -7,11 +7,11 @@ export interface ProfessionData {
  * Services pour interagir avec les routes API des professions.
  */
 export interface Profession {
-    _id?: string;
+    _id: string;
     name: string;
     description: string;
     yearsOfExperience: number;
-    isActive?: boolean;
-    createdAt?: Date;
-    updatedAt?: Date;
+    isActive: boolean;
+    createdAt: Date;
+    updatedAt: Date;
 }
