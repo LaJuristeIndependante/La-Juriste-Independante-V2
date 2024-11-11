@@ -74,35 +74,20 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick }) => {
                         value={password}
                     />
 
-                    <button
-                        className="text-white bg-black w-full p-2 hover:bg-gray-800 mt-1 rounded-lg"
-                        type="submit"
-                    >
-                        Se connecter
-                    </button>
+                    <div className="sideBar_logged-section_user-actions flex items-center justify-center w-full mt-3">
+                        <button
+                            className="text-white bg-black w-full p-2 hover:bg-gray-800 mt-1 rounded-lg"
+                            type="submit"
+                        >
+                            Se connecter
+                        </button>
+                        <button className="sideBar_logged-section_googleConnexionButton rounded-full w-12 h-10 ml-2 border-2 border-[#f1f1f1] flex items-center justify-center hover:bg-gray-200">
+                            <span>
+                                <Image src={google_icon} alt="google icon" width={24} height={24} className="w-6 h-6" />
+                            </span>
+                        </button>
+                    </div>
                 </form>
-            </div>
-            <div className="sideBar_hr_ou_hr flex items-center justify-center mt-5">
-                <hr className="border-t-2 border-gray-400 w-1/3" />
-                <p className="text-sm p-1 text-black">ou</p>
-                <hr className="border-t-2 border-gray-400 w-1/3" />
-            </div>
-            <div className="sideBar_logged-section_user-actions flex items-center justify-center w-full mt-3">
-                <button className="sideBar_logged-section_googleConnexionButton rounded-full w-10 h-10 border-2 border-[#f1f1f1] flex items-center justify-center hover:bg-gray-200">
-                    <span>
-                        <Image src={google_icon} alt="google icon" width={24} height={24} className="w-6 h-6" />
-                    </span>
-                </button>
-                <button className="sideBar_logged-section_appleConnexionButton rounded-full w-10 h-10 border-2 ml-3 border-[#f1f1f1] flex items-center justify-center hover:bg-gray-200">
-                    <span>
-                        <Image src={apple_icon} alt="apple icon" width={24} height={24} className="w-6 h-6" />
-                    </span>
-                </button>
-                <button className="sideBar_logged-section_discusConnexionButton rounded-full w-10 h-10 border-2 ml-3 border-[#f1f1f1] flex items-center justify-center hover:bg-gray-200">
-                    <span>
-                        <Image src={disqus_icon} alt="disqus icon" width={24} height={24} className="w-6 h-6" />
-                    </span>
-                </button>
             </div>
             <p className="text-xs text-center mt-4">
                 Vous n&apos;avez pas de compte ?{' '}

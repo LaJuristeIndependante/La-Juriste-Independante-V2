@@ -2,15 +2,17 @@
 import React from 'react';
 import ProfileSection from '@/components/SideSection/ProfileSection';
 
+import useMediaQuery from 'react-responsive';
 interface SideBarProps {
     isOpen: boolean;
     closeSidebar: () => void;
 }
 
 const AuthSideBar: React.FC<SideBarProps> = ({isOpen, closeSidebar}) => {
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
     return (
         <div
-            className={`w-1/8 h-[100vh] bg-white p-[20px] z-50 transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            className={`${isMobile ? 'w-96' : 'w-96'} h-[100vh] bg-white p-[20px] z-50 transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
             style={{position: 'fixed', top: 0, right: 0, borderLeft: '1px solid #a0aec0'}}
         >
             <div className="flex items-end justify-end bg-tertiary">

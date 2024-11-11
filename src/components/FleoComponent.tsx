@@ -11,8 +11,7 @@ export default function FleoComponent() {
                 <Image src={logo_fleo_web} alt="logo fleo web" className="w-[50px] h-[50px] mr-3" />
                 <div className="footer__fleo-pub-content">
                     <p className="text-lg font-semibold">Conçu par Fleo-Web</p>
-                    <p className="text-sm text-gray-500">Léo Torrès - Florian Filloux</p>
-                </div>
+                    </div>
                 <div className="mt-3 md:mt-0 md:ml-auto flex">
                     <ul className="fleo-socials flex justify-between space-x-3">
                         <li><Image src={linkedin_icon} alt="LinkedIn" className='w-4 h-4' /></li>

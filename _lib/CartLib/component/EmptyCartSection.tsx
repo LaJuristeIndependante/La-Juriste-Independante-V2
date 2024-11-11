@@ -14,7 +14,7 @@ const EmptyCartSection: React.FC<EmptyCartSectionProps> = ({ closeSidebar }) => 
                 <h3 className='font-semibold text-xl mb-4 text-[#666666]'>
                     Panier vide
                 </h3>
-                <p className='text-center text-[#666666]'>
+                <p className='text-center p-4 text-[#666666]'>
                     Ajoutez des articles au panier, puis revenez voir par ici !
                 </p>
             </div>

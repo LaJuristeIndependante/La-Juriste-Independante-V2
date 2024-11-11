@@ -80,7 +80,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ handleOnLoginClick }) => {
     };
 
     return (
-        <div className='RegisterForm flex flex-col justify-center'>
+        <div className='RegisterForm flex flex-col justify-center items-center'>
             <h1 className='font-semibold text-2xl mb-4 ml-3 mt-6'>S&apos;inscrire</h1>
             <p className='text-sm ml-3 mb-3'>
                 Inscrivez-vous pour partager vos impressions avec les autres clients, centraliser vos contrats, et plus encore !
@@ -152,38 +152,21 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ handleOnLoginClick }) => {
                         onChange={handleChange(setConfirmPassword)}
                     />
                 </div>
-                {errorMessage && <p className='text-red-500 mt-2 text-center mb-4'>{errorMessage}</p>}
-                <button className="text-white bg-black w-full p-2 hover:bg-gray-800 mt-1 rounded-lg" type='submit'>
-                    S&apos;inscrire
-                </button>
+                <div className="sideBar_logged-section_user-actions flex items-center justify-center w-full mt-3">
+                    {errorMessage && <p className='text-red-500 mt-2 text-center mb-4'>{errorMessage}</p>}
+                    <button className="text-white bg-black w-11/12 p-2 hover:bg-gray-800 mt-1 rounded-lg" type='submit'>
+                        S&apos;inscrire
+                    </button>
+                    <button className="sideBar_logged-section_googleConnexionButton rounded-full ml-2 w-11 h-10 border-2 border-[#f1f1f1] flex items-center justify-center hover:bg-gray-200">
+                            <Image src={google_icon} alt="google icon" width={24} height={24} className="w-6 h-6" />
+                    </button>
+                </div>
             </form>
-            <div className="sideBar_hr_ou_hr flex items-center justify-center mt-5">
-                <hr className="border-t-2 border-gray-400 w-1/3" />
-                <p className="text-sm p-1 text-black">ou</p>
-                <hr className="border-t-2 border-gray-400 w-1/3" />
-            </div>
-            <div className="sideBar_logged-section_user-actions flex items-center justify-center w-full mt-3">
-                <button className="sideBar_logged-section_googleConnexionButton rounded-full w-10 h-10 border-2 border-[#f1f1f1] flex items-center justify-center hover:bg-gray-200">
-                    <span>
-                        <Image src={google_icon} alt="google icon" width={24} height={24} className="w-6 h-6" />
-                    </span>
-                </button>
-                <button className="sideBar_logged-section_appleConnexionButton rounded-full w-10 h-10 border-2 ml-3 border-[#f1f1f1] flex items-center justify-center hover:bg-gray-200">
-                    <span>
-                        <Image src={apple_icon} alt="apple icon" width={24} height={24} className="w-6 h-6" />
-                    </span>
-                </button>
-                <button className="sideBar_logged-section_disqusConnexionButton rounded-full w-10 h-10 border-2 ml-3 border-[#f1f1f1] flex items-center justify-center hover:bg-gray-200">
-                    <span>
-                        <Image src={disqus_icon} alt="disqus icon" width={24} height={24} className="w-6 h-6" />
-                    </span>
-                </button>
-            </div>
             <div className="sideBar_logged-section_noAccount mt-4">
                 <p className='text-center text-sm'>
                     Déjà inscrit?{' '}
                     <button
-                        className='text-black font-medium hover:underline'
+                        className="text-xs mt-3 text-blue-400 list-underlined hover:text-blue-600"
                         onClick={handleOnLoginClick}
                     >
                         Connectez-vous
