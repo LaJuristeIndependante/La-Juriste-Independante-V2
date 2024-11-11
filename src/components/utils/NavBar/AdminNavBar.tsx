@@ -14,6 +14,7 @@ import AuthButton from "@/components/common/button/AuthButton";
 import AuthSideBar from "@/components/utils/NavBar/AuthSideBar";
 import Link from "next/link";
 import logo_la_juriste_independante from "@public/images/common/logo-la-juriste-indépendante.svg";
+import admin_icon from "@public/images/common/admin-icon.svg";
 
 
 export default function AdminNavbar() {
@@ -75,7 +76,7 @@ export default function AdminNavbar() {
                         className={`flex justify-center p-2 font-bold space-x-2 rounded-full border border-gray-300 bg-secondary-color`}
                         onClick={() => setMenuAdminIsVisible(true)}
                     >
-                        <MdOutlineAdminPanelSettings className={"w-7 h-auto"}/>
+                        <Image src={admin_icon} alt="admin icon" width={0} height={0} className="w-6 h-6"/>
                         <p className='mt-0.5'>Administration</p>
                     </button>
                     <AuthButton toggleSidebar={() => authSidebar()}/>

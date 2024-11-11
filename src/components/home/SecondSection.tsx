@@ -27,7 +27,7 @@ function SecondSectionComponent(): React.ReactElement {
             </div>
             <div className='flex flex-col items-center md:items-end w-11/12 md:w-1/3'>
                 {!isMobile && (
-                    <div className='border-8 border-red-500 w-48 md:w-[300px] h-24 md:h-[120px] mr-5 md:mr-0 mb-5 md:mb-0'>
+                    <div className='border-8 border-primary-color w-48 md:w-[300px] h-24 md:h-[120px] mr-5 md:mr-0 mb-5 md:mb-0'>
                         <p className="text-right text-sm mt-2 md:mt-4 mr-3">A PROPOS</p>
                         <h2 className="text-3xl md:text-4xl font-bold text-right mr-3">Qui suis-je ?</h2>
                     </div>

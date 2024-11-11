@@ -16,10 +16,8 @@ const config: Config = {
         'secondary-color': '#F5F5F5',
       },
       fontFamily: {
-        'more-sugar': ['More Sugar', 'sans-serif'],
-        'lazy-dog': ['Lazy Dog', 'sans-serif'],
-        'bimbo': ['Bimbo', 'sans-serif'],
-        'canva-sans': ['Canva Sans', 'sans-serif'],
+        jost: ['Jost', 'sans-serif'],
+        islandMoments: ['Island Moments', 'cursive'],
       },
       textStroke: {
         black: '1px black',
@@ -48,17 +46,11 @@ const config: Config = {
         '.border-secondary': {
           borderColor: 'var(--secondary-color)',
         },
-        '.font-more-sugar': {
-          fontFamily: 'var(--font-primary)',
+        '.font-jost': {
+          fontFamily: 'Jost, sans-serif',
         },
-        '.font-lazy-dog': {
-          fontFamily: 'var(--font-secondary)',
-        },
-        '.font-bimbo': {
-          fontFamily: 'Bimbo, sans-serif',
-        },
-        '.font-canva-sans': {
-          fontFamily: 'Canva Sans, sans-serif',
+        '.font-islandMoments': {
+          fontFamily: 'Island Moments, cursive',
         },
         '.text-stroke-black': {
           '-webkit-text-stroke': '.8px black',

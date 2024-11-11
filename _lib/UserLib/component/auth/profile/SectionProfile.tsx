@@ -1,15 +1,22 @@
-import React, {useState, useEffect} from "react";
-import {FaUserCircle, FaEdit} from "react-icons/fa";
-import {signOut, useSession} from "next-auth/react";
+import React, { useState, useEffect } from "react";
+import { FaEdit } from "react-icons/fa";
+import Image from "next/image";
+import { signOut, useSession } from "next-auth/react";
 import Button from "@/styles/Button.module.css";
 import axios from "axios";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import {updateUserData} from "@lib/UserLib/service/auth";
-import {ProfileData} from "@lib/UserLib/type/UserType";
+import { updateUserData } from "@lib/UserLib/service/auth";
+import { ProfileData } from "@lib/UserLib/type/UserType";
+
+import logout_icon from "@public/images/common/logout-icon.svg";
+import delete_icon from "@public/images/common/delete-icon.svg";
+import admin_icon from "@public/images/common/admin-icon.svg";
+import admin_logo from "@public/images/logo/La Juriste indépendante Admin.png";
+import normal_logo from "@public/images/logo/La Juriste indépendante.png";
 
 const SectionProfile: React.FC = () => {
-    const {data: session, update} = useSession();
+    const { data: session, update } = useSession();
     const [message, setMessage] = useState<string>("");
     const [error, setError] = useState<string>("");
     const [isClient, setIsClient] = useState<boolean>(false);
@@ -85,7 +92,7 @@ const SectionProfile: React.FC = () => {
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -101,10 +108,10 @@ const SectionProfile: React.FC = () => {
         setError("");
 
         try {
-            const response = await axios.delete("/api/user", {data: {userId}});
+            const response = await axios.delete("/api/user", { data: { userId } });
             if (response.status === 200) {
                 setMessage("Utilisateur supprimé avec succès");
-                signOut({callbackUrl: "/"});
+                signOut({ callbackUrl: "/" });
             } else {
                 setError("Échec de la suppression de l'utilisateur");
             }
@@ -115,14 +122,42 @@ const SectionProfile: React.FC = () => {
 
     return (
         <section className="flex flex-col justify-center text-center items-center w-full">
-            <h2 className="text-2xl font-bold text-center mb-8">Profil</h2>
+            <div className="pp rounded-full h-28 w-28 bg-[#D9D9D9] mb-5 flex items-center justify-center">
+                <Image src={session?.user?.isAdmin ? admin_logo : normal_logo} alt="user icon" width={0} height={0} className="rounded-full h-24 w-24" />    
+            </div>
+            <h2 className="text-2xl font-bold text-center mb-8">{session?.user?.isAdmin ? "Administateur" : session?.user?.name}</h2>
             <div className="rounded-lg p-8 bg-opacity-80 flex flex-col items-center">
-                <div className="mb-8">
+                {/* <div className="mb-8">
                     <FaUserCircle className="text-gray-700 w-36 h-36"/>
-                </div>
+                </div> */}
                 <div className="w-full text-center text-black">
-                    <h3 className="text-2xl font-semibold mb-4">Détails</h3>
-
+                <div className="space-y-2 text-center justify-center items-center">
+                        <div className={`flex flex-row justify-center items-center space-x-4 mb-6`}>
+                            <button
+                                className="flex items-center justify-center p-2 rounded-full border border-gray-300  hover:bg-gray-200"
+                                onClick={() => signOut({ callbackUrl: "/" })}
+                                type="button"
+                            >
+                                <Image src={logout_icon} alt="logout icon" width={0} height={0} className="w-6 h-6" />
+                            </button>
+                            <button
+                                className="flex items-center justify-center p-2 rounded-full border border-gray-300 hover:bg-gray-200"
+                                onClick={() => handleDelete(session?.user?.id ?? "")}
+                                type="button"
+                            >
+                                <Image src={delete_icon} alt="delete icon" width={0} height={0} className="w-6 h-6" />
+                            </button>
+                            {session?.user?.isAdmin ? (
+                                <button
+                                    className="flex items-center justify-center p-2 rounded-full border border-gray-300 hover:bg-gray-200"
+                                    onClick={handleSubmit}
+                                    type="button"
+                                >
+                                    <Image src={admin_icon} alt="admin icon" width={0} height={0} className="w-6 h-6" />
+                                </button>
+                            ) : null}
+                        </div>
+                    </div>
                     {["nom", "prenom", "username", "dateOfBirth", "email"].map((field) => (
                         <div key={field} className="mb-4 flex justify-between items-center">
                             <div>
@@ -160,33 +195,7 @@ const SectionProfile: React.FC = () => {
                         </div>
                     ))}
 
-                    <div className="space-y-2 text-center justify-center items-center">
-                        <div className={`flex flex-row space-x-4 justify-center items-center text-center`}>
-                            <button
-                                className={Button.customButton}
-                                onClick={() => signOut({callbackUrl: "/"})}
-                                type="button"
-                            >
-                                Se déconnecter
-                            </button>
-                            <button
-                                className={Button.customButton}
-                                onClick={() => handleDelete(session?.user?.id ?? "")}
-                                type="button"
-                            >
-                                Supprimer le compte
-                            </button>
-                        </div>
-                        {session?.user?.isAdmin ? (
-                            <button
-                                className={`${Button.customButton}`}
-                                onClick={handleSubmit}
-                                type="button"
-                            >
-                                Admin
-                            </button>
-                        ) : null}
-                    </div>
+                    
                     {message && <p className="text-green-500 mt-4">{message}</p>}
                     {error && <p className="text-red-500 mt-4">{error}</p>}
                 </div>

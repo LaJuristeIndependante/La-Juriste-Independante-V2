@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import Image from 'next/image';
 import close_icon from '@/../public/images/common/close-icon.svg';
 import edit_icon from '@/../public/images/common/edit-icon.svg';
+import bg_test_popup from '@/../public/images/home/bg-testi-popup.jpg';
 
 interface AddTestimonialPopupProps {
     setIsPopupOpen: (isOpen: boolean) => void;
@@ -53,7 +54,7 @@ export default function AddTestimonialPopup({ setIsPopupOpen, newComment, setNew
             overlayClassName="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-60 backdrop-blur-lg z-50 px-4 py-6 md:px-8 md:py-12"
             isOpen={true}
         >
-            <div className="bg-white p-8 rounded-lg shadow-lg w-1/2 relative">
+            <div className="bg-white p-8 rounded-lg shadow-lg w-1/2 relative" style={{ backgroundImage: `url(${bg_test_popup.src})` }}>
                 <h2 className="md:text-4xl text-xl text-center font-bold mb-4">
                     COMMENTAIRE
                 </h2>

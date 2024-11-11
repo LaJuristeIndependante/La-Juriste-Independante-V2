@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import Image from "next/image";
 import left from "@/../public/images/Utils/left-icon.svg";
-import { useMediaQuery } from 'react-responsive';
-// import right from "@/../public/images/Utils/right-icon.svg";
+import right from "@/../public/images/Utils/right-icon.svg";
 
 interface CarouselProps {
     items: React.ReactNode[];
@@ -10,7 +9,6 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = ({ items }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
     const handlePrev = () => {
         setCurrentIndex((prevIndex) =>
@@ -25,51 +23,43 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
     };
 
     return (
-        <div className="relative w-full max-w-4xl mx-auto p-8">
-            <div className="overflow-hidden rounded-lg">
+        <div className="relative w-full max-w-4xl mx-auto">
+            <div className="overflow-hidden">
                 <div
-                    className="flex transition-transform duration-500 ease-in-out"
+                    className="flex transition-transform duration-300"
                     style={{
                         transform: `translateX(-${currentIndex * 100}%)`,
-                        width: `${items.length * (isMobile ? 20 : 35)}%`,
                     }}
                 >
                     {items.map((item, index) => (
-                        <div
-                            key={index}
-                            className="min-w-full flex-shrink-0 flex items-center justify-center text-center"
-                        >
+                        <div key={index} className="min-w-full flex-shrink-0 m-8 mr-0 ml-0 flex flex-row items-center justify-center">
                             {item}
                         </div>
                     ))}
                 </div>
             </div>
 
-            {/* Flèche gauche */}
             <button
                 onClick={handlePrev}
-                className="absolute top-1/2 left-4 transform -translate-y-1/2 p-3 bg-gray-700 bg-opacity-50 hover:bg-opacity-100 transition duration-300 text-white rounded-full shadow-md focus:outline-none"
+                className="absolute top-1/2 left-0 transform -translate-y-1/2 p-2 text-white  rounded-full"
             >
-                <Image src={left} alt="Précédent" width={24} height={24} />
+                <Image src={left} alt="Précédent" width={0} height={0} className='h-12 w-12'/>
             </button>
-
-            {/* Flèche droite */}
             <button
                 onClick={handleNext}
-                className="absolute top-1/2 right-4 transform -translate-y-1/2 -rotate-180 p-3 bg-gray-700 bg-opacity-50 hover:bg-opacity-100 transition duration-300 text-white rounded-full shadow-md focus:outline-none"
+                className="absolute top-1/2 right-0 transform -translate-y-1/2 p-2 text-black  rounded-full"
             >
-                <Image src={left} alt="Suivant" width={24} height={24} />
+                <Image src={right} alt="Suivant" width={0} height={0} className='h-12 w-12'/>
             </button>
 
-            {/* Pagination des points */}
-            <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+            <div className="absolute -bottom-5 left-0 right-0 flex justify-center space-x-2">
                 {items.map((_, index) => (
                     <button
                         key={index}
                         onClick={() => setCurrentIndex(index)}
-                        className={`w-4 h-4 rounded-full transition duration-300 ${
+                        className={`w-3 h-3 rounded-full ${
                             index === currentIndex ? 'bg-gray-800' : 'bg-gray-400'
-                        } hover:bg-gray-600`}
+                        }`}
                     />
                 ))}
             </div>
