@@ -17,7 +17,7 @@ const Article: React.FC<{
             <div className="flex items-center space-x-6">
                 <button
                     onClick={() => onRemove(item._id)}
-                    className="text-gray-600 hover:text-red-600 transition-colors flex items-center justify-center"
+                    className="text-gray-600 hover:text-primary-color transition-colors flex items-center justify-center"
                 >
                     <FiTrash2 size={18} />
                 </button>

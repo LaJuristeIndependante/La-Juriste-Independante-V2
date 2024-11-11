@@ -15,7 +15,7 @@ export default function ProductPage() {
     }, []);
 
     return (
-        <main className="h-screen flex flex-col items-center justify-center">
+        <main className="min-h-screen h-auto flex flex-col items-center justify-center">
             {isLoading ? (
                     <p className="text-3xl">Chargement...</p>
             ) : (

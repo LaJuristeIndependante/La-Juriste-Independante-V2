@@ -3,7 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* Déclaration des polices personnalisées */
 @font-face {
   font-family: 'Jost';
@@ -29,6 +28,18 @@
 
   --font-primary: 'Jost', sans-serif;
   --font-secondary: 'IslandMoments', sans-serif;
+  --primary-color: #DD2A27;
+  --secondary-color: #F5F5F5;
+  --placeholder-color: rgb(131, 128, 128);
+  --label-color: #999;
+  --label-focus-color: #000;
+  --border-color: #000;
+  --border-hover-color: white;
+  --checkbox-border-color: gray;
+  --checkbox-checked-bg: blue;
+  --checkbox-checked-border: blue;
+  --popup-bg: white;
+  --popup-shadow: rgba(0, 0, 0, 0.1);
 }
 
 /* Styles globaux */
@@ -82,11 +93,11 @@ body {
 }
 
 .input:focus::placeholder {
-  color: rgb(131, 128, 128);
+  color: var(--placeholder-color);
 }
 
 .input.expand {
-  background-color: #F5F5F5;
+  background-color: var(--secondary-color);
   width: 290px;
   padding: 5px 16px;
   cursor: none;
@@ -100,7 +111,7 @@ body {
 }
 
 .label-p {
-  color: #999;
+  color: var(--label-color);
   font-size: calc(18px - 2px);
   font-weight: normal;
   position: absolute;
@@ -114,12 +125,12 @@ body {
 .input:valid~label {
   top: -25px;
   font-size: 16px;
-  color: #000;
+  color: var(--label-focus-color);
 }
 
 .iconFunny {
   border-radius: 54%;
-  border: #000 solid 2px;
+  border: var(--border-color) solid 2px;
 }
 
 /* Spécifications pour la checkbox personnalisée */
@@ -140,7 +151,7 @@ body {
 .productCard_circle.second {
   height: 100px;
   width: 100px;
-  background-color: #DD2A27;
+  background-color: var(--primary-color);
   opacity: 0.1;
   border-radius: 50%;
 }
@@ -178,7 +189,7 @@ body {
 /* Styles pour les boutons et les popups */
 .scroll-button {
   position: absolute;
-  background-color: #F5F5F5;
+  background-color: var(--secondary-color);
   border-radius: 0.25rem;
   top: 50%;
   transform: translateY(-50%);
@@ -212,10 +223,10 @@ body {
 }
 
 .popup {
-  background-color: white;
+  background-color: var(--popup-bg);
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px var(--popup-shadow);
   z-index: 1;
 }
 
@@ -232,7 +243,7 @@ body {
 
 @keyframes inputHighlighter {
   from {
-    background: #F5F5F5;
+    background: var(--secondary-color);
   }
 
   to {
@@ -332,7 +343,7 @@ body {
 
 .bubble {
   position: absolute;
-  background-color: #DA1A32;
+  background-color: var(--primary-color);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -346,7 +357,6 @@ body {
   animation: floating 5s infinite;
 }
 
-
 .bubble2 {
   width: 25vw;
   height: 25vw;
@@ -354,7 +364,6 @@ body {
   right: -20vw;
   animation: floating 7s infinite;
 }
-
 
 .bubble3 {
   position: absolute;
@@ -374,22 +383,6 @@ body {
   animation: floating 7s infinite;
 }
 
-
-
-@keyframes floating {
-  0% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(40px);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
-}
-
 .group {
   position: relative;
 }
@@ -405,7 +398,7 @@ body {
 }
 
 .label-p {
-  color: #999;
+  color: var(--label-color);
   font-size: calc(18px - 2px);
   font-weight: normal;
   position: absolute;
@@ -421,7 +414,7 @@ body {
 .input:valid~label {
   top: -25px;
   font-size: 16px;
-  color: #000;
+  color: var(--label-focus-color);
 }
 
 .bar {
@@ -437,7 +430,7 @@ body {
   width: 0;
   bottom: 1px;
   position: absolute;
-  background: #F5F5F5;
+  background: var(--secondary-color);
   transition: 0.2s ease all;
   -moz-transition: 0.2s ease all;
   -webkit-transition: 0.2s ease all;

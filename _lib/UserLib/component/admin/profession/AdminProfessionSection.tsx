@@ -124,13 +124,13 @@ const ProfessionManagement: React.FC = () => {
                         <div className="flex space-x-4">
                             <button
                                 onClick={() => openPopup(profession)}
-                                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                                className="px-4 py-2 bg-black text-secondary-color rounded hover:bg-gray-900 transition"
                             >
                                 Modifier
                             </button>
                             <button
                                 onClick={() => handleDelete(profession._id!)}
-                                className="px-4 py-2 bg-[#DD2A27] text-white rounded transition"
+                                className="px-4 py-2 bg-primary-color text-secondary-color rounded transition"
                             >
                                 Supprimer
                             </button>
@@ -189,7 +189,7 @@ const ProfessionManagement: React.FC = () => {
                             <div className="flex justify-end space-x-4">
                                 <button
                                     type="submit"
-                                    className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
+                                    className="bg-green-500 text-secondary-color px-6 py-2 rounded hover:bg-green-600 transition"
                                     disabled={isLoading}
                                 >
                                     {isLoading ? "En cours..." : selectedProfession ? "Enregistrer" : "Ajouter"}
@@ -197,7 +197,7 @@ const ProfessionManagement: React.FC = () => {
                                 <button
                                     type="button"
                                     onClick={closePopup}
-                                    className="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition"
+                                    className="bg-gray-500 text-secondary-color px-6 py-2 rounded hover:bg-gray-600 transition"
                                 >
                                     Annuler
                                 </button>

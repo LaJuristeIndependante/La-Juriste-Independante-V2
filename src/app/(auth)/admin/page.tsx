@@ -4,9 +4,36 @@ import { useRouter } from "next/navigation";
 import BubbleBackground from "@/components/utils/décors/BubbleBackground";
 import { FaGraduationCap, FaFileContract, FaUser, FaCommentDots } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
+import { getAllProfessions } from "@lib/ProfessionLib/service/professionService";
+import { fetchProductsForAdmin } from "@lib/ProductLib/service/produit";
+import { ProductDetail } from "@lib/ProductLib/type/Product";
+import { getTestimonials } from "@lib/testimonialLib/service/testimonials";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { CommentaireDocument } from "@lib/testimonialLib/type/Testimonial";
+import { Profession } from "@lib/ProfessionLib/type/Profession";
+
+
+
+interface User {
+    _id: string;
+    nom: string;
+    prenom: string;
+    username: string;
+    email: string;
+    isAdmin: boolean;
+    dateOfBirth: string;
+    isVerified: boolean;
+    createdAt: string;
+    cart?: string;
+}
 
 const AdminPage: React.FC = () => {
     const router = useRouter();
+    const [professions, setProfessions] = useState<Profession[]>([]);
+    const [products, setProducts] = useState<ProductDetail[]>([]);
+    const [users, setUsers] = useState<User[]>([]);
+    const [testimonials, setTestimonials] = useState<CommentaireDocument[]>([]);
 
     const handleProfessions = () => {
         router.push("/admin/profession");
@@ -24,6 +51,50 @@ const AdminPage: React.FC = () => {
         router.push("/admin/testimonials");
     };
 
+    useEffect(() => {
+        const loadProducts = async () => {
+            try {
+                const data = await fetchProductsForAdmin();
+                setProducts(data);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        };
+
+
+        const loadProfessions = async () => {
+            try {
+                const data = await getAllProfessions();
+                setProfessions(data);
+            } catch (error) {
+                console.error("Error fetching professions:", error);
+            }
+        };
+
+        const fetchUsers = async () => {
+            try {
+                const response = await axios.get("/api/user");
+                setUsers(response.data);
+            } catch (error) {
+                console.error("Error fetching users:", error);
+            }
+        };
+
+        const fetchTestimonials = async () => {
+            try {
+                const data = await getTestimonials();
+                setTestimonials(data);
+            } catch (error) {
+                console.error("Error fetching testimonials:", error);
+            }
+        };
+
+        loadProducts();
+        loadProfessions();
+        fetchUsers();
+    }, []);
+
+
     return (
         <main className="relative flex text-center items-center justify-center min-h-screen w-full z-20">
             <div className="m-5 mt-20 mb-10 relative  w-full px-6 py-10 md:px-10 md:py-20 rounded-xl z-20 flex flex-col items-center">
@@ -37,7 +108,10 @@ const AdminPage: React.FC = () => {
                             <FaGraduationCap className="text-3xl" />
                             <div className="text-left">
                                 <p className="text-lg font-semibold">Professions</p>
-                                <p className="text-sm text-gray-600">14 disponibles, 2 masquées</p>
+                                <p className="text-sm text-gray-600">{professions.length + " "}
+                                    disponible
+                                    {professions.length > 1 ? "s" : ""}
+                                </p>
                             </div>
                         </div>
                         <IoIosArrowForward className="text-2xl" />
@@ -50,7 +124,10 @@ const AdminPage: React.FC = () => {
                             <FaFileContract className="text-3xl" />
                             <div className="text-left">
                                 <p className="text-lg font-semibold">Contrats</p>
-                                <p className="text-sm text-gray-600">27 disponibles, 14 réservés</p>
+                                <p className="text-sm text-gray-600">
+                                    {products.length + " "}
+                                    disponible {products.length > 1 ? "s" : ""}
+                                </p>
                             </div>
                         </div>
                         <IoIosArrowForward className="text-2xl" />
@@ -63,7 +140,11 @@ const AdminPage: React.FC = () => {
                             <FaUser className="text-3xl" />
                             <div className="text-left">
                                 <p className="text-lg font-semibold">Comptes</p>
-                                <p className="text-sm text-gray-600">48 actifs, 2 en attente, 1 désactivé</p>
+                                <p className="text-sm text-gray-600">
+                                    {users.length} utilisateur{users.length > 1 ? "s" : ""}, 
+                                    {users.filter(user => user.isVerified).length + " "}vérifié{users.length > 1 ? "s" : ""}, {" "}
+                                    {users.filter(user => !user.isVerified).length + " "} non vérifié{users.length > 1 ? "s" : ""}
+                                </p>
                             </div>
                         </div>
                         <IoIosArrowForward className="text-2xl" />
@@ -76,7 +157,9 @@ const AdminPage: React.FC = () => {
                             <FaCommentDots className="text-3xl" />
                             <div className="text-left">
                                 <p className="text-lg font-semibold">Commentaires</p>
-                                <p className="text-sm text-gray-600">154 postés, 17 suspects</p>
+                                <p className="text-sm text-gray-600">
+                                    {testimonials.length + " "} posté{testimonials.length > 1 ? "s" : ""},
+                                     </p>
                             </div>
                         </div>
                         <IoIosArrowForward className="text-2xl" />

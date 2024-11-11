@@ -83,10 +83,9 @@ const UserSection: React.FC = () => {
     };
 
     return (
-        <section className="min-h-screen flex flex-col justify-center items-center w-1/2 space-y-10">
-            <RedirectionArrow/>
-            <div className="text-black w-full bg-white rounded-lg shadow-lg">
-                <h2 className="text-xl font-bold text-white mb-4 bg-[#3577B4] p-4">
+        <section className="min-h-screen flex flex-col justify-center items-center w-full space-y-10">
+            <div className="text-black w-full bg-white rounded-lg">
+                <h2 className="text-2xl font-bold text-black mb-4 p-4">
                     AUTHENTIFICATION ET AUTHORISATION
                 </h2>
                 <div className="flex space-y-4 flex-col sm:flex-row mb-4 justify-between">
@@ -101,7 +100,7 @@ const UserSection: React.FC = () => {
                 <div className="space-y-4 p-4">
                     {users.map((user) => (
                         <details key={user._id} id={`detail-${user._id}`}
-                                 className="p-4 bg-gray-500 bg-opacity-20 text-black rounded-lg shadow">
+                        className="flex justify-between items-center p-4 bg-gray-100 rounded-md shadow">
                             <summary
                                 className="cursor-pointer text-lg font-semibold flex justify-between items-center">
                             <span>
@@ -109,7 +108,7 @@ const UserSection: React.FC = () => {
                             </span>
                                 <div className="flex space-x-2">
                                     <FaEdit
-                                        className="hover:text-blue-400 cursor-pointer"
+                                        className="hover:text-gray-900 cursor-pointer"
                                         onClick={(event) => handleEditClick(user, event)}
                                     />
                                     {session?.user?.id !== user._id && (
@@ -193,13 +192,13 @@ const UserSection: React.FC = () => {
                                 {editingUser === user._id && (
                                     <div className="mt-2 flex justify-end space-x-2">
                                         <button
-                                            className="px-4 py-2 bg-blue-500 rounded hover:bg-blue-600"
+                                            className="px-4 py-2 bg-black rounded text-secondary-color hover:bg-gray-900"
                                             onClick={() => handleSaveClick(user._id)}
                                         >
                                             Enregistrer
                                         </button>
                                         <button
-                                            className="px-4 py-2 bg-gray-500 rounded hover:bg-gray-600"
+                                            className="px-4 py-2 bg-primary-color text-secondary-color rounded hover:bg-red-700"
                                             onClick={() => setEditingUser(null)}
                                         >
                                             Annuler

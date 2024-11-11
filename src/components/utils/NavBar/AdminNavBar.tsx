@@ -72,11 +72,11 @@ export default function AdminNavbar() {
                 )}
                 <div className={`flex items-center justify-center space-x-4 p-4`}>
                     <button
-                        className={`flex justify-center p-2 font-bold space-x-2 rounded-full bg-[#CACACA]`}
+                        className={`flex justify-center p-2 font-bold space-x-2 rounded-full border border-gray-300 bg-secondary-color`}
                         onClick={() => setMenuAdminIsVisible(true)}
                     >
                         <MdOutlineAdminPanelSettings className={"w-7 h-auto"}/>
-                        <p>Administration</p>
+                        <p className='mt-0.5'>Administration</p>
                     </button>
                     <AuthButton toggleSidebar={() => authSidebar()}/>
                     {isMobile && <MenuBurgerButton toggleSidebar={menuIsVisible}/>}

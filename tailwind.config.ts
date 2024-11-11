@@ -11,28 +11,70 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      colors: {
+        'primary-color': '#DD2A27',
+        'secondary-color': '#F5F5F5',
       },
       fontFamily: {
-        'jost': ['Jost', 'sans-serif'],
-        'island': ['IslandMoments', 'sans-serif'],
+        'more-sugar': ['More Sugar', 'sans-serif'],
+        'lazy-dog': ['Lazy Dog', 'sans-serif'],
+        'bimbo': ['Bimbo', 'sans-serif'],
+        'canva-sans': ['Canva Sans', 'sans-serif'],
+      },
+      textStroke: {
+        black: '1px black',
+        white: '1px white',
       },
     },
   },
   plugins: [
-    plugin(function ({addUtilities}) {
+    plugin(function ({ addUtilities }) {
       addUtilities({
-        '.font-jost': {
+        '.bg-primary': {
+          backgroundColor: 'var(--primary-color)',
+        },
+        '.bg-secondary': {
+          backgroundColor: 'var(--secondary-color)',
+        },
+        '.text-primary': {
+          color: 'var(--primary-color)',
+        },
+        '.text-secondary': {
+          color: 'var(--secondary-color)',
+        },
+        '.border-primary': {
+          borderColor: 'var(--primary-color)',
+        },
+        '.border-secondary': {
+          borderColor: 'var(--secondary-color)',
+        },
+        '.font-more-sugar': {
           fontFamily: 'var(--font-primary)',
         },
-        '.font-island': {
+        '.font-lazy-dog': {
           fontFamily: 'var(--font-secondary)',
+        },
+        '.font-bimbo': {
+          fontFamily: 'Bimbo, sans-serif',
+        },
+        '.font-canva-sans': {
+          fontFamily: 'Canva Sans, sans-serif',
+        },
+        '.text-stroke-black': {
+          '-webkit-text-stroke': '.8px black',
+        },
+        '.text-stroke-black-2': {
+          '-webkit-text-stroke': '.2px black',
+        },
+        '.text-stroke-white': {
+          '-webkit-text-stroke': '.8px white',
+        },
+        '.text-shadow-secondary': {
+          textShadow: '1px 1px 2px var(--primary-color)',
         },
       });
     }),
   ],
 };
+
 export default config;

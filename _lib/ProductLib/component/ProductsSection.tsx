@@ -19,7 +19,7 @@ const ProductCard = ({ product }: { product: ProductData }) => {
                     <p className="text-sm justify-start">{product.description}</p>
                     <a
                         href={`/products/${product._id}`}
-                        className="text-[#DD2A27] font-bold text-xs md:text-sm flex justify-center p-2 pl-0"
+                        className="text-primary-color font-bold text-xs md:text-sm flex justify-center p-2 pl-0"
                     >
                         Aperçu <span className={" p-1"}><SlArrowRight /></span>
                     </a>

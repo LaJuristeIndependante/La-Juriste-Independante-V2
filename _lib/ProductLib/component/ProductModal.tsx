@@ -76,7 +76,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, onSave, pr
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            className="w-full border border-gray-300 p-2 rounded"
+                            className="w-full border border-gray-300 resize-none p-2 rounded"
                             required
                         ></textarea>
                     </div>
@@ -118,10 +118,10 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, onSave, pr
                         />
                     </div>
                     <div className="flex justify-end space-x-4">
-                        <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-300 rounded">
+                        <button type="button" onClick={onClose} className="px-4 py-2 bg-primary-color text-secondary-color rounded">
                             Annuler
                         </button>
-                        <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
+                        <button type="submit" className="px-4 py-2 bg-black text-secondary-color rounded">
                             {product ? 'Enregistrer' : 'Ajouter'}
                         </button>
                     </div>
