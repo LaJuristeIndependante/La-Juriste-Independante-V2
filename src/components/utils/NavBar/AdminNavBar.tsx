@@ -9,7 +9,6 @@ import {usePathname, useRouter} from "next/navigation";
 import MenuBurgerButton from "@/components/common/button/MenuBurgerButton";
 import {useMediaQuery} from "react-responsive";
 import {MdOutlineAdminPanelSettings} from "react-icons/md";
-import MenuBurgerAdmin from "@/components/utils/NavBar/MenuBurgerAdmin";
 import AuthButton from "@/components/common/button/AuthButton";
 import AuthSideBar from "@/components/utils/NavBar/AuthSideBar";
 import Link from "next/link";
@@ -85,7 +84,6 @@ export default function AdminNavbar() {
             </nav>
             <MenuBurger isOpen={menuBurgerIsVisible} onClose={() => setMenuBurgerIsVisible(false)}/>
             <AuthSideBar isOpen={isAuthSideBarVisible} closeSidebar={closeAuthSidebar}/>
-            <MenuBurgerAdmin isOpen={menuAdminIsVisible} onClose={() => setMenuAdminIsVisible(false)}/>
         </header>
 
     )

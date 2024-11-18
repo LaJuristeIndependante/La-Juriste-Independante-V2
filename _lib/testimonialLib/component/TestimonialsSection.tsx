@@ -15,16 +15,14 @@ import Carroussel from "@/components/utils/décors/Carroussel";
 import PopupTestimonial from "@/components/home/testimonial/AddTestimonialPopup";
 import TestimonialCard from './TestimonialCard';
 
-
 export default function TestimonialsSection() {
     const [commentaires, setCommentaires] = useState<CommentaireDocument[]>([]);
-    const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false); // Pour la popup
+    const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
     const [newComment, setNewComment] = useState({ objet: '', message: '', note: 0 });
-    const [isEditing, setIsEditing] = useState<boolean>(false); // Détermine si on est en mode édition
-    const [editingCommentId, setEditingCommentId] = useState<string | null>(null); // Stocke l'ID du commentaire à modifier
-    const { data: session } = useSession(); // Récupère les données de session
+    const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
+    const { data: session } = useSession();
 
-    // Charger les commentaires depuis l'API
     useEffect(() => {
         const loadCommentaires = async () => {
             try {
@@ -38,7 +36,6 @@ export default function TestimonialsSection() {
         loadCommentaires();
     }, []);
 
-    // Gestion de la soumission du commentaire (ajout ou modification)
     const handleSubmitComment = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -49,19 +46,16 @@ export default function TestimonialsSection() {
 
         try {
             if (isEditing && editingCommentId) {
-                // Mode édition : Mettre à jour le commentaire existant
                 await updateTestimonial(editingCommentId, session.user.id, {
                     newMessage: newComment.message,
                     newObjet: newComment.objet,
                     newNote: newComment.note,
                 });
                 console.log("Commentaire mis à jour avec succès");
-
             } else {
-                // Mode ajout : Créer un nouveau témoignage
                 await createTestimonial({
                     User: {
-                        _id: session.user.id, // Récupère l'ID de l'utilisateur connecté
+                        _id: session.user.id,
                         username: session.user.name || 'Anonyme',
                     },
                     objet: newComment.objet,
@@ -71,20 +65,17 @@ export default function TestimonialsSection() {
                 console.log("Commentaire ajouté avec succès");
             }
 
-            // Recharger les commentaires après soumission
             const updatedCommentaires = await getTestimonials();
             setCommentaires(updatedCommentaires);
 
-            // Fermer la popup après la soumission
             setIsPopupOpen(false);
-            setIsEditing(false); // Quitte le mode édition
-            setEditingCommentId(null); // Réinitialise l'ID du commentaire en édition
+            setIsEditing(false);
+            setEditingCommentId(null);
         } catch (error) {
             console.error('Erreur lors de la soumission du commentaire:', error);
         }
     };
 
-    // Gestion de la suppression d'un commentaire
     const handleDeleteComment = async (commentaireId: string) => {
         if (!session?.user?.id) {
             console.error('Utilisateur non connecté, suppression non autorisée');
@@ -92,9 +83,7 @@ export default function TestimonialsSection() {
         }
 
         try {
-            // Supprime le commentaire si l'utilisateur est l'auteur ou un administrateur
             await deleteTestimonial(commentaireId, session.user.id, session.user.isAdmin);
-            // Recharger les commentaires après la suppression
             const updatedCommentaires = await getTestimonials();
             setCommentaires(updatedCommentaires);
         } catch (error) {
@@ -102,16 +91,15 @@ export default function TestimonialsSection() {
         }
     };
 
-    // Gestion de l'ouverture de la popup en mode édition
     const handleEditComment = (commentaire: Commentaire) => {
         setIsEditing(true);
-        setEditingCommentId(commentaire._id); // Stocke l'ID du commentaire à modifier
+        setEditingCommentId(commentaire._id);
         setNewComment({
             objet: commentaire.objet,
             message: commentaire.message,
             note: commentaire.note,
         });
-        setIsPopupOpen(true); // Ouvre la popup
+        setIsPopupOpen(true);
     };
 
     return (
@@ -155,7 +143,6 @@ export default function TestimonialsSection() {
                 <p className='mt-6'>Connecté vous pour ajouté un commentaire</p>
             )}
 
-            {/* Popup personnalisée pour ajouter ou modifier un commentaire */}
             {isPopupOpen && (
                 <PopupTestimonial setIsPopupOpen={setIsPopupOpen} newComment={newComment} setNewComment={setNewComment} isEditing={isEditing} handleSubmitComment={handleSubmitComment} />
             )}

@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react';
 import Image from 'next/image';
 import logo_sidebar from '@public/images/logo/fleo-web-reversed.png';
 import {useSession} from 'next-auth/react';
+import {useMediaQuery} from 'react-responsive';
 import {useRouter} from "next/navigation";
 import {CartItem, SidebarProps} from "../type/CartType";
 import Article from "./CartArticle";
@@ -31,7 +32,7 @@ const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
             }
 
             try {
-                const items = await fetchCartItems(session.user.id); // Utilise la fonction du service
+                const items = await fetchCartItems(session.user.id);
                 setCartItems(items);
             } catch (error) {
                 console.error('Error fetching cart items:', error);
@@ -43,7 +44,6 @@ const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
 
     useEffect(() => {
         const totalPrice = cartItems.reduce((acc, item) => {
-            // Add null checks for item.product and item.product.price
             const itemPrice = item.product && item.product.price ? Number(item.product.price) : 0;
             const itemQuantity = Number(item.quantity);
             return acc + (isNaN(itemPrice) || isNaN(itemQuantity) ? 0 : itemPrice * itemQuantity);
@@ -58,7 +58,7 @@ const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
         const newQuantity = item.quantity - 1;
 
         if (newQuantity <= 0) {
-            await handleRemove(id); // Gère la suppression si la quantité devient 0
+            await handleRemove(id);
             return;
         }
 
@@ -69,12 +69,12 @@ const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
         }
 
         try {
-            await decrementCartItemQuantity(productId, session?.user?.id as string, newQuantity); // Appel de la fonction service
+            await decrementCartItemQuantity(productId, session?.user?.id as string, newQuantity);
 
             const updatedItems = cartItems.map((cartItem) =>
                 cartItem._id === id ? {...cartItem, quantity: newQuantity} : cartItem
             );
-            setCartItems(updatedItems); // Met à jour l'état des items du panier
+            setCartItems(updatedItems);
         } catch (error) {
             console.error('Error decrementing item quantity:', error);
         }
@@ -112,7 +112,6 @@ const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
         }
 
         try {
-            // Ensure product._id and session.user.id are passed correctly
             await removeCartItem(item.product._id, session?.user?.id as string);
             const updatedItems = cartItems.filter((cartItem) => cartItem._id !== id);
             setCartItems(updatedItems);
@@ -148,37 +147,35 @@ const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
     };
 
     const [isVisible, setIsVisible] = useState(false);
-    const [shouldRender, setShouldRender] = useState(isOpen); // Pour gérer le moment où l'élément est dans le DOM
+    const isMobile = useMediaQuery({query: '(max-width: 768px)'});
+    const [shouldRender, setShouldRender] = useState(isOpen);
 
     useEffect(() => {
         if (isOpen) {
-            // Quand isOpen devient vrai, rendre visible et commencer l'animation
             setShouldRender(true);
-            // Attendre un court instant avant d'appliquer `flex` pour éviter les sauts
             const timeout = setTimeout(() => {
                 setIsVisible(true);
-            }, 10); // Petit délai pour permettre l'application de la classe CSS d'animation
+            }, 10);
 
             return () => clearTimeout(timeout);
         } else {
-            // Quand isOpen devient faux, lancer l'animation de fermeture puis cacher l'élément
             setIsVisible(false);
             const timeout = setTimeout(() => {
-                setShouldRender(false); // Retirer complètement l'élément après l'animation
-            }, 300); // Correspond à la durée de l'animation (300ms)
+                setShouldRender(false);
+            }, 300);
 
             return () => clearTimeout(timeout);
         }
     }, [isOpen]);
 
-    if (!shouldRender) return null; // Ne pas rendre la div si elle ne doit pas être visible
+    if (!shouldRender) return null;
 
     return (
         <div
-            className={`fixed top-0 right-0 min-h-screen h-full w-96 bg-white shadow-xl transform transition-transform ease-in-out duration-300 z-50
+            className={`${isMobile ? 'w-full' : 'w-96'} fixed top-0 right-0 min-h-screen h-full bg-white shadow-xl transform transition-transform ease-in-out duration-300 z-50
                 ${isVisible ? 'translate-x-0 flex flex-col' : 'translate-x-full'}
             `}
-            style={{maxHeight: '100vh'}} // Ensure it never grows beyond viewport height
+            style={{maxHeight: '100vh'}}
         >
             <div className="flex items-center justify-between p-4 border-b bg-tertiary">
                 <h2 className="text-2xl font-bold text-text-primary">Mon Panier</h2>
@@ -194,10 +191,6 @@ const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
                 <EmptyCartSection closeSidebar={() => onClose()}/>
             ) : (
                 <div>
-                    {/* Header Section */}
-
-
-                    {/* Cart Items Section */}
                     <div className="p-4 overflow-y-auto" style={{maxHeight: '60vh'}}>
                         {cartItems.length > 0 ? (
                             <ul className="space-y-4">
@@ -216,7 +209,6 @@ const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
                         )}
                     </div>
 
-                    {/* Total Section */}
                     <div className="absolute bottom-0 w-full bg-gray-50 p-4 border-t">
                         <div className="flex items-center justify-between mb-4">
                             <Image src={logo_sidebar} alt="logo" width={50} height={50}/>

@@ -45,15 +45,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick }) => {
     };
 
     return (
-        <div className="sideBar_connexion-section mt-4">
+        <div className="sideBar_connexion-section flex flex-col w-full justify-center items-center mt-4">
             <h3 className="font-semibold text-xl mb-4">Se connecter</h3>
             <p className="text-sm">
                 Connectez-vous pour partager vos impressions avec les autres acheteurs.
             </p>
             {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
-            <div className="sideBar_connexion-section__inputs">
+            <div className="sideBar_connexion-section__inputs w-full">
                 <form
-                    className="flex flex-col items-center justify-center max-w-xl border-none rounded-sm mt-8"
+                    className="flex flex-col items-center justify-center w-full border-none rounded-sm mt-8"
                     onSubmit={handleSubmit}
                 >
                     <InputAnimation

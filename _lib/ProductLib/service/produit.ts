@@ -53,6 +53,25 @@ export async function fetchProductsForClient(): Promise<ProductData[]> {
 }
 
 /**
+ * Recuperer les produits en fonction de la profession.
+ * @param professionFilter
+ * @returns {Promise<ProductData[]>}
+ * @throws {Error}
+ * @example
+*/
+export async function fetchProductsByProfession(professionFilter: string): Promise<ProductData[]> {
+    try {
+        console.log('coucou');
+        const response = await axios.get(`/api/products?profession=${professionFilter}`);
+        return response.data;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.message || 'Erreur lors de la récupération des produits');
+    }
+}
+
+
+
+/**
  * Récupère la liste des produits.
  *
  * @returns {Promise<Product[]>} - Une promesse qui se résout avec un tableau de produits.

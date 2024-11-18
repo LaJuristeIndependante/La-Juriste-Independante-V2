@@ -86,7 +86,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ handleOnLoginClick }) => {
                 Inscrivez-vous pour partager vos impressions avec les autres clients, centraliser vos contrats, et plus encore !
             </p>
             <form className='w-full max-w-md' onSubmit={handleSubmit}>
-                <div className={`scrollable-inputs mb-2 ${screenHeight < 800 ? 'max-h-60 overflow-y-scroll' : ''}`}>
+                <div className={`scrollable-inputs mb-2 ${screenHeight < 900 ? 'max-h-60 overflow-y-scroll' : ''}`}>
                     <div className="mt-5"></div>
                     <InputAnimation
                         icon={people_id_icon}

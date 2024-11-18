@@ -24,7 +24,7 @@ export default function TestimonialCard({ commentaire, handleEditComment, handle
     const { data: session } = useSession();
 
     return (
-        <div className="border-2 border-black first-card bg-[#f0eeee] flex flex-col items-center justify-between w-[250px] h-[300px] min-w-[250px] min-h-[300px] rounded-md shadow-lg p-4 relative">
+        <div className="border-2 border-black bg-[#f0eeee] flex flex-col items-center justify-between w-[250px] h-[300px] min-w-[250px] min-h-[300px] rounded-md shadow-lg p-4 relative">
             <div className="flex flex-col w-full">
                 <div className="flex justify-between w-full items-center">
                     <div className="flex flex-col items-center justify-center relative">
@@ -45,7 +45,6 @@ export default function TestimonialCard({ commentaire, handleEditComment, handle
                         </p>
                     </div>
                 </div>
-                {/* Boutons Modifier et Supprimer */}
                 {(session?.user?.id === commentaire.User._id || session?.user?.isAdmin) && (
                     <div className="flex justify-center items-center space-x-4 mt-4">
                         <button
@@ -63,7 +62,6 @@ export default function TestimonialCard({ commentaire, handleEditComment, handle
                         </button>
                     </div>
                 )}
-                {/* Étoiles de notation */}
                 <div className="mt-4 flex items-center justify-center">
                     {Array.from({ length: 5 }, (_, i) => (
                         <span
@@ -74,8 +72,6 @@ export default function TestimonialCard({ commentaire, handleEditComment, handle
                         </span>
                     ))}
                 </div>
-
-                {/* Message du commentaire */}
                 <div className="text-center text-sm text-gray-700 mt-2 break-all overflow-hidden" style={{ wordWrap: 'break-word' }}>
                     <p>{commentaire.message}</p>
                 </div>

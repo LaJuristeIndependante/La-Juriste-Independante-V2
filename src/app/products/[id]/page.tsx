@@ -122,13 +122,13 @@ export default function ProductPage({ params }: ProductPageProps) {
                             <Image src={left_arrow_icon} alt="left arrow icon" className='w-12 h-12' />
                         </button>
                         <div className="flex flex-col mt-20 ml-3">
-                            <h1 className='text-3xl font-semibold text-center mt-10 mb-10 ml-3'>
+                            <h2 className='text-3xl font-semibold text-center mt-10 mb-10 ml-3'>
                                 {!product ? (
                                     <span>Modèle</span>
                                 ) : (
                                     <span>{product.name}</span>
                                 )}
-                            </h1>
+                            </h2>
                             <p className='bg-gray-200 p-2 rounded-lg text-center ml-3 mb-8'>
                                 {product && (
                                     <span className='w-full text-center'>
@@ -178,8 +178,8 @@ const ModelCart3 = ({ product }: { product: ProductDetail }) => {
                     </div>
                     <div className="flex flex-col border border-gray-200 rounded-lg overflow-hidden h-full w-full md:w-[400px]">
                         <div className="flex items-center justify-center w-full border-1 border-black h-full">
-                            <div className="flex-col items-center justify-center w-full h-full mt-10">
-                                <h2 className="text-xl font-bold text-center  mb-[35px]">{product.name}</h2>
+                            <div className="flex-col items-center justify-center w-1/2 h-full mt-10">
+                                <h3 className="text-xl font-bold text-center  mb-[35px]">{product.name}</h3>
                             </div>
                         </div>
                     </div>

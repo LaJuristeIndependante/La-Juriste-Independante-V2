@@ -98,7 +98,7 @@ const AdminPage: React.FC = () => {
     return (
         <main className="relative flex text-center items-center justify-center min-h-screen w-full z-20">
             <div className="m-5 mt-20 mb-10 relative  w-full px-6 py-10 md:px-10 md:py-20 rounded-xl z-20 flex flex-col items-center">
-                <h1 className={"text-6xl font-bold p-10"}>Bienvenue sur la page administrateur</h1>
+                <h2 className="text-3xl md:text-6xl font-bold p-5 md:p-10 text-center">Bienvenue sur la page administrateur</h2>
                 <div className="flex flex-col space-y-4 w-full">
                     <button
                         onClick={handleProfessions}
@@ -158,7 +158,7 @@ const AdminPage: React.FC = () => {
                             <div className="text-left">
                                 <p className="text-lg font-semibold">Commentaires</p>
                                 <p className="text-sm text-gray-600">
-                                    {testimonials.length + " "} posté{testimonials.length > 1 ? "s" : ""},
+                                    {testimonials.length + " "} posté{testimonials.length > 1 ? "s" : ""}
                                      </p>
                             </div>
                         </div>
@@ -166,8 +166,6 @@ const AdminPage: React.FC = () => {
                     </button>
                 </div>
             </div>
-            {/*<BubbleBackground size={400} position={"-left-16 -bottom-16"} />*/}
-            {/*<BubbleBackground size={300} position={"-right-16 -bottom-16"} />*/}
         </main>
     );
 };

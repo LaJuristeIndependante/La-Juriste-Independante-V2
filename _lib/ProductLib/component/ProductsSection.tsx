@@ -1,22 +1,29 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import slugify from 'slugify';
 import { ProductData } from "@lib/ProductLib/type/Product";
-import { fetchProductsForClient } from "@lib/ProductLib/service/produit";
+import { fetchProductsByProfession } from "@lib/ProductLib/service/produit";
 import { SlArrowRight } from "react-icons/sl";
 import BubbleDecoration from "@lib/ProductLib/component/BubbleDecoration";
 import BackgroundBubbles from "@/components/utils/décors/BubbleBackground";
 import TitleSectionModels from './TitleSectionModels';
+
 const ProductCard = ({ product }: { product: ProductData }) => {
+    const truncateDescription = (description: string) => {
+        if (description.length > 200) {
+            return description.substring(0, 150) + '...';
+        }
+        return description;
+    };
 
     return (
         <div className='flex items-center justify-center flex-col'>
             <div
-                className="relative flex flex-col items-center justify-center w-[250px] p-2 pb-0 bg-[#EAEAEA] rounded-lg cursor-pointer transition shadow-lg hover:shadow-xl overflow-hidden">
-                <p className="font-bold text-xl p-5 ">{product.name}</p>
+                className="relative flex flex-col items-center justify-center w-full max-w-[270px] h-[320px] p-2 pb-0 bg-[#EAEAEA] rounded-lg cursor-pointer transition shadow-lg hover:shadow-xl overflow-hidden">
+                <p className="font-bold text-xl p-5 text-center mt-2">{product.name}</p>
                 <div className="flex flex-col items-start justify-start w-full p-5 pl-5 pt-0">
-                    <p className="text-sm justify-start">{product.description}</p>
+                    <p className="text-sm justify-start">{truncateDescription(product.description || '')}</p>
                     <a
                         href={`/products/${product._id}`}
                         className="text-primary-color font-bold text-xs md:text-sm flex justify-center p-2 pl-0"
@@ -36,33 +43,33 @@ const ProductCard = ({ product }: { product: ProductData }) => {
     );
 };
 
+
 export default function ProductSection() {
     const searchParams = useSearchParams();
     const profession = searchParams.get("profession") || "";
-    const router = useRouter();
-
-    const handleRemoveFilter = () => {
-        router.push('/products');
-    };
 
     const [products, setProducts] = useState<ProductData[]>([]);
 
-    useEffect(() => {
-        const fetchProd = async () => {
-            try {
-                const data = await fetchProductsForClient(); // Récupération des produits
-                setProducts(data); // Mise à jour de l'état 'products'
-            } catch (error) {
-                console.error("Erreur lors de la récupération des produits:", error);
-            }
-        };
+    const fetchProd = async (professionFilter?: string) => {
+        try {
+            const data = await fetchProductsByProfession(professionFilter || '');
+            setProducts(data); 
+        } catch (error) {
+            console.error("Erreur lors de la récupération des produits:", error);
+        }
+    };
 
-        fetchProd();
-    }, []);
+    useEffect(() => {
+        fetchProd(profession);
+    }, [profession]);
+
+    const handleChange = (profession: string) => {
+        fetchProd(slugify(profession, { lower: true }));
+    }
 
     return (
         <section className="relative min-h-screen w-full mx-auto flex flex-col items-start gap-8 p-8">
-            <TitleSectionModels professionName={profession} />
+            <TitleSectionModels professionName={profession} handleChange={handleChange} />
             {products.length > 0 ? (
                 <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 border rounded-lg border-dashed border-black py-4 px-2">
                     {products.map((product, index) => (

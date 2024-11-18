@@ -56,7 +56,8 @@ export default function SearchDiv() {
     const handleSelectProfession = (professionName: string) => {
         setSearchString(professionName);
         setInputClicked(false);
-        router.push(`/products?profession=${encodeURIComponent(professionName)}`);
+        const slugifiedProfessionName = professionName.toLowerCase().replace(/\s+/g, '-');
+        router.push(`/products?profession=${encodeURIComponent(slugifiedProfessionName)}`);
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -143,7 +144,7 @@ export default function SearchDiv() {
             )}
 
             {inputClicked && filteredProfessions.length > 0 && (
-                <ul className={`bg-white border mt-28 border-gray-300 shadow-md absolute xl:w-[575px] search-results w-[90%] md:w-[575px]`}>
+                <ul className={`bg-white border mt-56 border-gray-300 shadow-md absolute xl:w-[575px] search-results w-[90%] md:w-[575px]`}>
                     {filteredProfessions.map((profession, index) => (
                         <li
                             key={index}
