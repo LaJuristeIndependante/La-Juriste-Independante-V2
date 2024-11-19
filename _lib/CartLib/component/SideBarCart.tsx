@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from 'react';
 import Image from 'next/image';
-import logo_sidebar from '@public/images/logo/fleo-web-reversed.png';
+import logo_sidebar from '@public/images/logo/La Juriste indépendante.png';
 import {useSession} from 'next-auth/react';
 import {useMediaQuery} from 'react-responsive';
 import {useRouter} from "next/navigation";
@@ -218,7 +218,7 @@ const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
                             </div>
                         </div>
                         <button
-                            className="text-black bg-red-600 font-semibold w-full py-3 rounded-lg hover:bg-bg-tertiary transition-colors"
+                            className="text-white bg-red-600 font-semibold w-full py-3 rounded-lg hover:bg-bg-tertiary transition-colors"
                             onClick={handleCheckout}
                         >
                             Passer la commande
