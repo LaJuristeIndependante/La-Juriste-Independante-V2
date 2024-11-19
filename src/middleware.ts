@@ -52,6 +52,20 @@ export async function middleware(req: NextRequest) {
         return response;
     }
 
+    if(!token && url.pathname === '/orders'){
+        url.pathname = '/';
+        const response = NextResponse.redirect(url);
+        response.cookies.set('flashMessage', 'Vous devez être connecté pour avoir accés a vos commande', { path: '/' });
+        return response;
+    }
+
+    if(!token && url.pathname === '/paiement'){
+        url.pathname = '/';
+        const response = NextResponse.redirect(url);
+        response.cookies.set('flashMessage', 'Vous devez être connecté pour pouvoir acheté', { path: '/' });
+        return response;
+    }
+
     // Autoriser l'accès si aucune condition de redirection n'est remplie
     return NextResponse.next();
 }

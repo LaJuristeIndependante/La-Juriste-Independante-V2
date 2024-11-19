@@ -57,7 +57,7 @@ interface NavItemCardProps {
     closeSidebar: () => void;
 }
 
-const NavItemCard: React.FC<NavItemCardProps> = ({ icon, title, link, closeSidebar }) => {
+const NavItemCard: React.FC<NavItemCardProps> = ({icon, title, link, closeSidebar}) => {
     const router = useRouter();
 
     const handleClick = () => {

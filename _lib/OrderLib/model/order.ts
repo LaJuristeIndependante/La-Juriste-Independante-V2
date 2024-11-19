@@ -19,6 +19,7 @@ interface IOrder extends Document {
         name: string;
         price: number;
         quantity: number;
+        pdfFile: Buffer;
     }>;
     status: 'pending' | 'paid' ;
     createdAt: Date;
@@ -44,6 +45,7 @@ const orderSchema: Schema = new Schema({
             name: { type: String, required: true },
             price: { type: Number, required: true },
             quantity: { type: Number, required: true },
+            pdfFile: {type: Buffer, required: false,},
         },
     ],
     status: { type: String, default: 'pending', enum: ['pending', 'paid'] },

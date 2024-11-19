@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { FaUserCircle } from "react-icons/fa";
 import Link from 'next/link';
 import { SidebarProps } from "@lib/CartLib/type/CartType";
+import {useSession} from "next-auth/react";
 
 const MenuBurger: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
     const [isVisible, setIsVisible] = useState(false);
     const [shouldRender, setShouldRender] = useState(isOpen); // Pour gérer le moment où l'élément est dans le DOM
+    const session = useSession().data;
 
     useEffect(() => {
         if (isOpen) {
@@ -31,12 +33,15 @@ const MenuBurger: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
     if (!shouldRender) return null; // Ne pas rendre la div si elle ne doit pas être visible
 
-    // Liste des éléments du menu pour modularité
     const menuItems = [
         { label: 'Accueil', href: '/' },
         { label: 'Produits', href: '/products' },
         { label: 'Support', href: '/support' },
     ];
+
+    if(session?.user) {
+        menuItems.push({ label: 'Commande', href: '/orders' })
+    }
 
     return (
         <div

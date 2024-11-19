@@ -9,7 +9,7 @@ import {createPaymentIntent} from "@lib/StripeLib/service/paiement";
 import {deleteOrder, updateOrderForPaiement} from "@lib/OrderLib/service/orders";
 
 const CheckoutPage = ({amount, orderId}: { amount: number, orderId: string }) => {
-    const link = "http://localhost:3000/profile"
+    const link = "http://localhost:3000/orders"
     const router = useRouter();
 
     const stripe = useStripe();
