@@ -3,6 +3,7 @@ interface OrderItem {
     name: string;
     price: number;
     quantity: number;
+    pdfFile?: string;
 }
 
 interface PaidOrderItem {
@@ -35,7 +36,7 @@ export interface OrderDetails {
         name: string;
         price: number;
         quantity: number;
-        pdfFile?: Buffer;
+        pdfFile?: string;
     }>;
     amount: number;
     status: "pending" | "paid" ;

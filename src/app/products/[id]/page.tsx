@@ -75,6 +75,7 @@ export default function ProductPage({params}: ProductPageProps) {
                         productId: product._id,
                         name: product.name,
                         price: product.price,
+                        pdfFile : product.pdfFile,
                         quantity: 1,
                     });
                 }
@@ -108,6 +109,7 @@ export default function ProductPage({params}: ProductPageProps) {
                     name: product.name,
                     price: product.price,
                     quantity: 1,
+                    pdfFile : product.pdfFile,
                 }],
                 amount: product.price,
             });
@@ -173,14 +175,21 @@ export default function ProductPage({params}: ProductPageProps) {
                                 </p>
                             </details>
                         )}
-                        <div className="flex items-center justify-center w-full space-x-5">
-                            <button onClick={handleOrder} className={"flex-1 bg-primary-color rounded-2xl p-4 text-white font-bold text-xl"}>
-                                Acheté
-                            </button>
-                            <button onClick={handleCart} className={"flex-1 border-black rounded-2xl border-2 p-4 font-bold text-xl"}>
-                                panier
-                            </button>
-                        </div>
+                        {session?.user ? (
+                            <div className="flex items-center justify-center w-full space-x-5">
+                                <button onClick={handleOrder}
+                                        className={"flex-1 bg-primary-color rounded-2xl p-4 text-white font-bold text-xl"}>
+                                    Acheté
+                                </button>
+                                <button onClick={handleCart}
+                                        className={"flex-1 border-black rounded-2xl border-2 p-4 font-bold text-xl"}>
+                                    panier
+                                </button>
+                            </div>
+                        ) : (
+                            // eslint-disable-next-line react/no-unescaped-entities
+                            <p>Pour acheté : créez vous un compte afin de pouvoir recevoir et voir vos document aprés l'achat</p>
+                        )}
                     </div>
                 </div>
                 {/*<BackgroundBubbles page='contracts'/>*/}
