@@ -29,7 +29,7 @@ function Footer() {
                                 <Link href="/">Accueil</Link>
                             </li>
                             <li className="footer__site-pages list__item">
-                                <Link href="/contracts">Contrats</Link>
+                                <Link href="/products">Contrats</Link>
                             </li>
                             <li className="footer__site-pages list__item">
                                 <Link href="/support">Support</Link>
@@ -40,13 +40,13 @@ function Footer() {
                         <h3 className="footer__legal-pages__title font-semibold text-2xl">Légal</h3>
                         <ul className="footer__legal-pages__list space-y-1">
                             <li className="footer__legal-pages list__item">
-                                <Link href="/privacy-policy">Politique de confidentialité</Link>
+                                <Link href="/privacy">Politique de confidentialité</Link>
                             </li>
                             <li className="footer__legal-pages list__item">
-                                <Link href="/terms-of-use">Conditions d&apos;utilisation</Link>
+                                <Link href="/terms-of-uses">Conditions d&apos;utilisation</Link>
                             </li>
                             <li className="footer__legal-pages list__item">
-                                <Link href="/terms-of-sale">Conditions de vente</Link>
+                                <Link href="/terms-of-sales">Conditions de vente</Link>
                             </li>
                         </ul>
                     </div>
@@ -60,14 +60,14 @@ function Footer() {
                                 <Link href="https://facebook.com">Facebook</Link>
                             </li>
                             <li className="footer__social-links list__item">
-                                <Link href="/contact-us">Nous contacter</Link>
+                                <Link href="/support">Nous contacter</Link>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
             <hr className="footer__separator w-[98%] border border-[#4A4A4A] my-5 mx-auto" />
-            <FleoComponent />
+            <FleoComponent/>
         </footer>
     );
 }
