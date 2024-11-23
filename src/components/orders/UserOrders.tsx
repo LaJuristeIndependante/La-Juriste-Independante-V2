@@ -106,13 +106,19 @@ const SectionUserOrder = () => {
                                         </>
                                     )}
                                     {order.status === "paid" && (
-                                        <button
-                                            onClick={() => handleDownloadPdf(order._id, `order-${order._id}`)}
-                                            className="px-5 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"
-                                        >
-                                            Télécharger le PDF
-                                        </button>
+                                        <div>
+                                            {order.items.map((item, index) => (
+                                                <button
+                                                    key={index}
+                                                    onClick={() => handleDownloadPdf(item.productId, item.name)}
+                                                    className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition mb-2"
+                                                >
+                                                    Télécharger le PDF pour {item.name}
+                                                </button>
+                                            ))}
+                                        </div>
                                     )}
+
                                 </div>
                             </details>
                         ))}
