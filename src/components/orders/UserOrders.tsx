@@ -64,7 +64,7 @@ const SectionUserOrder = () => {
                         {filteredOrders.map((order) => (
                             <details
                                 key={order._id}
-                                className="border border-gray-200 p-6 pb-0 rounded-lg bg-white shadow-lg transition-shadow duration-200 hover:shadow-xl"
+                                className="border border-gray-200 p-6 rounded-lg bg-white shadow-lg transition-shadow duration-200 hover:shadow-xl"
                             >
                                 <summary className="cursor-pointer text-lg font-semibold">
                                     Order ID: {order._id} - Total Amount: €{order.amount.toFixed(2)}
