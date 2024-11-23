@@ -54,10 +54,10 @@ function Footer() {
                         <h3 className="footer__social-links__title font-semibold text-2xl">Réseaux</h3>
                         <ul className="footer__social-links__list space-y-1">
                             <li className="footer__social-links list__item">
-                                <a href="https://instagram.com">Instagram</a>
+                                <Link href="https://instagram.com">Instagram</Link>
                             </li>
                             <li className="footer__social-links list__item">
-                                <a href="https://facebook.com">Facebook</a>
+                                <Link href="https://facebook.com">Facebook</Link>
                             </li>
                             <li className="footer__social-links list__item">
                                 <Link href="/contact-us">Nous contacter</Link>
