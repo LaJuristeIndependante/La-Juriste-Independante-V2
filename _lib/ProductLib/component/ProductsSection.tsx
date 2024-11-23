@@ -8,6 +8,7 @@ import { SlArrowRight } from "react-icons/sl";
 import BubbleDecoration from "@lib/ProductLib/component/BubbleDecoration";
 import BackgroundBubbles from "@/components/utils/décors/BubbleBackground";
 import TitleSectionModels from './TitleSectionModels';
+import Link from "next/link";
 
 const ProductCard = ({ product }: { product: ProductData }) => {
     const truncateDescription = (description: string) => {
@@ -24,12 +25,12 @@ const ProductCard = ({ product }: { product: ProductData }) => {
                 <p className="font-bold text-xl p-5 text-center mt-2">{product.name}</p>
                 <div className="flex flex-col items-start justify-start w-full p-5 pl-5 pt-0">
                     <p className="text-sm justify-start">{truncateDescription(product.description || '')}</p>
-                    <a
+                    <Link
                         href={`/products/${product._id}`}
                         className="text-primary-color font-bold text-xs md:text-sm flex justify-center p-2 pl-0"
                     >
                         Aperçu <span className={" p-1"}><SlArrowRight /></span>
-                    </a>
+                    </Link>
                 </div>
                 <div className={"mt-10"}>
                     <BubbleDecoration size={70} position="-right-5 -bottom-2" opacity={0.5} />
