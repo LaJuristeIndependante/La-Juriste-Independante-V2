@@ -11,7 +11,7 @@ interface BubbleBackgroundProps {
 const BubbleDecoration: React.FC<BubbleBackgroundProps> = ({
                                                                size,
                                                                position,
-                                                               color = "#DA1A32",  // Couleur par défaut si aucune n'est fournie
+                                                               color = "#A00C30",  // Couleur par défaut si aucune n'est fournie
                                                                shadow = true,       // Ombre activée par défaut
                                                                opacity = 0.7        // Opacité par défaut à 0.7
                                                            }) => {

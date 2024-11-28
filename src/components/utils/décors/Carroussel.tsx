@@ -7,7 +7,7 @@ interface CarouselProps {
     items: React.ReactNode[];
 }
 
-const Carousel: React.FC<CarouselProps> = ({ items }) => {
+const Carrousel: React.FC<CarouselProps> = ({ items }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handlePrev = () => {
@@ -41,30 +41,18 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
 
             <button
                 onClick={handlePrev}
-                className="absolute top-1/2 left-0 transform -translate-y-1/2 p-2 text-white  rounded-full"
+                className="absolute top-1/2 -left-5 transform -translate-y-1/2 p-2 text-white  rounded-full"
             >
                 <Image src={left} alt="Précédent" width={0} height={0} className='h-12 w-12'/>
             </button>
             <button
                 onClick={handleNext}
-                className="absolute top-1/2 right-0 transform -translate-y-1/2 p-2 text-black  rounded-full"
+                className="absolute top-1/2 -right-5 transform -translate-y-1/2 p-2 text-black  rounded-full"
             >
                 <Image src={right} alt="Suivant" width={0} height={0} className='h-12 w-12'/>
             </button>
-
-            <div className="absolute -bottom-5 left-0 right-0 flex justify-center space-x-2">
-                {items.map((_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => setCurrentIndex(index)}
-                        className={`w-3 h-3 rounded-full ${
-                            index === currentIndex ? 'bg-gray-800' : 'bg-gray-400'
-                        }`}
-                    />
-                ))}
-            </div>
         </div>
     );
 };
 
-export default Carousel;
+export default Carrousel;

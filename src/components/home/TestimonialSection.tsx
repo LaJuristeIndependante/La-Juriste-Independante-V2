@@ -1,21 +1,5 @@
-"use client"
-
+"use client";
 import { useState } from 'react';
-
-interface User {
-    _id: string;
-    username: string;
-    image: string;
-}
-
-interface Commentaire {
-    _id: string;
-    User: User;
-    objet: string;
-    message: string;
-    note: number;
-    dateEnvoie: string;
-}
 
 function CommentFormModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
     if (!isOpen) return null;
@@ -50,7 +34,7 @@ function CommentFormModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
     );
 }
 
-export default function TestimonialComponent() {
+export default function TestimonialSection() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOpenModal = () => {

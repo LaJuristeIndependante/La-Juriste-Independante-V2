@@ -28,7 +28,7 @@
 
   --font-primary: 'Jost', sans-serif;
   --font-secondary: 'IslandMoments', sans-serif;
-  --primary-color: #DD2A27;
+  --primary-color: #A00C30;
   --secondary-color: #F5F5F5;
   --placeholder-color: rgb(131, 128, 128);
   --label-color: #999;
@@ -370,7 +370,7 @@ body {
   width: 370px;
   height: 370px;
   bottom: -10vw;
-  right: -11.5vw;
+  right: -9.6vw;
   transform: translateX(-40%);
   z-index: -111;
 }

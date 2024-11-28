@@ -12,7 +12,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'primary-color': '#DD2A27',
+        'primary-color': '#A00C30',
         'secondary-color': '#F5F5F5',
       },
       fontFamily: {

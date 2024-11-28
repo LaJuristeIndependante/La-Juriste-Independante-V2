@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
-import Button from "@/styles/Button.module.css";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";

@@ -82,7 +82,7 @@ function Navbar() {
                         <li className={`${pathname === '/' ? 'font-bold' : ''} text-center w-[100px]`}>
                             <Link href="/">Accueil</Link>
                         </li>
-                        <li className={`${pathname === '/templates' ? 'font-bold' : ''} text-center w-auto min-w-[150px]`}>
+                        <li className={`${pathname === '/products' ? 'font-bold' : ''} text-center w-auto min-w-[150px]`}>
                             <Link href="/products">Templates types</Link>
                         </li>
                         <li className={`${pathname === '/support' ? 'font-bold' : ''} text-center w-[100px]`}>

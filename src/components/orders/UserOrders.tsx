@@ -1,5 +1,5 @@
 "use client";
-
+import { FaChevronDown } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -7,6 +7,7 @@ import { FiTrash2 } from "react-icons/fi";
 import { downloadProductPdf } from "@lib/ProductLib/service/produit";
 import { fetchOrdersByUser, deleteOrder } from "@lib/OrderLib/service/orders";
 import { OrderDetails } from "@lib/OrderLib/type/OrderType";
+import { useMediaQuery } from "react-responsive";
 
 const SectionUserOrder = () => {
     const [orders, setOrders] = useState<OrderDetails[]>([]);
@@ -16,14 +17,14 @@ const SectionUserOrder = () => {
     useEffect(() => {
         const fetchUserOrders = async () => {
             if (!session?.user) {
-                console.error("User not authenticated");
+                console.error("Utilisateur non authentifié");
                 return;
             }
             try {
                 const fetchedOrders = await fetchOrdersByUser(session.user.id);
                 setOrders(fetchedOrders);
             } catch (error) {
-                console.error("Error fetching orders:", error);
+                console.error("Erreur lors de la récupération des commandes:", error);
             }
         };
 
@@ -35,7 +36,7 @@ const SectionUserOrder = () => {
             await deleteOrder(orderId);
             setOrders((prevOrders) => prevOrders.filter((order) => order._id !== orderId));
         } catch (error) {
-            console.error("Error deleting order:", error);
+            console.error("Erreur lors de la suppression de la commande:", error);
         }
     };
 
@@ -50,6 +51,8 @@ const SectionUserOrder = () => {
             console.error("Erreur lors du téléchargement du PDF:", error);
         }
     };
+
+    const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
     const renderOrdersByStatus = (status: "pending" | "paid", title: string) => {
         const filteredOrders = orders.filter((order) => order.status === status);
@@ -66,18 +69,29 @@ const SectionUserOrder = () => {
                                 key={order._id}
                                 className="border border-gray-200 p-6 rounded-lg bg-white shadow-lg transition-shadow duration-200 hover:shadow-xl"
                             >
-                                <summary className="cursor-pointer text-lg font-semibold">
-                                    Order ID: {order._id} - Total Amount: €{order.amount.toFixed(2)}
+                                <summary className="cursor-pointer flex flex-col md:flex-row justify-between w-full items-center text-lg font-semibold">
+                                    <span className="flex items-center">
+                                        <FaChevronDown />
+                                        <p className="ml-2">PID de la commande: {order._id}</p>
+                                    </span>
+                                    {!isMobile && (
+                                        <span>
+                                            Montant total: €{order.amount.toFixed(2)}
+                                        </span>
+                                    )}
                                 </summary>
                                 <div className="mt-4">
+                                    <p className="text-md mb-2">
+                                        <strong>Montant total:</strong> €{order.amount.toFixed(2)}
+                                    </p>
                                     <p className="text-md mb-2">
                                         <strong>Date:</strong> {new Date(order.createdAt).toLocaleDateString()}
                                     </p>
                                     <p className="text-md mb-2">
-                                        <strong>Status:</strong> {order.status}
+                                        <strong>Statut:</strong> {order.status}
                                     </p>
                                     <p className="text-md mb-2">
-                                        <strong>Items:</strong>
+                                        <strong>Articles:</strong>
                                     </p>
                                     <ul className="list-disc list-inside ml-4">
                                         {order.items.map((item) => (
@@ -87,7 +101,7 @@ const SectionUserOrder = () => {
                                         ))}
                                     </ul>
                                 </div>
-                                <div className="flex justify-end space-x-3 mt-4">
+                                <div className="flex flex-col md:flex-row justify-end space-y-3 md:space-y-0 md:space-x-3 mt-4">
                                     {order.status === "pending" && (
                                         <>
                                             <button
@@ -95,13 +109,13 @@ const SectionUserOrder = () => {
                                                 className="px-5 py-2 bg-red-500 text-primary rounded-lg hover:bg-red-600 transition duration-200"
                                             >
                                                 <FiTrash2 className="mr-2" />
-                                                Delete
+                                                Supprimer
                                             </button>
                                             <button
                                                 onClick={() => handlePaymentRedirect(order._id)}
-                                                className="px-5 py-2 bg-green-500 text-primary rounded-lg hover:bg-green-600 transition duration-200"
+                                                className="px-5 py-2 bg-black text-secondary-color rounded hover:bg-gray-900 transition duration-200"
                                             >
-                                                Pay
+                                                Payer
                                             </button>
                                         </>
                                     )}
@@ -111,7 +125,7 @@ const SectionUserOrder = () => {
                                                 <button
                                                     key={index}
                                                     onClick={() => handleDownloadPdf(item.productId, item.name)}
-                                                    className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition mb-2"
+                                                    className="px-4 py-2 bg-black text-secondary-color hover:bg-gray-900 rounded transition mb-2"
                                                 >
                                                     Télécharger le PDF pour {item.name}
                                                 </button>
@@ -134,8 +148,8 @@ const SectionUserOrder = () => {
                 <p className="text-center text-gray-500 text-xl">Aucune commande pour le moment.</p>
             ) : (
                 <>
-                    {renderOrdersByStatus("pending", "Pending Orders")}
-                    {renderOrdersByStatus("paid", "Paid Orders")}
+                    {renderOrdersByStatus("pending", "Commandes en attente")}
+                    {renderOrdersByStatus("paid", "Commandes payées")}
                 </>
             )}
         </section>

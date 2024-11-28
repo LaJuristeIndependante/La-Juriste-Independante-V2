@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from 'react';
 import edit_icon from '@/../public/images/common/edit-icon.svg';
 import Image from 'next/image';
@@ -106,7 +105,7 @@ export default function TestimonialsSection() {
         <section className="relative min-h-screen bg-white flex flex-col justify-center items-center py-10">
             <div className="absolute top-0 left-0">
                 <hr
-                    className="w-[200px] md:w-[500px] border-[12px] md:border-l-8 rounded-r-xl border-[#DA1A32] my-10 mx-auto"
+                    className="w-[200px] md:w-[500px] border-[12px] md:border-l-8 rounded-r-xl border-[#A00C30] my-10 mx-auto"
                 />
             </div>
             <div className={`flex w-full px-10 py-0 text-start`}>
@@ -129,7 +128,7 @@ export default function TestimonialsSection() {
             </div>
             {session?.user ? (
                 <button
-                    className="bg-[#D9D9D9] flex items-center justify-center px-3 py-2 text-black font-semibold rounded-md mt-4"
+                    className="bg-[#D9D9D9] z-50 flex items-center justify-center px-3 py-2 text-black font-semibold rounded-md mt-4"
                     onClick={() => {
                         setIsEditing(false);
                         setIsPopupOpen(true);
