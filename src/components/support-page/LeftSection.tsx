@@ -29,7 +29,12 @@ function LeftSection() {
           Mes coordonnées
         </h2>
         <p className={`mt-1 w-11/12 ${isMobile ? 'text-xs' : 'text-base'}`}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+            Vous n’avez pas trouvé le modèle juridique qu’il vous faut ? <br/>
+            Pas de problème, nous sommes là pour vous aider ! Si aucun des modèles proposés ne correspond à vos besoins spécifiques, n’hésitez pas à nous contacter.
+            Nous serons ravis de vous accompagner dans la création d’un modèle juridique personnalisé, parfaitement adapté à votre activité.<br/>
+            Pour toute demande, contactez-nous directement via le formulaire ci-dessous ou à l’adresse email indiquée. Notre équipe se fera un plaisir de répondre 
+            rapidement et efficacement à vos besoins. <br/>
+            Ensemble, trouvons la solution qui vous convient !        
         </p>
         <div className="flex flex-col">
           <CoordsCard
@@ -38,14 +43,6 @@ function LeftSection() {
             content='lajuristeindependante@gmail.com'
             isMobile={isMobile}
           />
-          <p>
-            Vous n’avez pas trouvé le modèle juridique qu’il vous faut ? <br/>
-            Pas de problème, nous sommes là pour vous aider ! Si aucun des modèles proposés ne correspond à vos besoins spécifiques, n’hésitez pas à nous contacter.
-            Nous serons ravis de vous accompagner dans la création d’un modèle juridique personnalisé, parfaitement adapté à votre activité.<br/>
-            Pour toute demande, contactez-nous directement via le formulaire ci-dessous ou à l’adresse email indiquée. Notre équipe se fera un plaisir de répondre 
-            rapidement et efficacement à vos besoins. <br/>
-            Ensemble, trouvons la solution qui vous convient !
-          </p>
         </div>
       </div>
     </div>
