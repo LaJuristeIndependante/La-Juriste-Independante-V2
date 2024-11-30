@@ -156,7 +156,7 @@ export default function ProductPage({params}: ProductPageProps) {
                             </p>
                         </div>
                     </div>
-                    <hr className="w-1/4 md:w-[400px] border-[#DA1A32] border-[12px] md:border-l-8 rounded-l-xl border-special-red my-10"/>
+                    <hr className="w-1/4 md:w-[400px] border-[#A00C30] border-[12px] md:border-l-8 rounded-l-xl border-special-red my-10"/>
                 </div>
                 <div className="flex flex-col md:flex-row items-center h-full w-full justify-between">
                     <div className="w-2/3 flex items-center h-full justify-center">
