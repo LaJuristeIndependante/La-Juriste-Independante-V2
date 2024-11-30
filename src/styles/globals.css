@@ -361,7 +361,7 @@ body {
   width: 25vw;
   height: 25vw;
   bottom: 0vw;
-  right: -20vw;
+  right: -16.5vw;
   animation: floating 7s infinite;
 }
 
@@ -370,7 +370,7 @@ body {
   width: 370px;
   height: 370px;
   bottom: -10vw;
-  right: -9.6vw;
+  right: -8.8vw;
   transform: translateX(-40%);
   z-index: -111;
 }

@@ -67,7 +67,7 @@ function Footer() {
                 </div>
             </div>
             <hr className="footer__separator w-[98%] border border-[#4A4A4A] my-5 mx-auto" />
-            <FleoComponent/>
+            <FleoComponent />
         </footer>
     );
 }

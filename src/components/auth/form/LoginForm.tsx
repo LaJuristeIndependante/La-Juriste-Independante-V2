@@ -15,14 +15,14 @@ interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick }) => {
-    const [identifiant, setIdentifiant] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [showPassword, setShowPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
     const router = useRouter();
 
-    const handleIdentifiantChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setIdentifiant(e.target.value);
+    const handleEmailChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setEmail(e.target.value);
     };
 
     const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +32,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick }) => {
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const res = await signIn('credentials', {
-            email: identifiant,
+            email: email,
             password: password,
             redirect: false,
         });
@@ -60,10 +60,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick }) => {
                         icon={id_icon}
                         utility="id"
                         type="text"
-                        name="identifiant"
-                        label="Identifiant"
-                        onChange={handleIdentifiantChange}
-                        value={identifiant}
+                        name="Email"
+                        label="Email"
+                        onChange={handleEmailChange}
+                        value={email}
                     />
                     <PasswordAnimation
                         utilitie="password"

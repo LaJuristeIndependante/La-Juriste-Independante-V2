@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 
 interface CookiePopupProps {
     isOpen: boolean;
@@ -10,35 +11,35 @@ interface CookiePopupProps {
 const CookiePopup: React.FC<CookiePopupProps> = ({ isOpen, onClose }) => {
     return (
         <div
-            className={`fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center transition-opacity ${
-                isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-            }`}
+            className={`fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center transition-opacity ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                }`}
         >
-            <div className="bg-tertiary bg-white text-secondary shadow-xl w-full max-w-md mx-4 p-6 rounded-lg">
-                <div className="flex items-center justify-between">
-                    <h2 className="text-lg font-bold text-black">Cookies</h2>
-                    <button
-                        className="text-2xl font-bold text-text-secondary hover:text-text-quinary transition-colors"
-                        onClick={() => onClose(false)}
-                    >
-                        &times;
-                    </button>
-                </div>
-                <p className="mt-2 mb-4 text-black text-sm">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            <div className="bg-white text-black shadow-lg w-full max-w-lg mx-4 p-6 rounded-lg">
+                <h2 className="text-lg font-bold mb-4">LES COOKIES SUR LAJURISTEINDEPENDANTE.COM</h2>
+                <p className="text-sm mb-6">
+                    LAJURISTEINDEPENDANTE utilise des cookies pour personnaliser le contenu et vous offrir une expérience sur mesure.
+                    Vous pouvez gérer vos préférences et en savoir plus en cliquant sur
+                    <span className='font-bold'> &quot;Paramètres des cookies&quot;</span> et à tout moment dans notre{' '}
+                    <Link href="/privacy" className="underline">Politique de confidentialité</Link>.
                 </p>
-                <div className="flex gap-4 justify-end">
+                <div className="flex flex-col gap-3">
                     <button
-                        className="bg-bg-secondary bg-black text-secondary-color py-2 px-4 rounded-lg hover:bg-bg-tertiary transition-colors"
+                        className="w-full bg-black text-white py-2 rounded-md hover:opacity-90 transition"
                         onClick={() => onClose(true)}
                     >
-                        Accepter
+                        TOUT ACCEPTER
                     </button>
                     <button
-                        className="bg-primary-color text-secondary-color py-2 px-4 rounded-lg hover:bg-red-600 transition-colors"
+                        className="w-full bg-primary-color text-white py-2 rounded-md hover:opacity-90 transition"
                         onClick={() => onClose(false)}
                     >
-                        Refuser
+                        ACCEPTER LES COOKIES STRICTEMENT NÉCESSAIRES
+                    </button>
+                    <button
+                        className="w-full text-gray-500 hover:text-black underline text-sm"
+                        onClick={() => console.log('Paramètres des cookies ouverts')}
+                    >
+                        Refuser tous les cookies
                     </button>
                 </div>
             </div>

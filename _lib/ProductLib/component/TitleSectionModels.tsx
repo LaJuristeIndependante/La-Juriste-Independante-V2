@@ -122,16 +122,16 @@ const TitleSectionModels: React.FC<TitleSectionModelsProps> = ({ professionName,
                 <h2 className="text-3xl md:text-4xl font-bold w-full mb-12 md:mb-6 title_section_contrats">
                     {!isMobile ? (
                         <>
-                            Des modèles qui correspondent <span className={"relative"}>à vos besoins <Image src={line} alt={"line"} className={"absolute right-0"} /></span>
+                            Des templates qui correspondent <span className={"relative"}>à vos besoins <Image src={line} alt={"line"} className={"absolute right-0"} /></span>
                         </>
                     ) : (
                         <>
-                            Des modèles qui correspondent <br /><span className={"relative"}>à vos besoins <Image src={line} alt={"line"} className={"absolute right-0"} /></span>
+                            Des templates qui correspondent <br /><span className={"relative"}>à vos besoins <Image src={line} alt={"line"} className={"absolute right-0"} /></span>
                         </>
                     )}
                 </h2>
                 <p className={`text-lg sm:text-base md:text-lg font-light md:w-2/3 text-center md:text-left`}>
-                    Je mets à votre disposition des modèles juridiques prêts à l'emploi, spécialement conçus pour répondre aux exigences uniques de votre secteur professionnel.
+                    Je mets à votre disposition des templates juridiques prêts à l'emploi, spécialement conçus pour répondre aux exigences uniques de votre secteur professionnel.
                 </p>
                 <form
                     className={`mt-10 md:mt-6 flex items-center ${isClicked && 'bg-[#F5F5F5] border border-gray-300 rounded-md'} ${isMobile ? 'w-full' : 'max-w-xl'}`}
