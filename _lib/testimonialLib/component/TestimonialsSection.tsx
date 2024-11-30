@@ -139,7 +139,7 @@ export default function TestimonialsSection() {
                     <Image src={edit_icon} alt="edit icon" className='w-5 h-5 ml-2 md:w-6 md:h-6' />
                 </button>
             ) : (
-                <p className='mt-6'>Connecté vous pour ajouté un commentaire</p>
+                <p className='mt-6 z-50'>Connectez-vous pour poster un commentaire.</p>
             )}
 
             {isPopupOpen && (
