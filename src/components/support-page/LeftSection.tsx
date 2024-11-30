@@ -29,11 +29,11 @@ function LeftSection() {
           Mes coordonnées
         </h2>
         <p className={`mt-1 w-11/12 ${isMobile ? 'text-xs' : 'text-base'}`}>
-            Vous n’avez pas trouvé le modèle juridique qu’il vous faut ? <br/>
+            Vous n’avez pas trouvé le modèle juridique qu’il vous faut ? <br/><br/>
             Pas de problème, nous sommes là pour vous aider ! Si aucun des modèles proposés ne correspond à vos besoins spécifiques, n’hésitez pas à nous contacter.
-            Nous serons ravis de vous accompagner dans la création d’un modèle juridique personnalisé, parfaitement adapté à votre activité.<br/>
+            Nous serons ravis de vous accompagner dans la création d’un modèle juridique personnalisé, parfaitement adapté à votre activité.<br/><br/>
             Pour toute demande, contactez-nous directement via le formulaire ci-dessous ou à l’adresse email indiquée. Notre équipe se fera un plaisir de répondre 
-            rapidement et efficacement à vos besoins. <br/>
+            rapidement et efficacement à vos besoins. <br/><br/>
             Ensemble, trouvons la solution qui vous convient !        
         </p>
         <div className="flex flex-col">
