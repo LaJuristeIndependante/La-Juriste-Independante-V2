@@ -35,25 +35,17 @@ function LeftSection() {
           <CoordsCard
             title='Adresse mail'
             icon={mail_icon}
-            content='Exemple@gmail.com'
+            content='lajuristeindependante@gmail.com'
             isMobile={isMobile}
           />
-          <CoordsCard
-            title='Adresse'
-            icon={loca_icon}
-            content={
-              <>
-                206 rue du triolet 34090, <br /> Montpellier
-              </>
-            }
-            isMobile={isMobile}
-          />
-          <CoordsCard
-            title='Téléphone'
-            icon={phone_icon}
-            content='07.83.08.49.92'
-            isMobile={isMobile}
-          />
+          <p>
+            Vous n’avez pas trouvé le modèle juridique qu’il vous faut ? <br/>
+            Pas de problème, nous sommes là pour vous aider ! Si aucun des modèles proposés ne correspond à vos besoins spécifiques, n’hésitez pas à nous contacter.
+            Nous serons ravis de vous accompagner dans la création d’un modèle juridique personnalisé, parfaitement adapté à votre activité.<br/>
+            Pour toute demande, contactez-nous directement via le formulaire ci-dessous ou à l’adresse email indiquée. Notre équipe se fera un plaisir de répondre 
+            rapidement et efficacement à vos besoins. <br/>
+            Ensemble, trouvons la solution qui vous convient !
+          </p>
         </div>
       </div>
     </div>
