@@ -59,17 +59,10 @@ const PaymentPage: React.FC = () => {
         <section className="min-h-screen flex flex-col justify-center p-10 text-center m-10 rounded-md text-black">
             <div className="md-10">
                 <h1 className="text-4xl font-extrabold mb-2">Résumé de la commande</h1>
-                <h2 className="text-2xl ">Total : <span className="text-green-600">€ {orderDetails.amount.toFixed(2)}</span></h2>
+                <h2 className="text-2xl ">Total : <span
+                    className="text-green-600">€ {orderDetails.amount.toFixed(2)}</span></h2>
             </div>
-            <Elements stripe={stripePromise}
-                      options={{
-                          mode: "payment",
-                          amount: convertToSubcurrency(orderDetails.amount),
-                          currency: "eur"
-                      }}
-            >
-                <CheckoutPage orderId={orderDetails._id} amount={orderDetails.amount}/>
-            </Elements>
+            <CheckoutPage orderId={orderDetails._id} amount={orderDetails.amount}/>
         </section>
     );
 };
