@@ -1,6 +1,5 @@
 import {NextRequest, NextResponse} from "next/server";
 import Stripe from "stripe";
-import {createPaymentIntent} from "@lib/StripeLib/service/paiement";
 import convertToSubcurrency from "@lib/StripeLib/convertToSubcurrency";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "", {
@@ -31,7 +30,7 @@ export async function POST(request: NextRequest) {
             payment_method_types: ['card'],
             customer: customer.id,
             mode: "payment",
-            success_url: `http://localhost:3000/paiement/success?token=${customer.id}`,
+            success_url: `http://localhost:3000/paiement/success?token=${customer.id}&orderId=${orderId}`,
             cancel_url: "http://localhost:3000?token="+customer.id,
             line_items: [{
                 quantity: 1,
@@ -42,10 +41,8 @@ export async function POST(request: NextRequest) {
                     currency: "EUR",
                     unit_amount: amountInCent,
                 },
-
             }]
         })
-        console.log(checkout.url);
         return NextResponse.json({msg: checkout, url: checkout.url}, {status: 200});
     } catch (error) {
         console.error("Internal Error", error);
