@@ -11,9 +11,14 @@ interface UserPayload {
 export async function middleware(req: NextRequest) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
     const url = req.nextUrl.clone();
+    const { searchParams } = new URL(req.url);
+    const paiementToken = searchParams.get('token');
+    const orderId = searchParams.get('orderId');
 
     let isAdmin = false;
     let isVerified = false;
+
+
 
     if (token) {
         const userPayload = token as UserPayload;
@@ -66,7 +71,13 @@ export async function middleware(req: NextRequest) {
         return response;
     }
 
-    // Autoriser l'accès si aucune condition de redirection n'est remplie
+    if (url.pathname === '/paiement/success' && (!orderId && !paiementToken)) {
+        url.pathname = '/';
+        const response = NextResponse.redirect(url)
+        response.cookies.set('flashMessage', 'cette page n est pas disponnible si aucun paiement n a été effectué' , { path: '/' })
+        return response;
+    }
+
     return NextResponse.next();
 }
 
