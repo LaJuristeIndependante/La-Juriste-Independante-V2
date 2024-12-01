@@ -1,6 +1,5 @@
 import {NextRequest, NextResponse} from 'next/server'
 import Stripe from 'stripe'
-import * as process from "node:process";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
     apiVersion: "2024-06-20",
