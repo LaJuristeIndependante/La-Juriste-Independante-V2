@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { createPaymentIntent } from "@lib/StripeLib/service/paiement";
 import { deleteOrder, updateOrderForPaiement } from "@lib/OrderLib/service/orders";
 
-const CheckoutPage = ({amount, orderId}: { amount: number, orderId: string }) => {
+const CheckoutPage = ({ amount, orderId }: { amount: number, orderId: string }) => {
     const link = "https://www.lajuristeindependante.com/";
     const router = useRouter();
 
@@ -87,7 +87,17 @@ const CheckoutPage = ({amount, orderId}: { amount: number, orderId: string }) =>
         setLoading(false);
     };
 
+    const verifyPersonalInfo = () => {
+        if (!personalInfo.name || !personalInfo.email || !personalInfo.address.line1 || !personalInfo.address.city || !personalInfo.address.postalCode || !personalInfo.address.country) {
+            setErrorMessage("Veuillez remplir tous les champs.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     const updateOrders = async (): Promise<void> => {
+
         try {
             await updateOrderForPaiement(orderId, personalInfo, 'paid');
         } catch (err: any) {
@@ -130,11 +140,11 @@ const CheckoutPage = ({amount, orderId}: { amount: number, orderId: string }) =>
                     className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
                     role="status"
                 >
-          <span
-              className="!absolute !-m-px !h-px !w-px !overflow-hidden whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-          >
-            Loading...
-          </span>
+                    <span
+                        className="!absolute !-m-px !h-px !w-px !overflow-hidden whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                    >
+                        Chargement...
+                    </span>
                 </div>
             </div>
         );
@@ -153,7 +163,7 @@ const CheckoutPage = ({amount, orderId}: { amount: number, orderId: string }) =>
                     {/* Ajoutez plus de détails de facture si nécessaire */}
                     <button
                         onClick={() => setStep(2)}
-                        className="text-white w-full py-4 bg-red-500 mt-4 rounded-lg font-bold"
+                        className="text-white w-full py-4 bg-[#A00C30] mt-4 rounded-lg font-bold"
                     >
                         Suivant
                     </button>
@@ -164,6 +174,7 @@ const CheckoutPage = ({amount, orderId}: { amount: number, orderId: string }) =>
                 <div className="text-black">
                     {/* Section des informations personnelles */}
                     <h3 className="text-lg font-bold mb-2">Informations personnelles</h3>
+                    {errorMessage && <div className="text-center text-red-500">{errorMessage}</div>}
                     <input
                         type="text"
                         name="name"
@@ -171,6 +182,7 @@ const CheckoutPage = ({amount, orderId}: { amount: number, orderId: string }) =>
                         onChange={handleInputChange}
                         placeholder="Nom complet"
                         className="w-full p-2 mb-2 border rounded-md"
+                        required
                     />
                     <input
                         type="email"
@@ -179,6 +191,7 @@ const CheckoutPage = ({amount, orderId}: { amount: number, orderId: string }) =>
                         onChange={handleInputChange}
                         placeholder="Email"
                         className="w-full p-2 mb-2 border rounded-md"
+                        required
                     />
                     <input
                         type="text"
@@ -187,6 +200,7 @@ const CheckoutPage = ({amount, orderId}: { amount: number, orderId: string }) =>
                         onChange={handleAddressChange}
                         placeholder="Adresse ligne 1"
                         className="w-full p-2 mb-2 border rounded-md"
+                        required
                     />
                     <input
                         type="text"
@@ -195,6 +209,7 @@ const CheckoutPage = ({amount, orderId}: { amount: number, orderId: string }) =>
                         onChange={handleAddressChange}
                         placeholder="Adresse ligne 2"
                         className="w-full p-2 mb-2 border rounded-md"
+                        required
                     />
                     <input
                         type="text"
@@ -203,6 +218,7 @@ const CheckoutPage = ({amount, orderId}: { amount: number, orderId: string }) =>
                         onChange={handleAddressChange}
                         placeholder="Ville"
                         className="w-full p-2 mb-2 border rounded-md"
+                        required
                     />
                     <input
                         type="text"
@@ -211,6 +227,7 @@ const CheckoutPage = ({amount, orderId}: { amount: number, orderId: string }) =>
                         onChange={handleAddressChange}
                         placeholder="Code postal"
                         className="w-full p-2 mb-2 border rounded-md"
+                        required
                     />
                     <input
                         type="text"
@@ -219,17 +236,22 @@ const CheckoutPage = ({amount, orderId}: { amount: number, orderId: string }) =>
                         onChange={handleAddressChange}
                         placeholder="Pays"
                         className="w-full p-2 mb-2 border rounded-md"
+                        required
                     />
                     <div className="flex justify-between mt-4">
                         <button
                             onClick={() => setStep(1)}
-                            className="text-white w-1/3 py-2 bg-gray-500 rounded-lg font-bold"
+                            className="text-white w-1/3 py-2 bg-black rounded-lg font-bold"
                         >
                             Précédent
                         </button>
                         <button
-                            onClick={() => setStep(3)}
-                            className="text-white w-1/3 py-2 bg-red-500 rounded-lg font-bold"
+                            onClick={() => {
+                                if (verifyPersonalInfo()) {
+                                    setStep(3);
+                                }
+                            }}
+                            className="text-white w-1/3 py-2 bg-[#A00C30] rounded-lg font-bold"
                         >
                             Suivant
                         </button>
@@ -247,14 +269,14 @@ const CheckoutPage = ({amount, orderId}: { amount: number, orderId: string }) =>
                         <button
                             onClick={() => setStep(2)}
                             type="button"
-                            className="text-white w-1/3 py-2 bg-gray-500 rounded-lg font-bold"
+                            className="text-white w-1/3 py-2 bg-black rounded-lg font-bold"
                         >
                             Précédent
                         </button>
                         <button
                             type="submit"
                             disabled={!stripe || loading}
-                            className="text-white w-1/3 py-2 bg-red-500 rounded-lg font-bold disabled:opacity-50 disabled:animate-pulse"
+                            className="text-white w-1/3 py-2 bg-[#A00C30] rounded-lg font-bold disabled:opacity-50 disabled:animate-pulse"
                         >
                             {!loading ? `Payer €${amount.toFixed(2)}` : "Traitement..."}
                         </button>

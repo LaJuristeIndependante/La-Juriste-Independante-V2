@@ -29,7 +29,7 @@ function Footer() {
                                 <Link href="/">Accueil</Link>
                             </li>
                             <li className="footer__site-pages list__item">
-                                <Link href="/products">Contrats</Link>
+                                <Link href="/products">Templates types</Link>
                             </li>
                             <li className="footer__site-pages list__item">
                                 <Link href="/support">Support</Link>
@@ -54,13 +54,13 @@ function Footer() {
                         <h3 className="footer__social-links__title font-semibold text-2xl">Réseaux</h3>
                         <ul className="footer__social-links__list space-y-1">
                             <li className="footer__social-links list__item">
-                                <Link href="https://instagram.com">Instagram</Link>
+                                <Link target='blank' href="https://www.instagram.com/arianebarrons/">Instagram</Link>
                             </li>
                             <li className="footer__social-links list__item">
-                                <Link href="https://facebook.com">Facebook</Link>
+                                <Link target='blank' href="https://facebook.com">Facebook</Link>
                             </li>
                             <li className="footer__social-links list__item">
-                                <Link href="/support">Nous contacter</Link>
+                                <Link href="/support">Me contacter</Link>
                             </li>
                         </ul>
                     </div>

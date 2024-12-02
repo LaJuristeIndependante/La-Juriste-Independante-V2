@@ -3,6 +3,7 @@ import Image from 'next/image';
 import logo_fleo_web from '@public/images/common/logoSite.png';
 import linkedin_icon from '@public/images/common/linkedin-icon.svg';
 import website_icon from '@public/images/common/website-icon.svg';
+import Link from 'next/link';
 
 export default function FleoComponent() {
     return (
@@ -14,8 +15,8 @@ export default function FleoComponent() {
                     </div>
                 <div className="mt-3 md:mt-0 md:ml-auto flex">
                     <ul className="fleo-socials flex justify-between space-x-3">
-                        <li><Image src={linkedin_icon} alt="LinkedIn" className='w-4 h-4' /></li>
-                        <li><Image src={website_icon} alt="Website" className='w-4 h-4' /></li>
+                        <li><Link target='blank' href="https://www.linkedin.com/"><Image src={linkedin_icon} alt="LinkedIn" className='w-4 h-4' /></Link></li>
+                        <li><Link target='blank' href="https://catalogue-site-phi.vercel.app/"><Image src={website_icon} alt="Website" className='w-4 h-4' /></Link></li>
                     </ul>
                 </div>
             </div >

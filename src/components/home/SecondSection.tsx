@@ -34,7 +34,7 @@ function SecondSectionComponent(): React.ReactElement {
                 )}
                 <p className='text-center md:text-left md:w-full mt-6 md:mt-5 mx-4 md:mx-0'>
                     Bienvenue sur mon site ! Je suis une juriste indépendante spécialisée dans l&apos;accompagnement juridique des micro-entrepreneurs.
-                    Avec plus de 10 ans d&apos;expérience et un bac+5 en droit, je propose des templates/ modèles type juridique. Ensemble, assurons la
+                    Avec plus de 10 ans d&apos;expérience et un bac+5 en droit, je propose des templates / modèles type juridique. Ensemble, assurons la
                     protection et la réussite de votre entreprise.
                 </p>
             </div>

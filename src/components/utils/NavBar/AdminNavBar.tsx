@@ -1,23 +1,20 @@
 "use client"
 
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import navIcon from '@/../public/images/logo/La Juriste indépendante Admin.png';
-import {useSession} from "next-auth/react";
+import { useSession } from "next-auth/react";
 import MenuBurger from "@/components/utils/NavBar/MenuBurger";
-import {usePathname, useRouter} from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import MenuBurgerButton from "@/components/common/button/MenuBurgerButton";
-import {useMediaQuery} from "react-responsive";
-import {MdOutlineAdminPanelSettings} from "react-icons/md";
+import { useMediaQuery } from "react-responsive";
 import AuthButton from "@/components/common/button/AuthButton";
 import AuthSideBar from "@/components/utils/NavBar/AuthSideBar";
 import Link from "next/link";
-import logo_la_juriste_independante from "@public/images/common/logo-la-juriste-indépendante.svg";
 import admin_icon from "@public/images/common/admin-icon.svg";
 
 
 export default function AdminNavbar() {
-    const {data: session, status} = useSession();
     const [menuBurgerIsVisible, setMenuBurgerIsVisible] = useState<boolean>(false);
     const [menuAdminIsVisible, setMenuAdminIsVisible] = useState<boolean>(false);
     const [isAuthSideBarVisible, setAuthSideBarVisible] = useState<boolean>(false);
@@ -25,14 +22,14 @@ export default function AdminNavbar() {
     const pathname = usePathname();
 
     useEffect(() => {
-        if (pathname.includes("admin") ){
+        if (pathname.includes("admin")) {
             setMenuAdminIsVisible(true);
         } else {
             setMenuAdminIsVisible(false);
         }
     }, [pathname]);
 
-    const isMobile = useMediaQuery({query: '(max-width: 1070px)'});
+    const isMobile = useMediaQuery({ query: '(max-width: 1070px)' });
 
     const menuIsVisible = () => {
         setMenuBurgerIsVisible(true);
@@ -53,7 +50,7 @@ export default function AdminNavbar() {
                     className={`cursor-pointer flex items-center justify-center space-x-2 p-4`}
                     onClick={() => router.push('/')}
                 >
-                    <Image src={navIcon} alt="logo" width={60} height={60} style={{height: "auto"}}/>
+                    <Image src={navIcon} alt="logo" width={60} height={60} style={{ height: "auto" }} />
                 </div>
                 {!isMobile ? (
                     <>
@@ -83,15 +80,15 @@ export default function AdminNavbar() {
                         className={`flex justify-center p-2 font-bold space-x-2 rounded-full border border-gray-300 bg-secondary-color`}
                         onClick={() => router.push('/admin')}
                     >
-                        <Image src={admin_icon} alt="admin icon" width={0} height={0} className="w-6 h-6"/>
+                        <Image src={admin_icon} alt="admin icon" width={0} height={0} className="w-6 h-6" />
                         <p className='mt-0.5'>Administration</p>
                     </button>
-                    <AuthButton toggleSidebar={() => authSidebar()}/>
-                    {isMobile && <MenuBurgerButton toggleSidebar={menuIsVisible}/>}
+                    <AuthButton toggleSidebar={() => authSidebar()} />
+                    {isMobile && <MenuBurgerButton toggleSidebar={menuIsVisible} />}
                 </div>
             </nav>
             <MenuBurger isOpen={menuBurgerIsVisible} onClose={() => setMenuBurgerIsVisible(false)} isOpenAdmin={menuAdminIsVisible} />
-            <AuthSideBar isOpen={isAuthSideBarVisible} closeSidebar={closeAuthSidebar}/>
+            <AuthSideBar isOpen={isAuthSideBarVisible} closeSidebar={closeAuthSidebar} />
         </header>
 
     )

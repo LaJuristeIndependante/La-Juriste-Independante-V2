@@ -48,11 +48,11 @@ const PaymentPage: React.FC = () => {
     }
 
     if (error) {
-        return <div className="text-red-500 text-center mt-4">{error}</div>;
+        return <div className="text-[#A00C30] text-center mt-4">{error}</div>;
     }
 
     if (!orderDetails) {
-        return <div className="text-red-500 text-center mt-4">Détails de la commande non disponibles.</div>;
+        return <div className="text-[#A00C30] text-center mt-4">Détails de la commande non disponibles.</div>;
     }
 
     return (

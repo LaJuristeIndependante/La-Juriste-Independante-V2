@@ -105,7 +105,7 @@ function Navbar() {
                     {isMobile && <MenuBurgerButton toggleSidebar={menuIsVisible}/>}
                 </div>
             </nav>
-            <MenuBurger isOpen={menuBurgerIsVisible} onClose={() => setMenuBurgerIsVisible(false)}/>
+            <MenuBurger isOpen={menuBurgerIsVisible} onClose={() => setMenuBurgerIsVisible(false)} isOpenAdmin={false}/>
             <AuthSideBar isOpen={isAuthSideBarVisible} closeSidebar={closeAuthSidebar}/>
             <CartSideBar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)}/>
         </header>
