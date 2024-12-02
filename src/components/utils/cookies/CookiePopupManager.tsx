@@ -16,10 +16,8 @@ const CookiePopupManager: React.FC = () => {
     const closeCookiePopup = (consentGiven: boolean) => {
         if (consentGiven) {
             localStorage.setItem('cookieConsent', 'accepted');
-            // Logic for accepting cookies can go here
         } else {
             localStorage.setItem('cookieConsent', 'declined');
-            // Logic for declining cookies can go here
         }
         setCookiePopupOpen(false);
     };
@@ -29,7 +27,7 @@ const CookiePopupManager: React.FC = () => {
             {isCookiePopupOpen && (
                 <CookiePopup
                     isOpen={isCookiePopupOpen}
-                    onClose={() => closeCookiePopup(true)}  // Assumes user accepts by closing
+                    onClose={() => closeCookiePopup(true)}
                 />
             )}
         </>

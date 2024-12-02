@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import ClientNavbar from "@/components/ClientNavBar";
 import CookiePopupManager from "@/components/utils/cookies/CookiePopupManager";
 import CleanUpOrders from "@lib/OrderLib/component/CleanupOrder";
-import ClientProviders from './(provider)/ClientProviders';  // New Client Component
+import ClientProviders from './(provider)/ClientProviders';   
 
 export const metadata: Metadata = {
   title: "La juriste indépendante",

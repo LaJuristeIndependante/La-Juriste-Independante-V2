@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import { Profession } from "@lib/ProfessionLib/type/Profession";
 import Image from "next/image";
@@ -21,10 +20,9 @@ const ProfessionManagement: React.FC = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-        Modal.setAppElement('body');
-      }
+      Modal.setAppElement('body');
+    }
 
-    // Fetch all professions on component mount
     const fetchProfessions = async () => {
       try {
         const professionsData = await getAllProfessions();
@@ -101,8 +99,8 @@ const ProfessionManagement: React.FC = () => {
 
   return (
     <section className="flex flex-col text-black min-h-screen p-8 w-full space-y-10 z-0">
-      <div className={"flex justify-between"}>
-        <div className={"h-full w-full"}>
+      <div className={"flex justify-between w-full"}>
+        <div className={"h-full w-full "}>
           <h2 className="font-jost text-4xl font-bold mb-6">Gestionnaire de professions</h2>
           <button
             onClick={() => openPopup()}
@@ -111,18 +109,18 @@ const ProfessionManagement: React.FC = () => {
             Ajouter une profession +
           </button>
         </div>
-        <div className={"flex justify-center h-full pr-20"}>
+        <div className={"flex justify-center h-full md:pr-20"}>
           <Image src={contract} alt={"contract"} className={"h-28 w-auto"} />
         </div>
       </div>
 
-      <div className="space-y-4 w-full">
+      <div className="space-y-4 w-full ">
         {professions.map((profession) => (
           <div
             key={profession._id}
-            className="flex justify-between items-center p-4 bg-gray-100 rounded-md shadow"
+            className="flex flex-col md:flex-row justify-between items-center p-4 bg-gray-100 rounded-md shadow"
           >
-            <div className="flex items-center space-x-5">
+            <div className="flex flex-col md:flex-row items-center space-x-5">
               <Image src={professionIcon} alt={"professionIcon"} className={"h-10 w-auto"} />
               <span className="font-semibold">{profession.name}</span>
             </div>

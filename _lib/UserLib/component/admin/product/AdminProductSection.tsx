@@ -1,5 +1,6 @@
 // components/AdminProductSection.tsx
 import { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import {
     fetchProductsForAdmin,
     addProduct,
@@ -13,14 +14,15 @@ import { getAllProfessions } from "@lib/ProfessionLib/service/professionService"
 import Image from "next/image";
 import contract from "@public/images/Utils/contract-icon.png";
 import productIcon from "@public/images/Utils/Contract.png";
-import ProductModal from '@lib/ProductLib/component/ProductModal'; // Assurez-vous que le chemin est correct
+import ProductModal from '@lib/ProductLib/component/ProductModal'; 
 
-export default function AdminProductSection(){
+export default function AdminProductSection() {
     const [products, setProducts] = useState<ProductDetail[]>([]);
     const [professions, setProfessions] = useState<Profession[]>([]);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [modalProduct, setModalProduct] = useState<ProductDetail | undefined>(undefined);
     const [modalMode, setModalMode] = useState<'add' | 'edit'>('add');
+    const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
     useEffect(() => {
         const loadProducts = async () => {
@@ -68,7 +70,6 @@ export default function AdminProductSection(){
             } else if (modalMode === 'edit' && modalProduct) {
                 await updateProduct(modalProduct._id, formData);
             }
-            // Actualiser la liste des produits
             const data = await fetchProductsForAdmin();
             setProducts(data);
         } catch (error) {
@@ -79,7 +80,6 @@ export default function AdminProductSection(){
     const handleDelete = async (id: string) => {
         try {
             await deleteProduct(id);
-            // Actualiser la liste des produits
             const data = await fetchProductsForAdmin();
             setProducts(data);
         } catch (error) {
@@ -97,9 +97,9 @@ export default function AdminProductSection(){
 
     return (
         <section className={"w-full p-16"}>
-            <div className={"flex justify-between"}>
+            <div className={"flex justify-between w-full"}>
                 <div className={"h-full w-full"}>
-                    <h2 className="font-jost text-4xl font-bold mb-6">
+                    <h2 className="font-jost text-2xl md:text-4xl font-bold mb-6">
                         Gestionnaire de produits
                     </h2>
                     <button
@@ -109,8 +109,8 @@ export default function AdminProductSection(){
                         Ajouter un produit +
                     </button>
                 </div>
-                <div className={"flex justify-center h-full pr-20"}>
-                    <Image src={contract} alt={"contract"} className={"h-28 w-auto"}/>
+                <div className={"flex justify-center h-full md:pr-20"}>
+                    <Image src={contract} alt={"contract"} className={"h-28 w-auto"} />
                 </div>
             </div>
 
@@ -120,16 +120,22 @@ export default function AdminProductSection(){
                         key={product._id}
                         className="p-4 bg-gray-100 rounded-md shadow"
                     >
-                        <summary className="flex justify-between items-center cursor-pointer">
+                        <summary className="flex flex-col md:flex-row justify-between items-center cursor-pointer">
                             <div className="flex items-center space-x-5">
                                 <Image
                                     src={productIcon}
                                     alt={"productIcon"}
                                     className={"h-10 w-auto"}
                                 />
-                                <span className="font-semibold">{product.name}</span>
+                                <span className="font-semibold truncate max-w-xs">
+                                    {!isMobile ? (
+                                        product.name
+                                    ) : (
+                                        product.name.length > 30 ? product.name.substring(0, 30) + "..." : product.name
+                                    )}
+                                </span>
                             </div>
-                            <div className="flex space-x-4">
+                            <div className={`flex flex-col ${isMobile ? 'space-y-4' : 'md:flex-row md:space-x-4 md:items-center md:justify-center'}`}>
                                 <button
                                     onClick={() => handleDownload(product._id, product.name)}
                                     className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
@@ -155,12 +161,12 @@ export default function AdminProductSection(){
                                 <strong>Description :</strong> {product.description}
                             </p>
                             <p>
-                            <strong>Prix :</strong> {product.price} €
+                                <strong>Prix :</strong> {product.price} €
                             </p>
                             <p>
                                 <strong>Profession :</strong> {
-                                professions.find(prof => prof._id === product.profession)?.name || 'Profession inconnue'
-                            }
+                                    professions.find(prof => prof._id === product.profession)?.name || 'Profession inconnue'
+                                }
                             </p>
                         </div>
                     </details>

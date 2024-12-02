@@ -28,6 +28,34 @@ export async function middleware(req: NextRequest) {
         return response;
     }
 
+    if(!token && url.pathname === '/admin/profession'){
+        url.pathname = '/';
+        const response = NextResponse.redirect(url)
+        response.cookies.set('flashMessage', 'Vous avez déjà vérifié votre compte.', { path: '/' })
+        return response;
+    }
+
+    if(!token && url.pathname === '/admin/testimonials'){
+        url.pathname = '/';
+        const response = NextResponse.redirect(url)
+        response.cookies.set('flashMessage', 'Vous avez déjà vérifié votre compte.', { path: '/' })
+        return response;
+    }
+
+    if(!token && url.pathname === '/admin/product'){
+        url.pathname = '/';
+        const response = NextResponse.redirect(url)
+        response.cookies.set('flashMessage', 'Vous avez déjà vérifié votre compte.', { path: '/' })
+        return response;
+    }
+
+    if(!token && url.pathname === '/admin/users'){
+        url.pathname = '/';
+        const response = NextResponse.redirect(url)
+        response.cookies.set('flashMessage', 'Vous avez déjà vérifié votre compte.', { path: '/' })
+        return response;
+    }
+
     // Bloquer l'accès à /validation si l'utilisateur est déjà vérifié
     if (token && token.isVerified && url.pathname === '/validation') {
         url.pathname = '/';

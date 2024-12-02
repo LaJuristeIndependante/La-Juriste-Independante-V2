@@ -5,7 +5,11 @@ import Link from 'next/link';
 import { SidebarProps } from "@lib/CartLib/type/CartType";
 import { useSession } from "next-auth/react";
 
-const MenuBurger: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
+interface MenuBurgerProps extends SidebarProps {
+    isOpenAdmin: boolean;
+}
+
+const MenuBurger: React.FC<MenuBurgerProps> = ({ isOpen, onClose, isOpenAdmin }) => {
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
     const [isVisible, setIsVisible] = useState(false);
     const [shouldRender, setShouldRender] = useState(isOpen);
@@ -37,9 +41,19 @@ const MenuBurger: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         { label: 'Support', href: '/support' },
     ];
 
+    const menuAdminItems = [
+        { label: 'Accueil', href: '/admin' },
+        { label: 'Profession', href: '/admin/profession' },
+        { label: 'Contrat', href: '/admin/product' },
+        { label: 'Utilisateur', href: '/admin/users' },
+        { label: 'Commentaire', href: '/admin/testimonials' },
+    ];
+
     if (session?.user) {
         menuItems.push({ label: 'Commande', href: '/orders' })
     }
+
+    const itemsToRender = isOpenAdmin ? menuAdminItems : menuItems;
 
     return (
         <div
@@ -59,7 +73,7 @@ const MenuBurger: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
             {/* Menu déroulant */}
             <nav className="flex-grow h-[95%] flex flex-col justify-center items-center space-y-8">
-                {menuItems.map((item, index) => (
+                {itemsToRender.map((item, index) => (
                     <Link key={index} href={item.href}>
                         <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer rounded text-xl transition-colors duration-200 ease-in-out" onClick={onClose}>
                             {item.label}

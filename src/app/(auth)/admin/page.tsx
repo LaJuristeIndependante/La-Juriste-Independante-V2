@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import BubbleBackground from "@/components/utils/décors/BubbleBackground";
 import { FaGraduationCap, FaFileContract, FaUser, FaCommentDots } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { getAllProfessions } from "@lib/ProfessionLib/service/professionService";
@@ -92,6 +91,7 @@ const AdminPage: React.FC = () => {
         loadProducts();
         loadProfessions();
         fetchUsers();
+        fetchTestimonials();
     }, []);
 
 
@@ -126,7 +126,7 @@ const AdminPage: React.FC = () => {
                                 <p className="text-lg font-semibold">Contrats</p>
                                 <p className="text-sm text-gray-600">
                                     {products.length + " "}
-                                    disponible {products.length > 1 ? "s" : ""}
+                                    disponible{products.length > 1 ? "s" : ""}
                                 </p>
                             </div>
                         </div>
@@ -141,7 +141,7 @@ const AdminPage: React.FC = () => {
                             <div className="text-left">
                                 <p className="text-lg font-semibold">Comptes</p>
                                 <p className="text-sm text-gray-600">
-                                    {users.length} utilisateur{users.length > 1 ? "s" : ""}, 
+                                    {users.length} utilisateur{users.length > 1 ? "s" : ""}, {''}
                                     {users.filter(user => user.isVerified).length + " "}vérifié{users.length > 1 ? "s" : ""}, {" "}
                                     {users.filter(user => !user.isVerified).length + " "} non vérifié{users.length > 1 ? "s" : ""}
                                 </p>
@@ -159,7 +159,7 @@ const AdminPage: React.FC = () => {
                                 <p className="text-lg font-semibold">Commentaires</p>
                                 <p className="text-sm text-gray-600">
                                     {testimonials.length + " "} posté{testimonials.length > 1 ? "s" : ""}
-                                     </p>
+                                </p>
                             </div>
                         </div>
                         <IoIosArrowForward className="text-2xl" />

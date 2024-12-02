@@ -9,9 +9,9 @@ const ProductForm = dynamic(() => import("@lib/UserLib/component/admin/product/A
 
 const AdminProductPage: React.FC = () => {
     return (
-        <main className="relative flex items-center justify-center min-h-screen z-1">
+        <main className="relative flex items-start justify-center h-auto min-h-screen z-1">
             <ProductForm />
-            <BubbleBackground page={'contracts'}/>
+            <BubbleBackground page={'contracts'} />
         </main>
     );
 };

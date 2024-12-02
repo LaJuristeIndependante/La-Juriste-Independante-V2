@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Image from 'next/image'
 import navIcon from '@/../public/images/logo/La Juriste indépendante Admin.png';
 import {useSession} from "next-auth/react";
@@ -23,6 +23,14 @@ export default function AdminNavbar() {
     const [isAuthSideBarVisible, setAuthSideBarVisible] = useState<boolean>(false);
     const router = useRouter();
     const pathname = usePathname();
+
+    useEffect(() => {
+        if (pathname.includes("admin") ){
+            setMenuAdminIsVisible(true);
+        } else {
+            setMenuAdminIsVisible(false);
+        }
+    }, [pathname]);
 
     const isMobile = useMediaQuery({query: '(max-width: 1070px)'});
 
@@ -73,7 +81,7 @@ export default function AdminNavbar() {
                 <div className={`flex items-center justify-center space-x-4 p-4`}>
                     <button
                         className={`flex justify-center p-2 font-bold space-x-2 rounded-full border border-gray-300 bg-secondary-color`}
-                        onClick={() => setMenuAdminIsVisible(true)}
+                        onClick={() => router.push('/admin')}
                     >
                         <Image src={admin_icon} alt="admin icon" width={0} height={0} className="w-6 h-6"/>
                         <p className='mt-0.5'>Administration</p>
@@ -82,7 +90,7 @@ export default function AdminNavbar() {
                     {isMobile && <MenuBurgerButton toggleSidebar={menuIsVisible}/>}
                 </div>
             </nav>
-            <MenuBurger isOpen={menuBurgerIsVisible} onClose={() => setMenuBurgerIsVisible(false)}/>
+            <MenuBurger isOpen={menuBurgerIsVisible} onClose={() => setMenuBurgerIsVisible(false)} isOpenAdmin={menuAdminIsVisible} />
             <AuthSideBar isOpen={isAuthSideBarVisible} closeSidebar={closeAuthSidebar}/>
         </header>
 

@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from 'react';
 import edit_icon from '@/../public/images/common/edit-icon.svg';
 import Image from 'next/image';
@@ -11,6 +10,7 @@ import {
 } from '@lib/testimonialLib/service/testimonials';
 import { CommentaireDocument, Commentaire } from "@lib/testimonialLib/type/Testimonial";
 import { useSession } from "next-auth/react";
+import { useMediaQuery } from 'react-responsive';
 
 export default function AdminTestimonialsPage() {
     const [commentaires, setCommentaires] = useState<CommentaireDocument[]>([]);
@@ -18,6 +18,7 @@ export default function AdminTestimonialsPage() {
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
     const { data: session } = useSession();
+    const isMobile = useMediaQuery({ query: '(max-width: 881px)' });
 
     useEffect(() => {
         const loadCommentaires = async () => {
@@ -106,20 +107,24 @@ export default function AdminTestimonialsPage() {
             <div className="flex flex-col text-black min-h-screen p-8 w-full space-y-10 z-0">
                 <div className="flex justify-between">
                     <div className="h-full w-full">
-                        <h2 className="font-jost text-4xl font-bold mb-6">Gestionnaire de témoignages</h2>
+                        <h2 className="font-jost text-2xl md:text-4xl font-bold mb-6">Gestionnaire de témoignages</h2>
                     </div>
                     <div className="flex justify-center h-full pr-20">
                         <Image src={edit_icon} alt="edit icon" className="h-28 w-auto" />
                     </div>
                 </div>
-
+                <div className="flex flex-row justify-between items-center space-x-4 md:w-1/3 md:ml-4 underline">
+                    <p>Objet</p>
+                    <p>Message</p>
+                    <p>Note</p>
+                </div>
                 <div className="space-y-4 w-full">
                     {commentaires.map((commentaire) => (
                         <div
                             key={commentaire._id}
-                            className="flex justify-between items-center p-4 bg-gray-100 rounded-md shadow"
+                            className={`flex ${isMobile ? 'flex-col justify-center' : 'flex-row justify-between '} items-center p-4 bg-gray-100 rounded-md shadow`}
                         >
-                            <div className="flex items-center space-x-5">
+                            <div className={`flex items-center ${isMobile ? 'flex-col space-y-2 justify-center' : 'flex-row  space-x-5'}`}>
                                 {isEditing && editingCommentId === commentaire._id ? (
                                     <>
                                         <input
@@ -146,7 +151,7 @@ export default function AdminTestimonialsPage() {
                                 ) : (
                                     <>
                                         <span className="font-semibold">{commentaire.objet}</span>
-                                        <span className="font-semibold">{commentaire.message}</span>
+                                        <span className="font-semibold truncate max-w-xs">{commentaire.message.length > 100 ? commentaire.message.substring(0, 100) + '...' : commentaire.message}</span>
                                         <span className="font-semibold">{commentaire.note}</span>
                                     </>
                                 )}
