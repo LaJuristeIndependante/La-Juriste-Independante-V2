@@ -9,7 +9,7 @@ import ClientProviders from './(provider)/ClientProviders';
 
 export const metadata: Metadata = {
   title: "La juriste indépendante",
-  description: "",
+  description: "Fleo web base pour tous les prochains sites Fleo",
   icons: {
     icon: "/favicon.ico",
   },
