@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic';
+
 import {useEffect, useState} from "react";
 import {useRouter, useSearchParams} from "next/navigation";
 import axios from "axios";
@@ -35,9 +37,6 @@ export default function SuccessPage() {
 
         updateStatus()
             .catch(err => console.log(err));
-
-        // InvoiceMail()
-        //     .catch(err => console.log(err));
     }, [orderId, token]);
 
     // const recupOrder = async () => {
