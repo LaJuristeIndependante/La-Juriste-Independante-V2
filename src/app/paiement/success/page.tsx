@@ -1,39 +1,47 @@
 "use client";
 
-export const dynamic = 'force-dynamic';
-
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import { updateOrderStatus } from "@lib/OrderLib/service/orders";
 
 export default function SuccessPage() {
-    const searchParams = useSearchParams();
-    const orderId = searchParams.get("orderId") || "";
-    const token = searchParams.get("token");
     const router = useRouter();
+    const [orderId, setOrderId] = useState<string>("");
+    const [token, setToken] = useState<string | null>(null);
     const [customerData, setCustomerData] = useState<any>(null);
     const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
     useEffect(() => {
-        if (token) {
-            axios.get(`/api/payment/success`, { params: { token, orderId } })
-                .then(res => setCustomerData(res.data))
-                .catch(err => console.log(err));
-        }
+        // Vérifier que le code s'exécute côté client
+        if (typeof window !== "undefined") {
+            // Récupérer les paramètres de l'URL
+            const params = new URLSearchParams(window.location.search);
+            const orderIdParam = params.get("orderId") || "";
+            const tokenParam = params.get("token");
 
-        const updateStatus = async () => {
-            try {
-                await updateOrderStatus(orderId, 'paid');
-            } catch (err: any) {
-                setErrorMessage('An error occurred while updating your order.');
-                console.error('Erreur lors de la mise à jour de la commande:', err.message);
+            setOrderId(orderIdParam);
+            setToken(tokenParam);
+
+            if (tokenParam) {
+                axios
+                    .get(`/api/payment/success`, { params: { token: tokenParam, orderId: orderIdParam } })
+                    .then((res) => setCustomerData(res.data))
+                    .catch((err) => console.log(err));
             }
-        };
 
-        updateStatus()
-            .catch(err => console.log(err));
-    }, [orderId, token]);
+            const updateStatus = async () => {
+                try {
+                    await updateOrderStatus(orderIdParam, "paid");
+                } catch (err: any) {
+                    setErrorMessage("An error occurred while updating your order.");
+                    console.error("Erreur lors de la mise à jour de la commande:", err.message);
+                }
+            };
+
+            updateStatus().catch((err) => console.log(err));
+        }
+    }, []);
 
     if (!token) {
         return <div>Loading...</div>;
@@ -54,7 +62,6 @@ export default function SuccessPage() {
                         stroke="currentColor"
                         strokeWidth="2"
                         viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
                     >
                         <path
                             strokeLinecap="round"
@@ -64,9 +71,7 @@ export default function SuccessPage() {
                     </svg>
                 </div>
                 {/* Titre principal */}
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">
-                    Paiement réussi 🎉
-                </h1>
+                <h1 className="text-3xl font-bold text-gray-900 mb-4">Paiement réussi 🎉</h1>
                 {customerData ? (
                     <div className="mt-4">
                         {/* Message de succès */}
