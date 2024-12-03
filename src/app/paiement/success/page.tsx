@@ -1,14 +1,10 @@
 "use client"
 
-export const dynamic = 'force-dynamic';
-
 import {useEffect, useState} from "react";
 import {useRouter, useSearchParams} from "next/navigation";
 import axios from "axios";
-import {fetchOrderDetails, updateOrderStatus} from "@lib/OrderLib/service/orders";
-import {OrderDetails} from "@lib/OrderLib/type/OrderType";
-import {downloadProductPdf} from "@lib/ProductLib/service/produit";
-
+import {updateOrderStatus} from "@lib/OrderLib/service/orders";
+import {Suspense} from 'react';
 
 export default function SuccessPage() {
     const searchParams = useSearchParams();
@@ -20,7 +16,7 @@ export default function SuccessPage() {
 
     useEffect(() => {
         if (token) {
-            axios.get(`/api/payment/success`, { params: { token, orderId } })
+            axios.get(`/api/payment/success`, {params: {token, orderId}})
                 .then(res => setCustomerData(res.data))
                 .catch(err => console.log(err));
         }
