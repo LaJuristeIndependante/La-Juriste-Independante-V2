@@ -1,12 +1,15 @@
 "use client"
 
 import {useEffect, useState} from "react";
-import {useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import axios from "axios";
-import {updateOrderStatus} from "@lib/OrderLib/service/orders";
-import {useRouter} from "next/navigation";
+import {fetchOrderDetails, updateOrderStatus} from "@lib/OrderLib/service/orders";
+import {OrderDetails} from "@lib/OrderLib/type/OrderType";
+import {downloadProductPdf} from "@lib/ProductLib/service/produit";
+
 
 export default function SuccessPage() {
+    const [commande, setCommande] = useState<OrderDetails>();
     const searchParams = useSearchParams();
     const orderId = searchParams.get("orderId") || "";
     const token = searchParams.get("token");
@@ -14,13 +17,14 @@ export default function SuccessPage() {
     const [customerData, setCustomerData] = useState<any>(null)
     const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
-    useEffect(()=>{
-        if(token){
-            axios.get(`/api/payment/success`, {params: {token, orderId}})
-            .then(res => setCustomerData(res.data))
-                .catch(err => console.log(err))
+    useEffect(() => {
+        if (token) {
+            axios.get(`/api/payment/success`, { params: { token, orderId } })
+                .then(res => setCustomerData(res.data))
+                .catch(err => console.log(err));
         }
-        const updateStatus = async (): Promise<void> => {
+
+        const updateStatus = async () => {
             try {
                 await updateOrderStatus(orderId, 'paid');
             } catch (err: any) {
@@ -29,10 +33,68 @@ export default function SuccessPage() {
             }
         };
 
-        updateStatus();
-    }, [customerData, orderId, token])
+        updateStatus()
+            .catch(err => console.log(err));
 
-    if(!token){
+        InvoiceMail()
+            .catch(err => console.log(err));
+    }, [orderId, token]);
+
+    const recupOrder = async () => {
+        try {
+            setCommande(await fetchOrderDetails(orderId));
+        } catch (err: any) {
+            setErrorMessage('An error occurred while updating your order.');
+        }
+    }
+
+    const handleDownloadPdf = async (productId: string, productName: string) => {
+        try {
+            await downloadProductPdf(productId, productName);
+        } catch (error) {
+            console.error("Erreur lors du téléchargement du PDF:", error);
+        }
+    };
+
+
+    const InvoiceMail = async () => {
+        await recupOrder()
+            .catch(err => console.log(err));
+
+        let listProduct = '';
+        let total = 0;
+
+        if (commande?.items && commande.items.length > 0) {
+            for (let i = 0; i < commande.items.length; i++) {
+                let item = commande.items[i];
+                let product = `
+                <div>
+                    <p>${item.name} : ${item.price} x ${item.quantity}</p>
+                    <a href="${process.env.NEXTAUTH_URL}/api/products/${item.productId}/pdf" style="display:inline-block;padding:10px 20px;margin-top:10px;background-color:#28a745;color:#fff;text-decoration:none;border-radius:5px;">Télécharger ${item.name}</a>
+                </div>
+            `;
+                listProduct += product;
+                total += item.price * item.quantity;
+            }
+        }
+
+        const html = `
+        <div>
+            <h2>Merci pour votre achat, ${commande?.name} !</h2>
+            <p>Voici votre reçu pour la commande <strong>${orderId}</strong> :</p>
+            ${listProduct}
+            <p><strong>Total :</strong> ${total}€</p>
+        </div>
+    `;
+        let email = commande?.email;
+        let subject = "Reçu de la commande numéro " + commande?._id + " commandé par " + commande?.name;
+
+        axios.post(`/api/payment/invoice`, {email, subject, html})
+            .then(res => setCustomerData(res.data))
+            .catch(err => console.log(err));
+    };
+
+    if (!token) {
         return <div>Loading...</div>;
     }
 
