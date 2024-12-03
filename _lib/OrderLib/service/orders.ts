@@ -112,74 +112,6 @@ export async function updateOrder(orderId: string, updatedInfo: object): Promise
 }
 
 /**
- * Marque une commande spécifique comme complétée.
- *
- * @param {string} orderId - L'identifiant de la commande à marquer comme complétée.
- * @returns {Promise<void>} - Une promesse qui résout si la commande est marquée comme complétée avec succès.
- *
- * @throws {Error} - Lance une erreur si la mise à jour échoue avec un message approprié.
- *
- * @example
- *
- * markOrderAsCompleted('12345')
- *   .then(() => {
- *     console.log('Order marked as completed successfully');
- *   })
- *   .catch((error) => {
- *     console.error('Failed to mark order as completed:', error.message);
- *   });
- */
-export async function markOrderAsCompleted(orderId: string): Promise<void> {
-    try {
-        const response = await axios.patch(`/api/orders/${orderId}`, {}, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-
-        if (response.status !== 200) {
-            throw new Error("Failed to mark order as completed");
-        }
-    } catch (error: any) {
-        throw new Error(error.response?.data?.message || "Error marking order as completed");
-    }
-}
-
-/**
- * Met à jour l'état d'une commande en la marquant comme expédiée.
- *
- * @param {string} orderId - L'identifiant de la commande à mettre à jour.
- * @returns {Promise<Order>} - Une promesse qui se résout avec la commande mise à jour.
- * @throws {Error} - Lance une erreur si la mise à jour échoue.
- *
- * @example
- *
- * markOrderAsShipped('orderId123')
- *   .then((updatedOrder) => console.log('Commande expédiée:', updatedOrder))
- *   .catch((error) => console.error('Erreur lors de la mise à jour de la commande:', error));
- */
-export async function markOrderAsShipped(orderId: string): Promise<OrderDetails> {
-    try {
-        const response = await axios.patch(`/api/orders`, {
-            orderId,
-            status: 'shipped'
-        }, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-
-        if (response.status === 200) {
-            return response.data;
-        } else {
-            throw new Error('Erreur lors de la mise à jour du statut de la commande');
-        }
-    } catch (error: any) {
-        throw new Error(error.response?.data?.message || 'Erreur lors de la mise à jour du statut de la commande');
-    }
-}
-
-/**
  * Récupère toutes les commandes effectuées par un utilisateur donné.
  *
  * @param {string} userId - L'ID de l'utilisateur dont on veut récupérer les commandes.
@@ -242,34 +174,18 @@ export const fetchOrderDetails = async (orderId: string): Promise<OrderDetails> 
 }
 
 /**
- * Met à jour une commande pour le paiement.
+ * Met à jour les informations personnelles d'une commande.
  *
- * @param {string} orderId - L'identifiant unique de la commande à mettre à jour.
+ * @param {string} orderId - L'identifiant unique de la commande.
  * @param {object} personalInfo - Les informations personnelles du client.
  * @param {string} personalInfo.name - Le nom du client.
  * @param {string} personalInfo.email - L'adresse email du client.
  * @param {string} personalInfo.phone - Le numéro de téléphone du client.
- * @param {string} personalInfo.address - Toutes les info sur l'adresse du client.
- * @param {string} status - Le statut de la commande, par exemple 'paid'.
+ * @param {object} personalInfo.address - Les détails de l'adresse du client.
  * @returns {Promise<void>} - Une promesse qui se résout si la mise à jour est réussie.
  * @throws {Error} - Lance une erreur si la mise à jour échoue.
- *
- * @example
- *
- * updateOrderForPaiement('order-id-123', {
- *   name: 'John Doe',
- *   email: 'john.doe@example.com',
- *   phone: '+123456789',
- *   address: '123 Main St',
- * }, 'paid')
- *   .then(() => {
- *     console.log('Commande mise à jour avec succès.');
- *   })
- *   .catch(error => {
- *     console.error('Erreur lors de la mise à jour de la commande:', error.message);
- *   });
  */
-export const updateOrderForPaiement = async (
+export const updateOrderPersonalInfo = async (
     orderId: string,
     personalInfo: {
         name: string,
@@ -282,8 +198,7 @@ export const updateOrderForPaiement = async (
             postalCode: string,
             country: string,
         },
-    },
-    status: string
+    }
 ): Promise<void> => {
     try {
         const response = await axios.put(`/api/orders/${orderId}`, {
@@ -291,7 +206,6 @@ export const updateOrderForPaiement = async (
             email: personalInfo.email,
             phone: personalInfo.phone,
             address: personalInfo.address,
-            status: status
         }, {
             headers: {
                 'Content-Type': 'application/json',
@@ -299,12 +213,42 @@ export const updateOrderForPaiement = async (
         });
 
         if (response.status !== 200) {
-            throw new Error('Échec de la mise à jour de la commande.');
+            throw new Error('Échec de la mise à jour des informations personnelles de la commande.');
         }
     } catch (error: any) {
-        throw new Error(error.response?.data?.message || 'Erreur lors de la mise à jour de la commande.');
+        throw new Error(error.response?.data?.message || 'Erreur lors de la mise à jour des informations personnelles.');
     }
 };
+
+/**
+ * Met à jour le statut d'une commande à 'paid'.
+ *
+ * @param {string} orderId - L'identifiant unique de la commande.
+ * @param {string} status - Le statut de la commande, par exemple 'paid'.
+ * @returns {Promise<void>} - Une promesse qui se résout si la mise à jour est réussie.
+ * @throws {Error} - Lance une erreur si la mise à jour échoue.
+ */
+export const updateOrderStatus = async (
+    orderId: string,
+    status: string
+): Promise<void> => {
+    try {
+        const response = await axios.put(`/api/orders/${orderId}`, {
+            status,
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Échec de la mise à jour du statut de la commande.');
+        }
+    } catch (error: any) {
+        throw new Error(error.response?.data?.message || 'Erreur lors de la mise à jour du statut de la commande.');
+    }
+};
+
 
 /**
  * Récupère la liste des commandes.
