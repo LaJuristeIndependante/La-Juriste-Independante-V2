@@ -1,13 +1,12 @@
 "use server"
 
-import { connectDB } from "../../MongoLib/mongodb";
+import { connectDB } from "@lib/MongoLib/mongodb";
 import User from "../models/User";
 import bcrypt from "bcryptjs";
 
 export const register = async (values: any) => {
     const { email, password, nom, prenom, username, dateOfBirth } = values;
     try {
-        console.log('coucou'); 
         await connectDB();
         const userFound = await User.findOne({ email });
         if (userFound) {
@@ -39,7 +38,6 @@ export const register = async (values: any) => {
             isVerified: false,
         };
     } catch (e) {
-        console.log(e);
         return {
             error: 'Une erreur est survenue lors de la création de l\'utilisateur.'
         };
