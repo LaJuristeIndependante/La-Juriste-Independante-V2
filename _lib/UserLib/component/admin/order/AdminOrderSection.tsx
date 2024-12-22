@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { FaArrowLeft, FaCartPlus, FaTrashAlt, FaTruck } from "react-icons/fa";
+import {FaCartPlus, FaTrashAlt } from "react-icons/fa";
 import RedirectionArrow from "@lib/UserLib/component/admin/RedirectionArrow";
-import {deleteOrder, getOrders, markOrderAsShipped} from "@lib/OrderLib/service/orders";
+import {deleteOrder, getOrders} from "@lib/OrderLib/service/orders";
 import {OrderDetails} from "@lib/OrderLib/type/OrderType";
 
 const AdminOrderSection = () => {
