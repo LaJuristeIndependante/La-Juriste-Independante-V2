@@ -11,12 +11,12 @@ interface ValidationPopupProps {
 const ValidationPopUp: React.FC<ValidationPopupProps> = ({ title, text, onClose }) => {
     return (
         <div className="fixed inset-0 flex items-center justify-center text-black bg-black backdrop-blur bg-opacity-50 font-light">
-            <div className="bg-white rounded-lg border-4 border-red-500 p-8 max-w-md text-center shadow-lg">
+            <div className="bg-white rounded-lg border-4 border-primary-color p-8 max-w-md text-center shadow-lg">
                 <h2 className="text-2xl font-bold mb-4">{title}</h2>
                 <p className="mb-8">{text}</p>
                 <button
                     onClick={onClose}
-                    className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-700"
+                    className="bg-primary-color text-white py-2 px-4 rounded-lg hover:bg-black"
                 >
                     FERMER LA POPUP
                 </button>

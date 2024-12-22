@@ -139,7 +139,7 @@ function RightSection() {
                     <label className="text-black">Consentement*</label>
                 </div>
                 <button type="submit"
-                        className='w-full bg-[#A00C30] text-white focus:outline-none py-2 rounded-md hover:bg-[#FF4D4D] mb-4'>
+                        className='w-full bg-[#A00C30] text-white focus:outline-none py-2 rounded-md hover:bg-black mb-4'>
                     Envoyer
                 </button>
             </form>

@@ -15,13 +15,13 @@ function LeftSection() {
           Mes coordonnées
         </h2>
         <p className={`mt-1 font-bold w-11/12 ${isMobile ? 'text-xs' : specialQuery ? 'text-sm' : 'text-base'}`}>
-          Vous n’avez pas trouvé le template type qu’il vous faut ?
+          Vous n’avez pas trouvé le modèle type qu’il vous faut ?
         </p>
         <p className={`${specialQuery ? 'text-sm' : ''}`}>
-          Pas de problème, je suis là pour vous aider ! Si aucun des templates proposés ne correspond à vos besoins spécifiques, n’hésitez pas à me contacter.
+          Pas de problème, je suis là pour vous aider ! Si aucun des modèles proposés ne correspond à vos besoins spécifiques, n’hésitez pas à me contacter.
         </p>
         <p className={`${specialQuery ? 'text-sm' : ''}`}>
-          Pour toute demande, contactez-moi directement via le formulaire ci-dessous ou à l’adresse email indiquée. Notre équipe se fera un plaisir de répondre
+          Pour toute demande, contactez-moi directement via le formulaile ou à l’adresse email indiquée. Je me ferait un plaisir de répondre
           rapidement et efficacement à vos besoins.
         </p>
         <CoordsCard
