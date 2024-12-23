@@ -195,7 +195,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                             </div>
                         ) : (
                             // eslint-disable-next-line react/no-unescaped-entities
-                            <p className='text-center mb-4 md:mb-0'>Pour acheter : créez-vous un compte afin de pouvoir recevoir et voir vos documents après l'achat</p>
+                            <p className='text-lg xs:text-xl md:text-xl xl:text-xl text-justify md:max-w-[600px] p-5'>Pour acheter : créez-vous un compte afin de pouvoir recevoir et voir vos documents après l'achat</p>
                         )}
                     </div>
                 </div>
