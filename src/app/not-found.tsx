@@ -14,7 +14,7 @@ export default function NotFoundPage() {
         <p>Pour retourner à l&apos;accueil, cliquez sur ce bouton</p>
         <FaArrowDown className='animate-bounce text-xl' />
         <Link href="/" className="bg-primary-color hover:bg-black text-white font-bold py-2 px-4 rounded">
-          Retourner à l'accueil
+          Retourner à l&apos;accueil
         </Link>
       </div>
     </main>
