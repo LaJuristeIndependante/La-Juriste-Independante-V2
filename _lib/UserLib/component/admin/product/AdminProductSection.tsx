@@ -104,7 +104,7 @@ export default function AdminProductSection() {
                     </h2>
                     <button
                         onClick={openAddModal}
-                        className="mb-6 px-4 py-2 bg-[#D9D9D9] text-black rounded-lg text-md hover:bg-gray-400 transition"
+                        className="mb-6 px-4 py-2 bg-[#E8E8E8] text-black rounded-lg text-md hover:bg-gray-400 transition"
                     >
                         Ajouter un produit +
                     </button>
@@ -118,7 +118,7 @@ export default function AdminProductSection() {
                 {products.map((product) => (
                     <details
                         key={product._id}
-                        className="p-4 bg-gray-100 rounded-md shadow"
+                        className="p-4 bg-[#E8E8E8] rounded-md shadow"
                     >
                         <summary className="flex flex-col md:flex-row justify-between items-center cursor-pointer">
                             <div className="flex items-center space-x-5">
@@ -144,7 +144,7 @@ export default function AdminProductSection() {
                                 </button>
                                 <button
                                     onClick={() => openEditModal(product)}
-                                    className="px-4 py-2 bg-black text-white rounded hover:bg-blue-600 transition"
+                                    className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
                                 >
                                     Modifier
                                 </button>

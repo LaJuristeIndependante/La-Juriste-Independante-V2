@@ -104,7 +104,7 @@ const ProfessionManagement: React.FC = () => {
           <h2 className="font-jost text-4xl font-bold mb-6">Gestionnaire de professions</h2>
           <button
             onClick={() => openPopup()}
-            className="mb-6 px-4 py-2 bg-[#D9D9D9] text-black rounded-lg text-md hover:bg-gray-400 transition"
+            className="mb-6 px-4 py-2 bg-[#E8E8E8] text-black rounded-lg text-md hover:bg-gray-400 transition"
           >
             Ajouter une profession +
           </button>
@@ -118,7 +118,7 @@ const ProfessionManagement: React.FC = () => {
         {professions.map((profession) => (
           <div
             key={profession._id}
-            className="flex flex-col md:flex-row justify-between items-center p-4 bg-gray-100 rounded-md shadow"
+            className="flex flex-col md:flex-row justify-between items-center p-4 bg-[#E8E8E8] rounded-md shadow"
           >
             <div className="flex flex-col md:flex-row items-center space-x-5">
               <Image src={professionIcon} alt={"professionIcon"} className={"h-10 w-auto"} />
