@@ -235,12 +235,3 @@ const ModelCart3 = ({ product }: { product: ProductDetail }) => {
         </div>
     )
 }
-
-
-/*
-              
-                 
-                </div>
-            </div>
-*/
-
