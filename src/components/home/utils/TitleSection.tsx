@@ -10,7 +10,7 @@ const TitleSection: React.FC = () => {
             </h1>
 
             <p className="text-lg sm:text-base md:text-lg lg:text-xl xl:text-2xl max-w-lg font-light text-center w-full sm:w-1/2">
-                Services de Templates Juridiques pour micro-entrepreneurs : protection et réussite garanties !
+                Services de modèles types pour micro-entrepreneurs : protection et réussite garanties !
             </p>
         </div>
     );

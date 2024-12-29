@@ -1,10 +1,10 @@
 "use client";
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {FaEdit, FaTrash, FaArrowLeft, FaUserCircle} from "react-icons/fa";
+import { FaEdit, FaTrash, FaArrowLeft, FaUserCircle } from "react-icons/fa";
 import Link from "next/link";
-import {useSession} from "next-auth/react";
+import { useSession } from "next-auth/react";
 import RedirectionArrow from "@lib/UserLib/component/admin/RedirectionArrow";
 
 interface User {
@@ -24,7 +24,7 @@ const UserSection: React.FC = () => {
     const [users, setUsers] = useState<User[]>([]);
     const [editingUser, setEditingUser] = useState<string | null>(null);
     const [formData, setFormData] = useState<Partial<User>>({});
-    const {data: session} = useSession();
+    const { data: session } = useSession();
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -53,7 +53,7 @@ const UserSection: React.FC = () => {
 
     const handleDeleteClick = async (userId: string) => {
         try {
-            const response = await axios.delete(`/api/user`, {data: {userId}});
+            const response = await axios.delete(`/api/user`, { data: { userId } });
             if (response.status === 200) {
                 setUsers(users.filter(user => user._id !== userId));
             }
@@ -63,7 +63,7 @@ const UserSection: React.FC = () => {
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         setFormData({
             ...formData,
             [name]: value,
@@ -72,9 +72,9 @@ const UserSection: React.FC = () => {
 
     const handleSaveClick = async (userId: string) => {
         try {
-            const response = await axios.put(`/api/user`, {userId, updateData: formData});
+            const response = await axios.put(`/api/user`, { userId, updateData: formData });
             if (response.status === 200) {
-                setUsers(users.map(user => (user._id === userId ? {...user, ...formData} : user)));
+                setUsers(users.map(user => (user._id === userId ? { ...user, ...formData } : user)));
                 setEditingUser(null);
             }
         } catch (error) {
@@ -94,96 +94,100 @@ const UserSection: React.FC = () => {
                         <li>Vous avez {users.filter(user => !user.isVerified).length} utilisateurs non vérifiés</li>
                     </ul>
                     <div className={`flex justify-center text-center `}>
-                        <FaUserCircle className={`w-1/4 h-1/4 sm:w-52 sm:h-52 sm:mr-10`}/>
+                        <FaUserCircle className={`w-1/4 h-1/4 sm:w-52 sm:h-52 sm:mr-10`} />
                     </div>
                 </div>
                 <div className="space-y-4 p-4">
                     {users.map((user) => (
                         <details key={user._id} id={`detail-${user._id}`}
-                        className="flex justify-between items-center p-4 bg-gray-100 rounded-md shadow">
+                            className="flex justify-between flex-col items-start p-4 bg-[#E8E8E8] rounded-md shadow">
                             <summary
-                                className="cursor-pointer text-lg font-semibold flex justify-between items-center">
-                            <span>
-                                {user.prenom} {user.nom} - {user.username}
-                            </span>
+                                className="cursor-pointer text-lg font-semibold flex w-full justify-between items-center">
+                                <span>
+                                    {user.prenom} {user.nom} - {user.username}
+                                </span>
                                 <div className="flex space-x-2">
-                                    <FaEdit
-                                        className="hover:text-gray-900 cursor-pointer"
+                                    <button
+                                        className="px-4 py-2 bg-black text-secondary-color rounded hover:bg-gray-900 transition"
                                         onClick={(event) => handleEditClick(user, event)}
-                                    />
+                                    >
+                                        Modifier
+                                    </button>
                                     {session?.user?.id !== user._id && (
-                                        <FaTrash
-                                            className="hover:text-red-400 cursor-pointer"
+                                        <button
+                                            className="px-4 py-2 bg-primary-color text-secondary-color rounded transition"
                                             onClick={() => handleDeleteClick(user._id)}
-                                        />
+                                        >
+                                            Supprimer
+                                        </button>
                                     )}
                                 </div>
                             </summary>
                             <div className="mt-2 space-y-2">
                                 <p className="flex items-center"><strong>Nom:</strong> <span
                                     className="mx-2">{editingUser === user._id ? (
-                                    <input
-                                        type="text"
-                                        name="nom"
-                                        value={formData.nom || ""}
-                                        onChange={handleInputChange}
-                                        className="mt-1 p-1 border-b-2 border-gray-600"
-                                    />
-                                ) : user.nom}</span></p>
+                                        <input
+                                            type="text"
+                                            name="nom"
+                                            value={formData.nom || ""}
+                                            onChange={handleInputChange}
+                                            className="mt-1 p-1 border-b-2 border-gray-600"
+                                        />
+                                    ) : user.nom}</span></p>
                                 <p className="flex items-center"><strong>Prénom:</strong> <span
                                     className="mx-2">{editingUser === user._id ? (
-                                    <input
-                                        type="text"
-                                        name="prenom"
-                                        value={formData.prenom || ""}
-                                        onChange={handleInputChange}
-                                        className="mt-1 p-1 border-b-2 border-gray-600"
-                                    />
-                                ) : user.prenom}</span></p>
+                                        <input
+                                            type="text"
+                                            name="prenom"
+                                            value={formData.prenom || ""}
+                                            onChange={handleInputChange}
+                                            className="mt-1 p-1 border-b-2 border-gray-600"
+                                        />
+                                    ) : user.prenom}</span></p>
                                 {/* eslint-disable-next-line react/no-unescaped-entities */}
                                 <p className="flex items-center"><strong>Nom d'utilisateur:</strong> <span
                                     className="mx-2">{editingUser === user._id ? (
-                                    <input
-                                        type="text"
-                                        name="username"
-                                        value={formData.username || ""}
-                                        onChange={handleInputChange}
-                                        className="mt-1 p-1 border-b-2 border-gray-600"
-                                    />
-                                ) : user.username}</span></p>
+                                        <input
+                                            type="text"
+                                            name="username"
+                                            value={formData.username || ""}
+                                            onChange={handleInputChange}
+                                            className="mt-1 p-1 border-b-2 border-gray-600"
+                                        />
+                                    ) : user.username}</span></p>
                                 <p className="flex items-center"><strong>Email:</strong> <span
                                     className="mx-2">{editingUser === user._id ? (
-                                    <input
-                                        type="text"
-                                        name="email"
-                                        value={formData.email || ""}
-                                        onChange={handleInputChange}
-                                        className="mt-1 p-1 border-b-2 border-gray-600"
-                                    />
-                                ) : user.email}</span></p>
+                                        <input
+                                            type="text"
+                                            name="email"
+                                            value={formData.email || ""}
+                                            onChange={handleInputChange}
+                                            className="mt-1 p-1 border-b-2 border-gray-600"
+                                        />
+                                    ) : user.email}</span></p>
                                 <p className="flex items-center"><strong>Admin:</strong> <span
                                     className="mx-2">{editingUser === user._id ? (
-                                    <input
-                                        type="checkbox"
-                                        name="isAdmin"
-                                        checked={formData.isAdmin || false}
-                                        onChange={(e) => setFormData({
-                                            ...formData,
-                                            isAdmin: e.target.checked,
-                                        })}
-                                        className="mt-1 p-1 border-b-2 border-gray-600"
-                                    />
-                                ) : user.isAdmin ? "Oui" : "Non"}</span></p>
+                                        <input
+                                            type="checkbox"
+                                            name="isAdmin"
+                                            checked={formData.isAdmin || false}
+                                            onChange={(e) => setFormData({
+                                                ...formData,
+                                                isAdmin: e.target.checked,
+                                            })}
+                                            className="mt-1 p-1 border-b-2 border-gray-600"
+                                        />
+                                    ) : user.isAdmin ? "Oui" : "Non"}</span></p>
                                 <p className="flex items-center"><strong>Date de naissance:</strong> <span
                                     className="mx-2">{editingUser === user._id ? (
-                                    <input
-                                        type="date"
-                                        name="dateOfBirth"
-                                        value={formData.dateOfBirth || ""}
-                                        onChange={handleInputChange}
-                                        className="mt-1 p-1 border-b-2 border-gray-600"
-                                    />
-                                ) : new Date(user.dateOfBirth).toLocaleDateString()}</span></p>
+                                        <input
+                                            type="date"
+                                            name="dateOfBirth"
+                                            value={formData.dateOfBirth || ""}
+                                            onChange={handleInputChange}
+                                            className="mt-1 p-1 border-b-2 border-gray-600"
+                                        />
+                                    ) : new Date(user.dateOfBirth).toLocaleDateString()}</span></p>
                                 <p className="flex items-center"><strong>Date de création:</strong> <span
                                     className="mx-2">{new Date(user.createdAt).toLocaleDateString()}</span></p>
                                 {user.cart && <p className="flex items-center"><strong>Panier ID:</strong> <span

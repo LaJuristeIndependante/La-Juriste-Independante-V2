@@ -62,7 +62,7 @@ export default function AdminNavbar() {
                                 <Link href="/admin/profession">Profession</Link>
                             </li>
                             <li className={`${pathname === '/admin/product' ? 'font-bold' : ''} text-center w-auto min-w-[150px]`}>
-                                <Link href="/admin/product">Contrat</Link>
+                                <Link href="/admin/product">Modèle</Link>
                             </li>
                             <li className={`${pathname === '/admin/users' ? 'font-bold' : ''} text-center w-auto min-w-[150px]`}>
                                 <Link href="/admin/users">Utilisateur</Link>
@@ -77,7 +77,7 @@ export default function AdminNavbar() {
                 )}
                 <div className={`flex items-center justify-center space-x-4 p-4`}>
                     <button
-                        className={`flex justify-center p-2 font-bold space-x-2 rounded-full border border-gray-300 bg-secondary-color`}
+                        className={`flex justify-center p-2 font-bold space-x-2 rounded-full border border-gray-300 bg-[#E8E8E8]`}
                         onClick={() => router.push('/admin')}
                     >
                         <Image src={admin_icon} alt="admin icon" width={0} height={0} className="w-6 h-6" />

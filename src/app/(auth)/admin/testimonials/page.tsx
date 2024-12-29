@@ -122,7 +122,7 @@ export default function AdminTestimonialsPage() {
                     {commentaires.map((commentaire) => (
                         <div
                             key={commentaire._id}
-                            className={`flex ${isMobile ? 'flex-col justify-center' : 'flex-row justify-between '} items-center p-4 bg-gray-100 rounded-md shadow`}
+                            className={`flex ${isMobile ? 'flex-col justify-center' : 'flex-row justify-between '} items-center p-4 bg-[#E8E8E8] rounded-md shadow`}
                         >
                             <div className={`flex items-center ${isMobile ? 'flex-col space-y-2 justify-center' : 'flex-row  space-x-5'}`}>
                                 {isEditing && editingCommentId === commentaire._id ? (

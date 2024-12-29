@@ -29,7 +29,7 @@ function Footer() {
                                 <Link href="/">Accueil</Link>
                             </li>
                             <li className="footer__site-pages list__item">
-                                <Link href="/products">Templates types</Link>
+                                <Link href="/products">Modèles types</Link>
                             </li>
                             <li className="footer__site-pages list__item">
                                 <Link href="/support">Support</Link>

@@ -11,12 +11,11 @@ function SecondSectionComponent(): React.ReactElement {
         <section className={`${isMobile ? 'h-[80vh]' : 'h-[90vh]'} flex flex-col md:flex-row justify-evenly items-center mb-5`}>
             <div className='flex items-center justify-center w-full md:w-1/3 h-48 md:h-72'>
                 {isMobile ? (
-                    <div className="flex items-center flex-col justify-center h-[350px] w-[220px] mb-10" style={{
-                        backgroundImage: `url(${lajuriste_icon.src})`, backgroundSize: 'cover', backgroundPosition: 'center'
-                    }}>
-                        <p className="text-right text-white text-stroke text-sm mt-2 md:mt-4 mr-3">A PROPOS</p>
+                    <div className="flex items-center flex-col justify-center h-[250px] md:h-[350px] w-[220px] mb-10 relative">
+                        <Image src={lajuriste_icon} alt="lajuriste-img" layout="fill" objectFit="cover" />
+                        <p className="text-right text-white text-stroke text-sm mt-2 md:mt-4 mr-3 z-10">A PROPOS</p>
                         <h2
-                            className="text-white text-2xl text-stroke font-bold text-center w-48 h-24 flex items-center justify-center"
+                            className="text-white text-2xl text-stroke font-bold text-center w-48 h-24 flex items-center justify-center z-10"
                         >
                             Qui suis-je ?
                         </h2>
