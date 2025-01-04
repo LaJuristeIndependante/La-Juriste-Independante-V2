@@ -1,7 +1,7 @@
 "use client";
-import React, { FormEvent, useState, ChangeEvent } from 'react';
-import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
+import React, {FormEvent, useState, ChangeEvent} from 'react';
+import {useRouter} from 'next/navigation';
+import {signIn} from 'next-auth/react';
 import Image from 'next/image';
 import id_icon from '@public/images/auth/people-id-icon.svg';
 import google_icon from '@public/images/auth/google-icon.svg';
@@ -14,7 +14,7 @@ interface LoginFormProps {
     handleOnRegisterClick: () => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick }) => {
+const LoginForm: React.FC<LoginFormProps> = ({handleOnRegisterClick}) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [showPassword, setShowPassword] = useState(false);
@@ -81,14 +81,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick }) => {
                         >
                             Se connecter
                         </button>
-                        <button className="sideBar_logged-section_googleConnexionButton rounded-full w-12 h-10 ml-2 border-2 border-[#f1f1f1] flex items-center justify-center hover:bg-gray-200">
-                            <span>
-                                <button type="button"
-                                        className="sideBar_logged-section_googleConnexionButton rounded-full ml-2 w-11 h-10 border-2 border-[#f1f1f1] flex items-center justify-center hover:bg-gray-200"
-                                        onClick={() => signIn("google")}>
-                                    <Image src={google_icon} alt="google icon" width={24} height={24} className="w-6 h-6" />
-                                </button>
-                            </span>
+                        <button type="button"
+                                className="sideBar_logged-section_googleConnexionButton rounded-full ml-2 w-11 h-10 border-2 border-[#f1f1f1] flex items-center justify-center hover:bg-gray-200"
+                                onClick={() => signIn("google")}>
+                            <Image src={google_icon} alt="google icon" width={24} height={24} className="w-6 h-6"/>
                         </button>
                     </div>
                 </form>
