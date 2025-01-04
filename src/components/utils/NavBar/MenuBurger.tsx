@@ -37,7 +37,7 @@ const MenuBurger: React.FC<MenuBurgerProps> = ({ isOpen, onClose, isOpenAdmin })
 
     const menuItems = [
         { label: 'Accueil', href: '/' },
-        { label: 'Templates types', href: '/products' },
+        { label: 'Modèles types', href: '/products' },
         { label: 'Support', href: '/support' },
     ];
 
