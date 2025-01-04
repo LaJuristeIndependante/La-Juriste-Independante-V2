@@ -44,15 +44,15 @@ const PaymentPage: React.FC = () => {
     }, [orderId]);
 
     if (loading) {
-        return <div className="text-center mt-4">Chargement des détails de la commande...</div>;
+        return <div className="text-center mt-4 h-screen flex items-center justify-center">Chargement des détails de la commande...</div>;
     }
 
     if (error) {
-        return <div className="text-[#A00C30] text-center mt-4">{error}</div>;
+        return <div className="text-[#A00C30] text-center mt-4 h-screen flex items-center justify-center">{error}</div>;
     }
 
     if (!orderDetails) {
-        return <div className="text-[#A00C30] text-center mt-4">Détails de la commande non disponibles.</div>;
+        return <div className="text-[#A00C30] text-center mt-4 h-screen flex items-center justify-center">Détails de la commande non disponibles.</div>;
     }
 
     return (
