@@ -76,17 +76,18 @@ const CheckoutPage = ({ amount, orderId }: { amount: number; orderId: string }) 
         setStep(step + 1);
     };
 
+
     return (
-        <div className="bg-white p-8 rounded-lg shadow-lg max-w-3xl mx-auto space-y-6">
-            <h2 className="text-2xl font-bold text-center mb-6">Finalisez votre commande</h2>
+        <div className="bg-white px-8 py-3 rounded-lg max-w-3xl mx-auto space-y-6">
+            <h2 className="text-lg sm:text-base md:text-lg font-light text-center">Finalisez votre commande</h2>
 
             {step === 1 && (
-                <div className="space-y-4 text-black">
+                <div className="space-y-4 text-black shadow-lg px-36 py-10 rounded-lg">
                     <h3 className="text-lg font-bold mb-2">Votre facture</h3>
-                    <p>Montant à payer: €{amount.toFixed(2)}</p>
+                    <p className="text-lg sm:text-base md:text-lg font-light text-center">Montant à payer: €{amount.toFixed(2)}</p>
                     <button
                         onClick={() => setStep(2)}
-                        className="text-white w-full py-4 bg-red-500 mt-4 rounded-lg font-bold"
+                        className="text-white w-full py-4 bg-primary-color hover:bg-black mt-4 rounded-lg font-bold"
                     >
                         Suivant
                     </button>
@@ -102,7 +103,8 @@ const CheckoutPage = ({ amount, orderId }: { amount: number; orderId: string }) 
                         value={personalInfo.name}
                         onChange={handleInputChange}
                         placeholder="Nom complet"
-                        className="w-full p-2 mb-2 border rounded-md"
+                        className="w-full p-2 mb-2 bg-[#F5F5F5] border rounded-md text-base"
+                        required
                     />
                     <input
                         type="email"
@@ -110,7 +112,8 @@ const CheckoutPage = ({ amount, orderId }: { amount: number; orderId: string }) 
                         value={personalInfo.email}
                         onChange={handleInputChange}
                         placeholder="Email"
-                        className="w-full p-2 mb-2 border rounded-md"
+                        className="w-full p-2 mb-2 bg-[#F5F5F5] border rounded-md text-base"
+                        required
                     />
                     <input
                         type="text"
@@ -118,7 +121,8 @@ const CheckoutPage = ({ amount, orderId }: { amount: number; orderId: string }) 
                         value={personalInfo.phone}
                         onChange={handleInputChange}
                         placeholder="Téléphone"
-                        className="w-full p-2 mb-2 border rounded-md"
+                        className="w-full p-2 mb-2 bg-[#F5F5F5] border rounded-md text-base"
+                        required
                     />
                     <input
                         type="text"
@@ -126,7 +130,8 @@ const CheckoutPage = ({ amount, orderId }: { amount: number; orderId: string }) 
                         value={personalInfo.address.line1}
                         onChange={handleAddressChange}
                         placeholder="Adresse ligne 1"
-                        className="w-full p-2 mb-2 border rounded-md"
+                        className="w-full p-2 mb-2 bg-[#F5F5F5] border rounded-md text-base"
+                        required
                     />
                     <input
                         type="text"
@@ -134,7 +139,7 @@ const CheckoutPage = ({ amount, orderId }: { amount: number; orderId: string }) 
                         value={personalInfo.address.line2}
                         onChange={handleAddressChange}
                         placeholder="Adresse ligne 2 (facultatif)"
-                        className="w-full p-2 mb-2 border rounded-md"
+                        className="w-full p-2 mb-2 bg-[#F5F5F5] border rounded-md text-base"
                     />
                     <input
                         type="text"
@@ -142,7 +147,8 @@ const CheckoutPage = ({ amount, orderId }: { amount: number; orderId: string }) 
                         value={personalInfo.address.city}
                         onChange={handleAddressChange}
                         placeholder="Ville"
-                        className="w-full p-2 mb-2 border rounded-md"
+                        className="w-full p-2 mb-2 bg-[#F5F5F5] border rounded-md text-base"
+                        required
                     />
                     <input
                         type="text"
@@ -150,7 +156,8 @@ const CheckoutPage = ({ amount, orderId }: { amount: number; orderId: string }) 
                         value={personalInfo.address.postalCode}
                         onChange={handleAddressChange}
                         placeholder="Code postal"
-                        className="w-full p-2 mb-2 border rounded-md"
+                        className="w-full p-2 mb-2 bg-[#F5F5F5] border rounded-md text-base"
+                        required
                     />
                     <input
                         type="text"
@@ -158,18 +165,19 @@ const CheckoutPage = ({ amount, orderId }: { amount: number; orderId: string }) 
                         value={personalInfo.address.country}
                         onChange={handleAddressChange}
                         placeholder="Pays"
-                        className="w-full p-2 mb-2 border rounded-md"
+                        className="w-full p-2 mb-2 bg-[#F5F5F5] border rounded-md text-base"
+                        required
                     />
                     <div className="flex justify-between mt-4">
                         <button
                             onClick={() => setStep(1)}
-                            className="text-white w-1/3 py-2 bg-gray-500 rounded-lg font-bold"
+                            className="text-white w-1/3 py-2 bg-black rounded-lg font-bold"
                         >
                             Précédent
                         </button>
                         <button
                             onClick={handleNextStep}
-                            className="text-white w-1/3 py-2 bg-red-500 rounded-lg font-bold"
+                            className="text-white w-1/3 py-2 bg-primary-color rounded-lg font-bold"
                         >
                             Suivant
                         </button>
@@ -178,21 +186,21 @@ const CheckoutPage = ({ amount, orderId }: { amount: number; orderId: string }) 
             )}
 
             {step === 3 && (
-                <div className="space-y-4 text-black">
+                <div className="space-y-4 text-black w-full p-4 rounded-lg">
                     <h3 className="text-lg font-bold mb-2">Informations de paiement</h3>
-                    <div className="flex justify-between mt-4">
+                    <div className="flex justify-between items-center mt-4 gap-10 w-full">
                         <button
                             onClick={() => setStep(2)}
                             type="button"
-                            className="text-white w-1/3 py-2 bg-gray-500 rounded-lg font-bold"
+                            className="text-white py-2 px-6 bg-black rounded-lg font-bold"
                         >
                             Précédent
                         </button>
-                        <button
+                        <button                           
                             onClick={checkout}
-                            className="text-white w-1/3 py-2 bg-red-500 rounded-lg font-bold disabled:opacity-50 disabled:animate-pulse"
+                            className="text-white py-2 px-4 bg-primary-color rounded-lg font-bold disabled:opacity-50 disabled:animate-pulse"
                         >
-                            {!loading ? `Payer €${amount.toFixed(2)}` : "Traitement..."}
+                            {!loading ? `Payer ${amount.toFixed(2)} €` : "Traitement..."}
                         </button>
                     </div>
                 </div>

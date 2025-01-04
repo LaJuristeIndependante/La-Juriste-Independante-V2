@@ -44,19 +44,22 @@ const ProductCard = ({ product }: { product: ProductData }) => {
     );
 };
 
-
 export default function ProductSection() {
     const searchParams = useSearchParams();
     const profession = searchParams.get("profession") || "";
 
     const [products, setProducts] = useState<ProductData[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const fetchProd = async (professionFilter?: string) => {
+        setIsLoading(true);
         try {
             const data = await fetchProductsByProfession(professionFilter || '');
-            setProducts(data); 
+            setProducts(data);
         } catch (error) {
             console.error("Erreur lors de la récupération des produits:", error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -69,18 +72,27 @@ export default function ProductSection() {
     }
 
     return (
-        <section className="relative min-h-screen w-full mx-auto flex flex-col items-start gap-8 p-8">
+        <section className="relative min-h-screen w-full mx-auto flex flex-col items-start gap-8 p-4 md:p-8">
             <TitleSectionModels professionName={profession} handleChange={handleChange} />
-            {products.length > 0 ? (
-                <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 border rounded-lg border-dashed border-black py-4 px-2">
-                    {products.map((product, index) => (
-                        <ProductCard key={product._id || index} product={product} />
-                    ))}
+            {isLoading ? (
+                <div className="w-full flex items-center justify-center border rounded-lg border-dashed border-black py-4 px-2">
+                    <div className="w-full flex flex-col items-center justify-center min-h-[200px]">
+                        <p className="text-xl md:text-2xl font-semibold text-center animate-pulse">Chargement...</p>
+                    </div>
                 </div>
             ) : (
-                <div className="w-full mt-20">
-                    <p className={"text-6xl text-center"}>Aucun produit trouvé</p>
-                </div>
+                products.length > 0 ? (
+                    <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 border rounded-lg border-dashed border-black py-4 px-2">
+                        {products.map((product, index) => (
+                            <ProductCard key={product._id || index} product={product} />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="w-full flex flex-col items-center">
+                        <p className="text-2xl md:text-4xl font-islandMoments text-center">Aucun produit trouvé</p>
+                        <p className="text-base md:text-lg text-center mt-4">Essayez de modifier votre recherche pour trouver ce que vous cherchez.</p>
+                    </div>
+                )
             )}
 
             <BackgroundBubbles page='contracts' />

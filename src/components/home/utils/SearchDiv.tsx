@@ -118,7 +118,7 @@ export default function SearchDiv() {
                     className='bg-[#F5F5F5] pr-2'
                 >
                     <span>
-                        <Image src={loupe} alt={"loupe"} width={30} height={30}/>
+                        <Image src={loupe} alt={"loupe"} width={30} height={30} />
                     </span>
                 </button>
             </form>
@@ -126,7 +126,7 @@ export default function SearchDiv() {
             {isLoading ? (
                 <div className="mt-4">Chargement...</div>
             ) : (
-                <div className="relative w-[93%] md:w-full flex items-center justify-center md:justify-start">
+                <div className="relative w-[93%] md:w-full flex items-center justify-center">
                     <div className="overflow-x-scroll whitespace-nowrap scrollbar-hide" ref={scrollContainerRef}>
                         <div className="inline-flex space-x-1">
                             {filteredProfessions.map(profession => (

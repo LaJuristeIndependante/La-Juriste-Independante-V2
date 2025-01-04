@@ -185,7 +185,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                         {session?.user ? (
                             <div className="flex items-center justify-center w-full space-x-5">
                                 <button onClick={handleOrder}
-                                        className={"flex-1 bg-primary-color rounded-2xl p-4 text-white font-bold text-xl"}>
+                                        className={"flex-1 bg-primary-color hover:bg-black rounded-2xl p-4 text-white font-bold text-xl"}>
                                     Acheté
                                 </button>
                                 <button onClick={handleCart}
