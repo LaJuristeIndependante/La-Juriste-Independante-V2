@@ -7,10 +7,10 @@ import LoginSection from '@/components/auth/LoginSection';
 import SectionProfile from "@lib/UserLib/component/auth/profile/SectionProfile";
 
 const ProfileSection: React.FC<{ closeSidebar: () => void }> = ({ closeSidebar }) => {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
 
 
-    if (session) {
+    if (status == "authenticated" && session) {
         return (
             <div className="flex flex-col">
                 <SectionProfile />
