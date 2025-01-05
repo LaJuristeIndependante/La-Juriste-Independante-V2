@@ -165,13 +165,13 @@ export async function updateProduct(id: string, updatedProduct: FormData): Promi
 export async function downloadProductPdf(productId: string, productName: string): Promise<void> {
     try {
         const response = await axios.get(`/api/products/${productId}/pdf`, {
-            responseType: 'blob', // Important pour gérer les données binaires
+            responseType: 'blob',
         });
 
         const blob = new Blob([response.data], { type: 'application/pdf' });
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.setAttribute('download', `${productName}.pdf`); // Nom du fichier
+        link.setAttribute('download', `${productName}.pdf`);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -180,3 +180,4 @@ export async function downloadProductPdf(productId: string, productName: string)
         throw new Error(error.response?.data?.message || 'Erreur lors du téléchargement du PDF');
     }
 }
+
