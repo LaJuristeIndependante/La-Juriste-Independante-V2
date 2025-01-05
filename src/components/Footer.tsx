@@ -48,6 +48,9 @@ function Footer() {
                             <li className="footer__legal-pages list__item">
                                 <Link href="/terms-of-sales">Conditions de vente</Link>
                             </li>
+                            <li className="footer__legal-pages list__item">
+                                <Link href="/legals-mention">Conditions de vente</Link>
+                            </li>
                         </ul>
                     </div>
                     <div className="footer_social-links flex flex-col justify-start space-y-2">
