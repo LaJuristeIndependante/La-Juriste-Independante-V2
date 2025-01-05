@@ -56,12 +56,14 @@ function Footer() {
                     <div className="footer_social-links flex flex-col justify-start space-y-2">
                         <h3 className="footer__social-links__title font-semibold text-2xl">Réseaux</h3>
                         <ul className="footer__social-links__list space-y-1">
-                            {/* <li className="footer__social-links list__item">
+                            {
+                                /* <li className="footer__social-links list__item">
                                 <Link target='blank' href="https://www.instagram.com/arianebarrons/">Instagram</Link>
                             </li>
                             <li className="footer__social-links list__item">
                                 <Link target='blank' href="https://facebook.com">Facebook</Link>
-                            </li> */}
+                            </li> */
+                            }
                             <li className="footer__social-links list__item">
                                 <Link href="/support">Me contacter</Link>
                             </li>
