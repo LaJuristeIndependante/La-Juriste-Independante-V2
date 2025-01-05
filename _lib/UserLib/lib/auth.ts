@@ -31,7 +31,7 @@ export const authOptions: NextAuthOptions = {
                         { email: credentials?.email },
                         { username: credentials?.email }, // Login via username
                     ],
-                }).select("+password"); // Explicitly include password field
+                }).select("+password");
 
                 if (!user) throw new Error("Utilisateur introuvable");
 
@@ -69,27 +69,27 @@ export const authOptions: NextAuthOptions = {
 
             // Handle Google login
             if (account && profile) {
+                // Find an existing user by email
                 let existingUser = await User.findOne({ email: profile.email });
 
                 if (existingUser) {
-                    // Update token with existing user data
+                    // If user exists, associate Google account with the existing account
                     token.id = existingUser._id.toString();
                     token.name = existingUser.username;
                     token.email = existingUser.email;
-                    token.firstName = existingUser.prenom;
-                    token.lastName = existingUser.nom;
+                    token.firstName = existingUser.prenom || "";
+                    token.lastName = existingUser.nom || "";
                     token.isAdmin = existingUser.isAdmin;
                     token.isVerified = existingUser.isVerified;
                     token.dateOfBirth = existingUser.dateOfBirth;
                 } else {
-                    // Create a new user if not found
+                    // Create a new user if no user exists
                     const newUser = await User.create({
                         username: profile.name || "Utilisateur Google",
                         email: profile.email,
                         prenom: "",
                         nom: "",
                         isVerified: true, // Verified by Google
-                        dateOfBirth: new Date().toISOString(),
                     });
 
                     // Update token with new user data
