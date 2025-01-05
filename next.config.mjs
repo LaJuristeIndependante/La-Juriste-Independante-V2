@@ -4,7 +4,7 @@ const nextConfig = {
         return [
             {
                 source: '/api/products/:path*',
-                destination: 'https://la-juriste-proxy-ec8f63ca9ca5.herokuapp.com/api/products/:path*', // Remplacez par l'URL de votre proxy
+                destination: 'https://la-juriste-proxy-ec8f63ca9ca5.herokuapp.com/api/products/:path*',
             },
         ];
     },

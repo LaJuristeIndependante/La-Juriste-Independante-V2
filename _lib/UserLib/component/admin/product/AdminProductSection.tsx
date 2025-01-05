@@ -89,11 +89,24 @@ export default function AdminProductSection() {
 
     const handleDownload = async (productId: string, productName: string) => {
         try {
-            await downloadProductPdf(productId, productName);
+            const response = await fetch(`/api/products/${productId}/pdf`);
+            if (!response.ok) {
+                throw new Error('Erreur lors du téléchargement du PDF');
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `${productName}.pdf`);
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode?.removeChild(link);
         } catch (error) {
             console.error('Erreur lors du téléchargement du PDF:', error);
         }
     };
+
 
     return (
         <section className={"w-full p-16"}>

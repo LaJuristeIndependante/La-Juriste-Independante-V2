@@ -29,3 +29,4 @@ export async function GET(
         return new NextResponse('Erreur serveur lors de la récupération du PDF', { status: 500 });
     }
 }
+

@@ -165,19 +165,12 @@ export async function updateProduct(id: string, updatedProduct: FormData): Promi
 export async function downloadProductPdf(productId: string, productName: string): Promise<void> {
     try {
         const response = await axios.get(`/api/products/${productId}/pdf`, {
-            responseType: 'blob',
+            responseType: 'blob', // Important pour gérer les données binaires
         });
 
         const blob = new Blob([response.data], { type: 'application/pdf' });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.setAttribute('download', `${productName}.pdf`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        saveAs(blob, `${productName}.pdf`);
     } catch (error: any) {
-        console.error('Erreur lors du téléchargement du PDF :', error.message);
         throw new Error(error.response?.data?.message || 'Erreur lors du téléchargement du PDF');
     }
 }
-
