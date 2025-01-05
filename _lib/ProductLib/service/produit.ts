@@ -169,8 +169,14 @@ export async function downloadProductPdf(productId: string, productName: string)
         });
 
         const blob = new Blob([response.data], { type: 'application/pdf' });
-        saveAs(blob, `${productName}.pdf`);
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.setAttribute('download', `${productName}.pdf`); // Nom du fichier
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     } catch (error: any) {
+        console.error('Erreur lors du téléchargement du PDF :', error.message);
         throw new Error(error.response?.data?.message || 'Erreur lors du téléchargement du PDF');
     }
 }
