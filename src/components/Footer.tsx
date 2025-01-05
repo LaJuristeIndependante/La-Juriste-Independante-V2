@@ -49,7 +49,7 @@ function Footer() {
                                 <Link href="/terms-of-sales">Conditions de vente</Link>
                             </li>
                             <li className="footer__legal-pages list__item">
-                                <Link href="/legals-mention">Conditions de vente</Link>
+                                <Link href="/legals-mention">Mentions légales</Link>
                             </li>
                         </ul>
                     </div>
