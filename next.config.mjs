@@ -3,7 +3,7 @@ const nextConfig = {
     async rewrites() {
         return [
             {
-                source: '/api/product/:id/pdf',
+                source: '/api/product/:path*/pdf',
                 destination: 'https://la-juriste-proxy-ec8f63ca9ca5.herokuapp.com/api/products/:path*',
             },
         ];
