@@ -5,7 +5,6 @@ import { saveAs } from 'file-saver';
 /**
  * Récupère les détails d'un produit spécifique par son identifiant.
  *
- * @param {string} gameId - L'identifiant unique du produit (jeu) à récupérer.
  * @returns {Promise<ProductDetail | null>} - Une promesse qui résout avec les détails du produit si trouvé, sinon `null`.
  * @throws {Error} - Lance une erreur si la requête échoue ou si le produit n'est pas trouvé.
  *
@@ -22,10 +21,11 @@ import { saveAs } from 'file-saver';
  *   .catch(error => {
  *     console.error('Erreur lors de la récupération du produit:', error.message);
  *   });
+ * @param id
  */
-export const fetchProductById = async (gameId: string): Promise<ProductDetail | null> => {
+export const fetchProductById = async (id: string): Promise<ProductDetail | null> => {
     try {
-        const res = await axios.get(`/api/products/${gameId}/`);
+        const res = await axios.get(`/api/products/${id}/`);
         return res.data;
     } catch (error) {
         if (axios.isAxiosError(error)) {

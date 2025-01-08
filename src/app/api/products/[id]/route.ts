@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/../_lib/MongoLib/mongodb';
-import Product from '@/../_lib/ProductLib/model/products';
+import Product from '@lib/ProductLib/model/products';
 
 // GET: Récupérer un produit par son ID
 export async function GET(request: Request, { params }: { params: { id: string } }) {

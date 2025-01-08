@@ -5,16 +5,12 @@ import React, { useState, useEffect } from 'react';
 import { useSession } from "next-auth/react";
 import { notFound, useRouter } from "next/navigation";
 import { ProductDetail, ProductPageProps } from "@/../_lib/ProductLib/type/Product";
-import { fetchProductById, fetchProductsForAdmin } from "@/../_lib/ProductLib/service/produit";
+import { fetchProductById } from "@/../_lib/ProductLib/service/produit";
 import { createOrder } from "@/../_lib/OrderLib/service/orders";
-import { FaShoppingCart } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
 import { addToCart } from "@/../_lib/CartLib/service/cart";
 import left_arrow_icon from '@public/images/common/left-arrow-icon2.svg';
-import arrow_right_icon from '@public/images/common/arrow-right-icon.svg';
-import card_icon from '@public/images/common/cart-icon.svg';
 import BubbleDecoration from "@/../_lib/ProductLib/component/BubbleDecoration";
-import BackgroundBubbles from "@/components/utils/décors/BubbleBackground";
 import { Profession } from "@lib/ProfessionLib/type/Profession";
 import { getAllProfessions } from "@lib/ProfessionLib/service/professionService";
 
