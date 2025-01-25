@@ -12,7 +12,6 @@ export default function SearchDiv() {
     const [filteredProfessions, setFilteredProfessions] = useState<Profession[]>([]);
     const [inputClicked, setInputClicked] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [isValidProfession, setIsValidProfession] = useState(false);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const divRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
@@ -34,19 +33,12 @@ export default function SearchDiv() {
 
     useEffect(() => {
         if (searchString) {
-            const filtered = professions.filter((profession) =>
+            const filtered = professions.filter(profession =>
                 profession.name.toLowerCase().includes(searchString.toLowerCase())
             );
             setFilteredProfessions(filtered);
-
-            // Vérification si la profession entrée est exacte
-            const isExactMatch = professions.some(
-                (profession) => profession.name.toLowerCase() === searchString.toLowerCase()
-            );
-            setIsValidProfession(isExactMatch);
         } else {
             setFilteredProfessions(professions);
-            setIsValidProfession(false);
         }
     }, [searchString, professions]);
 
@@ -56,9 +48,8 @@ export default function SearchDiv() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (isValidProfession) {
-            const slugifiedProfessionName = searchString.toLowerCase().replace(/\s+/g, "-");
-            router.push(`/products?profession=${encodeURIComponent(slugifiedProfessionName)}`);
+        if (searchString) {
+            router.push(`/products?profession=${encodeURIComponent(searchString)}`);
         }
     };
 
@@ -67,6 +58,13 @@ export default function SearchDiv() {
         setInputClicked(false);
         const slugifiedProfessionName = professionName.toLowerCase().replace(/\s+/g, '-');
         router.push(`/products?profession=${encodeURIComponent(slugifiedProfessionName)}`);
+    };
+
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Escape') {
+            setSearchString('');
+            setInputClicked(false);
+        }
     };
 
     const handleInputClick = () => {
