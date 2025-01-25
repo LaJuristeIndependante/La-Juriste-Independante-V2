@@ -37,7 +37,7 @@ const CookiePopup: React.FC<CookiePopupProps> = ({ isOpen, onClose }) => {
                     </button>
                     <button
                         className="w-full text-gray-500 hover:text-black underline text-sm"
-                        onClick={() => console.log('Paramètres des cookies ouverts')}
+                        onClick={() => onClose(false)}
                     >
                         Refuser tous les cookies
                     </button>
