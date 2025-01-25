@@ -21,7 +21,7 @@ function LeftSection() {
           Pas de problème, je suis là pour vous aider ! Si aucun des modèles proposés ne correspond à vos besoins spécifiques, n’hésitez pas à me contacter.
         </p>
         <p className={`${specialQuery ? 'text-sm' : ''}`}>
-          Pour toute demande, contactez-moi directement via le formulaile ou à l’adresse email indiquée. Je me ferait un plaisir de répondre
+          Pour toute demande, contactez-moi directement via le formulaire ou à l’adresse email indiquée. Je me ferai un plaisir de répondre
           rapidement et efficacement à vos besoins.
         </p>
         <CoordsCard
