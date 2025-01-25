@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import loupe from "@public/images/Utils/loupe.png";
 import React, { useRef, useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
 import Image from 'next/image';
