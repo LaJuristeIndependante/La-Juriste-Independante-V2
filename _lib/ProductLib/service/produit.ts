@@ -61,7 +61,6 @@ export async function fetchProductsForClient(): Promise<ProductData[]> {
 */
 export async function fetchProductsByProfession(professionFilter: string): Promise<ProductData[]> {
     try {
-        console.log('coucou');
         const response = await axios.get(`/api/products?profession=${professionFilter}`);
         return response.data;
     } catch (error: any) {
