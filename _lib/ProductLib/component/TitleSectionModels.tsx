@@ -4,46 +4,35 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import gif from '@public/images/models-page/contract-search.gif';
 import line from "@public/images/Utils/redline.png";
-import { getAllProfessions } from '@lib/ProfessionLib/service/professionService';
-import { Profession } from '@lib/ProfessionLib/type/Profession';
+import { ProfessionData } from '@lib/ProfessionLib/type/Profession';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { useMediaQuery } from 'react-responsive';
-import loupe from "@public/images/Utils/loupe.png";
+import { ProfileData } from '@lib/UserLib/type/UserType';
 
 interface TitleSectionModelsProps {
     professionName: string;
+    professions: ProfessionData[];
     handleChange: (profession: string) => void;
 }
 
-const TitleSectionModels: React.FC<TitleSectionModelsProps> = ({ professionName, handleChange }) => {
-    const pathname = usePathname();
+const TitleSectionModels: React.FC<TitleSectionModelsProps> = ({ professionName, professions, handleChange }) => {
     const router = useRouter();
-    const [profession, setProfession] = useState<string>(professionName || '');
     const [searchString, setSearchString] = useState<string>('');
-    const [professions, setProfessions] = useState<Profession[]>([]);
-    const [filteredProfessions, setFilteredProfessions] = useState<Profession[]>([]);
+    const [filteredProfessions, setFilteredProfessions] = useState<ProfessionData[]>([]);
     const inputRef = useRef<HTMLInputElement | null>(null);
     const divRef = useRef<HTMLFormElement>(null);
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
+    function capitalizeFirstLetter(string: string) {
+        if (!string) return '';
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    }
+
     useEffect(() => {
-        if (pathname === '/models') {
-            setProfession(professionName);
+        if (professionName) {
+            setSearchString(capitalizeFirstLetter(professionName.replace(/-/g, ' ')));
         }
-    }, [pathname, professionName]);
-
-    useEffect(() => {
-        const fetchProfessions = async () => {
-            try {
-                const professionsData = await getAllProfessions();
-                setProfessions(professionsData);
-            } catch (error) {
-                console.error('Erreur lors de la récupération des professions:', error);
-            }
-        };
-
-        fetchProfessions();
-    }, []);
+    }, [professionName]);
 
     useEffect(() => {
         if (searchString) {
@@ -83,6 +72,12 @@ const TitleSectionModels: React.FC<TitleSectionModelsProps> = ({ professionName,
         router.push(`/products?profession=${slugifiedProfessionName}`);
     };
 
+    const clearSearch = () => {
+        console.log('clear search');
+        setSearchString('');
+        handleChange('');
+    };
+
     return (
         <div className="flex items-center justify-center">
             <div className={`min-h-[350px] sm:min-h-auto flex flex-col justify-center items-start md:ml-10`}>
@@ -106,18 +101,20 @@ const TitleSectionModels: React.FC<TitleSectionModelsProps> = ({ professionName,
                 >
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <input
-                                type="text"
-                                placeholder="Quelle est votre profession ?"
-                                className={`flex items-center justify-center text-black bg-[#EAEAEA] px-4 min-w-[250px] placeholder:text-black py-2 rounded-lg ${isMobile ? 'w-full ml-5' : ''}`}
-                                value={searchString}
-                                onChange={handleSearchInput}
-                                onBlur={handleBlur}
-                                onKeyDown={handleEscapeKey}
-                                ref={inputRef}
-                            />
+                            <div className="relative flex items-center w-full">
+                                <input
+                                    type="text"
+                                    placeholder="Quelle est votre profession ?"
+                                    className={`flex items-center justify-center text-black bg-[#EAEAEA] px-4 min-w-[250px] placeholder:text-black py-2 rounded-lg ${isMobile ? 'w-full ml-5' : ''}`}
+                                    value={searchString}
+                                    onChange={handleSearchInput}
+                                    onBlur={handleBlur}
+                                    onKeyDown={handleEscapeKey}
+                                    ref={inputRef}
+                                />
+                            </div>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="min-w-[250px] bg-white border border-gray-300 rounded-md shadow-lg mt-2 max-h-60 overflow-y-auto">
+                        <DropdownMenuContent className="min-w-[250px] min-h-[100px] z-50 bg-white border border-gray-300 rounded-md shadow-lg mt-2 max-h-60 overflow-y-auto">
                             {filteredProfessions.map((profession, index) => (
                                 <DropdownMenuItem
                                     key={index}
@@ -129,9 +126,18 @@ const TitleSectionModels: React.FC<TitleSectionModelsProps> = ({ professionName,
                             ))}
                         </DropdownMenuContent>
                     </DropdownMenu>
+                    {searchString && (
+                        <button
+                            type="button"
+                            className="text-black bg-transparent border-none cursor-pointer p-2 text-lg leading-none"
+                            onClick={clearSearch}
+                        >
+                            &times;
+                        </button>
+                    )}
                 </form>
             </div>
-            <div className="w-1/4">
+            <div className="w-1/4 lg:w-1/6">
                 <Image
                     src={gif}
                     alt="gif contract search"

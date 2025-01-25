@@ -60,7 +60,7 @@ export async function PATCH(request: Request, { params }: { params: { id: string
 // DELETE: Supprimer un produit par son ID
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
     await connectDB();
-
+    console.log('/api/products/[id] DELETE', params);
     try {
         const product = await Product.findByIdAndDelete(params.id);
         if (!product) {
