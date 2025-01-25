@@ -185,8 +185,6 @@ export default function AdminProductSection() {
                     </details>
                 ))}
             </div>
-
-
             <ProductModal
                 isOpen={isModalOpen}
                 onClose={closeModal}
