@@ -6,6 +6,7 @@ import CookiePopupManager from "@/components/utils/cookies/CookiePopupManager";
 import CleanUpOrders from "@lib/OrderLib/component/CleanupOrder";
 import ClientProviders from './(provider)/ClientProviders';
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/react"
 
 export default function RootLayout({children}: { children: React.ReactNode; }) {
     return (
@@ -35,6 +36,7 @@ export default function RootLayout({children}: { children: React.ReactNode; }) {
             ></iframe>
         </noscript>
         <ClientProviders>
+            <Analytics />
             <CleanUpOrders/>
             <ClientNavbar/>
             {children}
@@ -43,5 +45,5 @@ export default function RootLayout({children}: { children: React.ReactNode; }) {
         </ClientProviders>
         </body>
         </html>
-    );
+    )
 }
