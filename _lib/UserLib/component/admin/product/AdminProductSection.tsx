@@ -142,7 +142,7 @@ export default function AdminProductSection() {
                                 />
                                 <span className="font-semibold truncate max-w-xs">
                                     {!isMobile ? (
-                                        product.name
+                                        product.name, product._id
                                     ) : (
                                         product.name.length > 30 ? product.name.substring(0, 30) + "..." : product.name
                                     )}
