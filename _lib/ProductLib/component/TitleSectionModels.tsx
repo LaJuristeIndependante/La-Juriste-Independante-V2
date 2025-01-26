@@ -2,67 +2,37 @@
 import React, { useEffect, useState, useRef, ChangeEvent, KeyboardEvent } from 'react';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import edit_icon2 from '@public/images/common/edit-icon2.svg';
-import searchIcon from '@public/images/landing-page/search-icon.svg';
 import gif from '@public/images/models-page/contract-search.gif';
 import line from "@public/images/Utils/redline.png";
-import { getAllProfessions } from '@lib/ProfessionLib/service/professionService';
-import { Profession } from '@lib/ProfessionLib/type/Profession';
+import { ProfessionData } from '@lib/ProfessionLib/type/Profession';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
+import { useMediaQuery } from 'react-responsive';
+import { ProfileData } from '@lib/UserLib/type/UserType';
 
 interface TitleSectionModelsProps {
     professionName: string;
+    professions: ProfessionData[];
     handleChange: (profession: string) => void;
 }
 
-
-const TitleSectionModels: React.FC<TitleSectionModelsProps> = ({ professionName, handleChange }) => {
-    const pathname = usePathname();
+const TitleSectionModels: React.FC<TitleSectionModelsProps> = ({ professionName, professions, handleChange }) => {
     const router = useRouter();
-    const [isMobile, setIsMobile] = useState<boolean>(false);
-    const [profession, setProfession] = useState<string>(professionName || '');
-    const [isClicked, setIsClicked] = useState<boolean>(false);
     const [searchString, setSearchString] = useState<string>('');
-    const [isAnimating, setIsAnimating] = useState<boolean>(false);
-    const [professions, setProfessions] = useState<Profession[]>([]);
-    const [filteredProfessions, setFilteredProfessions] = useState<Profession[]>([]);
+    const [filteredProfessions, setFilteredProfessions] = useState<ProfessionData[]>([]);
     const inputRef = useRef<HTMLInputElement | null>(null);
     const divRef = useRef<HTMLFormElement>(null);
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+
+    function capitalizeFirstLetter(string: string) {
+        if (!string) return '';
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    }
 
     useEffect(() => {
-        if (pathname === '/models') {
-            setProfession(professionName);
+        if (professionName) {
+            setSearchString(capitalizeFirstLetter(professionName.replace(/-/g, ' ')));
         }
-
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= 832);
-        };
-
-        handleResize();
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, [pathname, professionName]);
-
-    useEffect(() => {
-        if (isClicked) {
-            inputRef.current?.focus();
-        }
-    }, [isClicked]);
-
-    useEffect(() => {
-        const fetchProfessions = async () => {
-            try {
-                const professionsData = await getAllProfessions();
-                setProfessions(professionsData);
-            } catch (error) {
-                console.error('Erreur lors de la récupération des professions:', error);
-            }
-        };
-
-        fetchProfessions();
-    }, []);
+    }, [professionName]);
 
     useEffect(() => {
         if (searchString) {
@@ -78,43 +48,35 @@ const TitleSectionModels: React.FC<TitleSectionModelsProps> = ({ professionName,
     const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         if (!divRef.current?.contains(e.relatedTarget as Node)) {
             if (searchString.length === 0) {
-                setIsAnimating(false);
                 setTimeout(() => {
-                    setIsClicked(false);
+                    setSearchString('');
                 }, 2000);
             }
         }
-    };
-
-    const handleToggleSearch = () => {
-        setIsClicked((prevState) => {
-            if (!prevState) {
-                setTimeout(() => setIsAnimating(true), 500);
-            }
-            return !prevState;
-        });
     };
 
     const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchString(e.target.value);
     };
 
-
     const handleEscapeKey = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Escape') {
             setSearchString('');
-            setIsClicked(false);
         }
     };
 
     const handleSelectProfession = (professionName: string) => {
         setSearchString(professionName);
-        setIsClicked(false);
         handleChange(professionName);
         const slugifiedProfessionName = encodeURIComponent(professionName.toLowerCase().replace(/\s+/g, '-'));
         router.push(`/products?profession=${slugifiedProfessionName}`);
     };
-    
+
+    const clearSearch = () => {
+        console.log('clear search');
+        setSearchString('');
+        handleChange('');
+    };
 
     return (
         <div className="flex items-center justify-center">
@@ -134,66 +96,48 @@ const TitleSectionModels: React.FC<TitleSectionModelsProps> = ({ professionName,
                     Je mets à votre disposition des modèles types prêts à l'emploi, spécialement conçus pour répondre aux exigences uniques de votre secteur professionnel.
                 </p>
                 <form
-                    className={`mt-10 md:mt-6 flex items-center ${isClicked && 'bg-[#F5F5F5] border border-gray-300 rounded-md'} ${isMobile ? 'w-full' : 'max-w-xl'}`}
+                    className={`mt-10 md:mt-6 flex items-center rounded-md ${isMobile ? 'w-full' : 'max-w-xl'}`}
                     ref={divRef}
                 >
-                    {!isClicked ? (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <div className="relative flex items-center w-full">
+                                <input
+                                    type="text"
+                                    placeholder="Quelle est votre profession ?"
+                                    className={`flex items-center justify-center text-black bg-[#EAEAEA] px-4 min-w-[250px] placeholder:text-black py-2 rounded-lg ${isMobile ? 'w-full ml-5' : ''}`}
+                                    value={searchString}
+                                    onChange={handleSearchInput}
+                                    onBlur={handleBlur}
+                                    onKeyDown={handleEscapeKey}
+                                    ref={inputRef}
+                                />
+                            </div>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="min-w-[250px] min-h-[100px] z-50 bg-white border border-gray-300 rounded-md shadow-lg mt-2 max-h-60 overflow-y-auto">
+                            {filteredProfessions.map((profession, index) => (
+                                <DropdownMenuItem
+                                    key={index}
+                                    className="cursor-pointer px-4 py-2 hover:bg-gray-100"
+                                    onSelect={() => handleSelectProfession(profession.name)}
+                                >
+                                    {profession.name}
+                                </DropdownMenuItem>
+                            ))}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    {searchString && (
                         <button
                             type="button"
-                            onClick={handleToggleSearch}
-                            className={`flex items-center justify-center text-black bg-[#D9D9D9] px-4 py-2 rounded-lg ${isMobile ? 'w-full' : ''}`}
+                            className="text-black bg-transparent border-none cursor-pointer p-2 text-lg leading-none"
+                            onClick={clearSearch}
                         >
-                            {professionName ? decodeURIComponent(professionName.replace(/-/g, ' ')) : 'Prestataire de services'}
-                            <Image src={edit_icon2} alt="edit icon" className="w-6 h-6 ml-2" />
+                            &times;
                         </button>
-                    ) : (
-                        <div className="input-container w-full">
-                            <input
-                                ref={inputRef}
-                                className={`input py-1.5 ${isAnimating && !isMobile ? (isClicked ? 'expand' : 'collapse') : ''}`}
-                                type="text"
-                                name="query"
-                                required
-                                autoComplete="off"
-                                autoCorrect="off"
-                                autoCapitalize="off"
-                                spellCheck="false"
-                                value={searchString}
-                                onBlur={handleBlur}
-                                onChange={handleSearchInput}
-                                onKeyDown={handleEscapeKey}
-                            />
-                            <span className="highlight"></span>
-                            <span className="bar"></span>
-                            <label className="labelAnimation label-p">
-                                Quelle est votre profession ?
-                            </label>
-                            <button
-                                type="submit"
-                                className="bg-[#F5F5F5]"
-                            >
-                                <span>
-                                    <Image src={searchIcon} alt="search icon" className="w-10 h-6 bg-[#F5F5F5]" />
-                                </span>
-                            </button>
-                        </div>
                     )}
                 </form>
-                {isClicked && filteredProfessions.length > 0 && (
-                    <ul className={`bg-white border z-50 md:mt-[440px] border-gray-300 shadow-md absolute search-results w-[250px] md:w-[575px] mt-0`}>
-                        {filteredProfessions.map((profession, index) => (
-                            <li
-                                key={index}
-                                className="p-2 cursor-pointer hover:bg-gray-100"
-                                onClick={() => handleSelectProfession(profession.name)}
-                            >
-                                {profession.name}
-                            </li>
-                        ))}
-                    </ul>
-                )}
             </div>
-            <div className="w-1/4">
+            <div className="w-1/4 lg:w-1/6">
                 <Image
                     src={gif}
                     alt="gif contract search"

@@ -91,70 +91,70 @@ export default function SearchDiv() {
     return (
         <div className="w-full max-w-xl mx-auto flex flex-col items-center justify-center gap-2" ref={divRef}>
             <form onSubmit={handleSubmit} className={`bg-[#F5F5F5] max-w-xl border-gray-300 border rounded-md flex items-center w-11/12 md:w-full`}>
-                <div className="group w-full">
-                    <input
-                        className='p-2 bg-[#F5F5F5] w-full input'
-                        type="text"
-                        name="query"
-                        required
-                        autoComplete="off"
-                        autoCorrect="off"
-                        autoCapitalize="off"
-                        spellCheck="false"
-                        value={searchString}
-                        onChange={handleSearchProposition}
-                        onKeyDown={handleEscapeKey}
-                        onClick={handleInputClick}
-                        onBlur={handleBlur}
-                    />
-                    <span className="highlight"></span>
-                    <span className="bar"></span>
-                    <label className='labelAnimation label-p'>
-                        Quelle est votre profession ?
-                    </label>
-                </div>
-                <button
-                    type="submit"
-                    className='bg-[#F5F5F5] pr-2'
-                >
-                    <span>
-                        <Image src={loupe} alt={"loupe"} width={30} height={30} />
-                    </span>
-                </button>
+            <div className="group w-full">
+                <input
+                className='p-2 bg-[#F5F5F5] w-full input'
+                type="text"
+                name="query"
+                required
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck="false"
+                value={searchString}
+                onChange={handleSearchProposition}
+                onKeyDown={handleEscapeKey}
+                onClick={handleInputClick}
+                onBlur={handleBlur}
+                />
+                <span className="highlight"></span>
+                <span className="bar"></span>
+                <label className='labelAnimation label-p'>
+                Quelle est votre profession ?
+                </label>
+            </div>
+            <button
+                type="submit"
+                className='bg-[#F5F5F5] pr-2'
+            >
+                <span>
+                <Image src={loupe} alt={"loupe"} width={30} height={30} />
+                </span>
+            </button>
             </form>
 
             {isLoading ? (
-                <div className="mt-4">Chargement...</div>
+            <div className="mt-4">Chargement...</div>
             ) : (
-                <div className="relative w-[93%] md:w-full flex items-center justify-center">
-                    <div className="overflow-x-scroll whitespace-nowrap scrollbar-hide" ref={scrollContainerRef}>
-                        <div className="inline-flex space-x-1">
-                            {filteredProfessions.map(profession => (
-                                <div
-                                    key={profession._id}
-                                    className="bg-[#E8E8E8] p-3 rounded-xl cursor-pointer"
-                                    onClick={() => handleSelectProfession(profession.name)}
-                                >
-                                    {profession.name}
-                                </div>
-                            ))}
-                        </div>
+            <div className="relative w-[93%] md:w-full flex items-center justify-center">
+                <div className="overflow-x-scroll whitespace-nowrap scrollbar-hide" ref={scrollContainerRef}>
+                <div className="inline-flex space-x-1">
+                    {filteredProfessions.map(profession => (
+                    <div
+                        key={profession._id}
+                        className="bg-[#E8E8E8] p-3 rounded-xl cursor-pointer"
+                        onClick={() => handleSelectProfession(profession.name)}
+                    >
+                        {profession.name}
                     </div>
+                    ))}
                 </div>
+                </div>
+            </div>
             )}
 
             {inputClicked && filteredProfessions.length > 0 && (
-                <ul className={`bg-white border mt-56 border-gray-300 shadow-md absolute xl:w-[575px] search-results w-[90%] md:w-[575px]`}>
-                    {filteredProfessions.map((profession, index) => (
-                        <li
-                            key={index}
-                            className="p-2 cursor-pointer hover:bg-gray-100"
-                            onClick={() => handleSelectProfession(profession.name)}
-                        >
-                            {profession.name}
-                        </li>
-                    ))}
-                </ul>
+            <ul className={`bg-white border mt-56 max-h-[90px] border-gray-300 shadow-md absolute xl:w-[575px] search-results w-[90%] md:w-[575px] overflow-y-auto`}>
+                {filteredProfessions.map((profession, index) => (
+                <li
+                    key={index}
+                    className="p-2 cursor-pointer hover:bg-gray-100"
+                    onClick={() => handleSelectProfession(profession.name)}
+                >
+                    {profession.name}
+                </li>
+                ))}
+            </ul>
             )}
         </div>
     );

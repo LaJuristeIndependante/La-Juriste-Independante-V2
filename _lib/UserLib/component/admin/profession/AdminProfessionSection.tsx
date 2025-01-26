@@ -168,7 +168,7 @@ const ProfessionManagement: React.FC = () => {
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded resize-none"
               required
               rows={4}
             />
