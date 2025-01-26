@@ -23,26 +23,26 @@ export async function PATCH(request: Request, { params }: { params: { id: string
 
     try {
         const contentType = request.headers.get('content-type') || '';
+        console.log('Content-Type reçu :', contentType);
 
         if (contentType.includes('multipart/form-data')) {
             const formData = await request.formData();
             const data: any = {};
 
-            // Extraire les champs du FormData
             formData.forEach((value, key) => {
-                if (key !== 'pdfFile') {  // On ne traite pas le fichier ici
+                if (key !== 'pdfFile') {
                     data[key] = value;
                 }
             });
 
-            // Traiter le fichier PDF
             if (formData.has('pdfFile')) {
                 const file = formData.get('pdfFile') as File;
-                const arrayBuffer = await file.arrayBuffer();  // Convertir le fichier en ArrayBuffer
-                data.pdfFile = Buffer.from(arrayBuffer);  // Convertir en Buffer
+                const arrayBuffer = await file.arrayBuffer();
+                data.pdfFile = Buffer.from(arrayBuffer);
             }
 
-            // Mettre à jour le produit
+            console.log('Données traitées pour mise à jour :', data);
+
             const product = await Product.findByIdAndUpdate(params.id, data, { new: true, runValidators: true });
             if (!product) {
                 return NextResponse.json({ error: 'Produit non trouvé' }, { status: 404 });
@@ -56,6 +56,7 @@ export async function PATCH(request: Request, { params }: { params: { id: string
         return NextResponse.json({ error: 'Erreur lors de la mise à jour du produit' }, { status: 500 });
     }
 }
+
 
 // DELETE: Supprimer un produit par son ID
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {

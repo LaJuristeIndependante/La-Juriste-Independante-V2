@@ -140,16 +140,20 @@ export async function deleteProduct(id: string): Promise<void> {
  */
 export async function updateProduct(id: string, updatedProduct: FormData): Promise<ProductDetail> {
     try {
+        console.log('Données envoyées pour mise à jour :', Array.from(updatedProduct.entries()));
+
         const response = await axios.patch(`/api/products/${id}`, updatedProduct, {
             headers: {
-                'Content-Type': 'multipart/form-data',  // Let Axios handle this correctly
+                'Content-Type': 'multipart/form-data', // Axios gère cela correctement
             },
         });
         return response.data;
     } catch (error: any) {
+        console.error('Erreur lors de la mise à jour du produit:', error.response?.data || error.message);
         throw new Error(error.response?.data?.message || 'Erreur lors de la mise à jour du produit');
     }
 }
+
 
 /**
  * Télécharge le PDF d'un produit spécifique par son identifiant.

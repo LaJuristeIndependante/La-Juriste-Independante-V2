@@ -65,17 +65,22 @@ export default function AdminProductSection() {
 
     const handleSave = async (formData: FormData) => {
         try {
+            console.log('Mode actuel du modal:', modalMode);
+            console.log('Données du formulaire :', Array.from(formData.entries()));
+
             if (modalMode === 'add') {
                 await addProduct(formData);
             } else if (modalMode === 'edit' && modalProduct) {
                 await updateProduct(modalProduct._id, formData);
             }
+
             const data = await fetchProductsForAdmin();
             setProducts(data);
         } catch (error) {
-            console.error("Erreur lors de l'enregistrement du produit", error);
+            console.error("Erreur lors de l'enregistrement du produit :", error);
         }
     };
+
 
     const handleDelete = async (id: string) => {
         try {
