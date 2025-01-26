@@ -4,9 +4,8 @@ import { useMediaQuery } from "react-responsive";
 import {
     fetchProductsForAdmin,
     addProduct,
-    updateProduct,
     deleteProduct,
-    downloadProductPdf
+    updateProductNoProxy
 } from "@lib/ProductLib/service/produit";
 import { Profession } from "@lib/ProfessionLib/type/Profession";
 import { ProductDetail } from "@lib/ProductLib/type/Product";
@@ -71,7 +70,7 @@ export default function AdminProductSection() {
             if (modalMode === 'add') {
                 await addProduct(formData);
             } else if (modalMode === 'edit' && modalProduct) {
-                await updateProduct(modalProduct._id, formData);
+                await updateProductNoProxy(modalProduct._id, formData);
             }
 
             const data = await fetchProductsForAdmin();
@@ -80,7 +79,6 @@ export default function AdminProductSection() {
             console.error("Erreur lors de l'enregistrement du produit :", error);
         }
     };
-
 
     const handleDelete = async (id: string) => {
         try {

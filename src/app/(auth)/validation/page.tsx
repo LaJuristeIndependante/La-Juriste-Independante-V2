@@ -1,3 +1,5 @@
+"use client"
+
 import ValidationSection from "@lib/UserLib/component/auth/validation/ValidationSection";
 
 export default function AuthPage() {

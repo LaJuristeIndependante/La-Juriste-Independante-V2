@@ -56,11 +56,13 @@ export default function ProductSection() {
     const [professions, setProfessions] = useState<ProfessionData[]>([]);
     const professionFilter = searchParams.get("profession") || "";
     const largeDesktop = useMediaQuery({ query: "(min-width: 1300px)" });
+
     useEffect(() => {
         if (typeof window !== "undefined") {
             console.log(window.innerWidth);
         }
     }, []);
+
     const [products, setProducts] = useState<ProductData[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [filteredProducts, setFilteredProducts] = useState<ProductData[]>([]);

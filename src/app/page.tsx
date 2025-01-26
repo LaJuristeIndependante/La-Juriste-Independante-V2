@@ -1,3 +1,4 @@
+"use client"
 
 import TestimonialsSection from "@lib/testimonialLib/component/TestimonialsSection";
 import FirstSection from "@/components/home/FirstSection";
@@ -6,6 +7,7 @@ import BubbleBackground from "@/components/utils/décors/BubbleBackground";
 import React from "react";
 
 export default function Home() {
+
     return (
         <main className="relative items-center justify-between">
             <FirstSection/>
