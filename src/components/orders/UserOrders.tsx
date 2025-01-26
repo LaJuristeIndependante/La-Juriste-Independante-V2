@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FiTrash2 } from "react-icons/fi";
-import { downloadProductPdf } from "@lib/ProductLib/service/produit";
+import { downloadProductPdf } from "@lib/OrderLib/service/orders";
 import { fetchOrdersByUser, deleteOrder } from "@lib/OrderLib/service/orders";
 import { OrderDetails } from "@lib/OrderLib/type/OrderType";
 import { useMediaQuery } from "react-responsive";
@@ -44,13 +44,16 @@ const SectionUserOrder = () => {
         router.push(`/paiement?orderId=${orderId}`);
     };
 
-    const handleDownloadPdf = async (productId: string, productName: string) => {
+    const handleDownloadPdf = async (orderId: string, productId: string, productName: string) => {
         try {
-            await downloadProductPdf(productId, productName);
-        } catch (error) {
-            console.error("Erreur lors du téléchargement du PDF:", error);
+            await downloadProductPdf(orderId, productId, productName);
+            console.log(`Fichier PDF pour le produit ${productName} téléchargé avec succès.`);
+        } catch (error: any) {
+            console.error(`Erreur lors du téléchargement du fichier PDF pour ${productName}:`, error.message);
+            alert(`Impossible de télécharger le fichier PDF pour ${productName}.`);
         }
     };
+
 
     const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
@@ -124,7 +127,7 @@ const SectionUserOrder = () => {
                                             {order.items.map((item, index) => (
                                                 <button
                                                     key={index}
-                                                    onClick={() => handleDownloadPdf(item.productId, item.name)}
+                                                    onClick={() => handleDownloadPdf(order._id, item.productId, item.name)}
                                                     className="px-4 py-2 bg-black text-secondary-color hover:bg-gray-900 rounded transition mb-2"
                                                 >
                                                     Télécharger le PDF pour {item.name}
@@ -132,7 +135,6 @@ const SectionUserOrder = () => {
                                             ))}
                                         </div>
                                     )}
-
                                 </div>
                             </details>
                         ))}

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {CreateOrderParams, OrderDetails} from "../type/OrderType";
+import {saveAs} from "file-saver";
 
 /**
  * Crée une nouvelle commande pour un utilisateur donné.
@@ -308,3 +309,41 @@ export const cleanupOrders = async (): Promise<number> => {
         throw new Error(error instanceof Error ? error.message : 'Erreur inconnue');
     }
 };
+
+/**
+ * Télécharge le PDF d'un produit spécifique dans une commande.
+ *
+ * @param {string} orderId - L'identifiant de la commande.
+ * @param {string} productId - L'identifiant du produit dans la commande.
+ * @param {string} productName - Le nom du produit pour nommer le fichier téléchargé.
+ * @returns {Promise<void>} - Une promesse qui se résout lorsque le téléchargement est terminé.
+ * @throws {Error} - Lance une erreur si le téléchargement échoue.
+ */
+
+
+/**
+ * Télécharge le fichier PDF d'un produit spécifique.
+ *
+ * @param {string} orderId - L'identifiant de la commande.
+ * @param {string} productId - L'identifiant du produit dans la commande.
+ * @param {string} productName - Le nom du produit pour nommer le fichier téléchargé.
+ * @returns {Promise<void>} - Une promesse qui se résout lorsque le téléchargement est terminé.
+ * @throws {Error} - Lance une erreur si le téléchargement échoue.
+ */
+export async function downloadProductPdf(orderId: string, productId: string, productName: string): Promise<void> {
+    try {
+        const response = await axios.get(`/api/orders/${orderId}/items/${productId}/pdf`, {
+            responseType: 'blob', // Pour gérer les données binaires
+        });
+
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        saveAs(blob, `${productName}.pdf`);
+        console.log(`Fichier PDF téléchargé avec succès pour le produit : ${productName}`);
+    } catch (error: any) {
+        console.error(`Erreur lors du téléchargement du fichier PDF :`, error);
+        throw new Error(error.response?.data?.message || 'Impossible de télécharger le fichier PDF.');
+    }
+}
+
+
+
