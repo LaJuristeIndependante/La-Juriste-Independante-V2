@@ -109,14 +109,14 @@ const SectionUserOrder = () => {
                                         <>
                                             <button
                                                 onClick={() => handleDeleteOrder(order._id)}
-                                                className="px-5 py-2 bg-primary-color text-secondary-color rounded-lg hover:bg-red-900 transition duration-200 flex items-center"
+                                                className="px-5 py-2 bg-primary-color text-secondary-color rounded-lg hover:bg-red-900 transition duration-200 flex items-center justify-center md:justify-between"
                                             >
                                                 Supprimer
-                                                <FiTrash2 className="mr-2" />
+                                                <FiTrash2 className="ml-2" />
                                             </button>
                                             <button
                                                 onClick={() => handlePaymentRedirect(order._id)}
-                                                className="px-5 py-2 bg-black text-secondary-color rounded hover:bg-gray-900 transition duration-200"
+                                                className="px-10 py-2 bg-black text-secondary-color rounded hover:bg-gray-900 transition duration-200"
                                             >
                                                 Payer
                                             </button>
