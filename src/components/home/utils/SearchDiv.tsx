@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import loupe from "@public/images/Utils/loupe.png";
 import React, { useRef, useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
 import Image from 'next/image';
@@ -12,7 +12,6 @@ export default function SearchDiv() {
     const [filteredProfessions, setFilteredProfessions] = useState<Profession[]>([]);
     const [inputClicked, setInputClicked] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [isValidProfession, setIsValidProfession] = useState(false);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const divRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
@@ -34,39 +33,26 @@ export default function SearchDiv() {
 
     useEffect(() => {
         if (searchString) {
-            const filtered = professions.filter((profession) =>
+            const filtered = professions.filter(profession =>
                 profession.name.toLowerCase().includes(searchString.toLowerCase())
             );
             setFilteredProfessions(filtered);
-
-            // Vérification si la profession entrée est exacte
-            const isExactMatch = professions.some(
-                (profession) => profession.name.toLowerCase() === searchString.toLowerCase()
-            );
-            setIsValidProfession(isExactMatch);
         } else {
             setFilteredProfessions(professions);
-            setIsValidProfession(false);
         }
     }, [searchString, professions]);
 
-    const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearchString(e.target.value);
-    };
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (isValidProfession) {
-            const slugifiedProfessionName = searchString.toLowerCase().replace(/\s+/g, "-");
-            router.push(`/products?profession=${encodeURIComponent(slugifiedProfessionName)}`);
+        if (searchString) {
+            router.push(`/products?profession=${encodeURIComponent(searchString)}`);
         }
     };
 
-    const handleSelectProfession = (professionName: string) => {
-        setSearchString(professionName);
+    const handleSelectProfession = (profession : Profession) => {
+        setSearchString(profession.name);
         setInputClicked(false);
-        const slugifiedProfessionName = professionName.toLowerCase().replace(/\s+/g, '-');
-        router.push(`/products?profession=${encodeURIComponent(slugifiedProfessionName)}`);
+        router.push(`/products?profession=${encodeURIComponent(profession._id)}`);
     };
 
     const handleInputClick = () => {
@@ -135,7 +121,7 @@ export default function SearchDiv() {
                     <div
                         key={profession._id}
                         className="bg-[#E8E8E8] p-3 rounded-xl cursor-pointer"
-                        onClick={() => handleSelectProfession(profession.name)}
+                        onClick={() => handleSelectProfession(profession)}
                     >
                         {profession.name}
                     </div>
@@ -151,7 +137,7 @@ export default function SearchDiv() {
                 <li
                     key={index}
                     className="p-2 cursor-pointer hover:bg-gray-100"
-                    onClick={() => handleSelectProfession(profession.name)}
+                    onClick={() => handleSelectProfession(profession)}
                 >
                     {profession.name}
                 </li>
