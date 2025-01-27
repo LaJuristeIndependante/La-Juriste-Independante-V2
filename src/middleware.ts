@@ -26,35 +26,35 @@ export async function middleware(req: NextRequest) {
         isVerified = userPayload.isVerified;
     }
 
-    if(!token && url.pathname === '/admin'){
+    if (!token && url.pathname === '/admin') {
         url.pathname = '/';
         const response = NextResponse.redirect(url)
         response.cookies.set('flashMessage', 'Vous avez déjà vérifié votre compte.', { path: '/' })
         return response;
     }
 
-    if(!token && url.pathname === '/admin/profession'){
+    if (!token && url.pathname === '/admin/profession') {
         url.pathname = '/';
         const response = NextResponse.redirect(url)
         response.cookies.set('flashMessage', 'Vous avez déjà vérifié votre compte.', { path: '/' })
         return response;
     }
 
-    if(!token && url.pathname === '/admin/testimonials'){
+    if (!token && url.pathname === '/admin/testimonials') {
         url.pathname = '/';
         const response = NextResponse.redirect(url)
         response.cookies.set('flashMessage', 'Vous avez déjà vérifié votre compte.', { path: '/' })
         return response;
     }
 
-    if(!token && url.pathname === '/admin/product'){
+    if (!token && url.pathname === '/admin/product') {
         url.pathname = '/';
         const response = NextResponse.redirect(url)
         response.cookies.set('flashMessage', 'Vous avez déjà vérifié votre compte.', { path: '/' })
         return response;
     }
 
-    if(!token && url.pathname === '/admin/users'){
+    if (!token && url.pathname === '/admin/users') {
         url.pathname = '/';
         const response = NextResponse.redirect(url)
         response.cookies.set('flashMessage', 'Vous avez déjà vérifié votre compte.', { path: '/' })
@@ -85,14 +85,14 @@ export async function middleware(req: NextRequest) {
         return response;
     }
 
-    if(!token && url.pathname === '/orders'){
+    if (!token && url.pathname === '/orders') {
         url.pathname = '/';
         const response = NextResponse.redirect(url);
         response.cookies.set('flashMessage', 'Vous devez être connecté pour avoir accés a vos commande', { path: '/' });
         return response;
     }
 
-    if(!token && url.pathname === '/paiement'){
+    if (!token && url.pathname === '/paiement') {
         url.pathname = '/';
         const response = NextResponse.redirect(url);
         response.cookies.set('flashMessage', 'Vous devez être connecté pour pouvoir acheté', { path: '/' });
@@ -102,7 +102,14 @@ export async function middleware(req: NextRequest) {
     if (url.pathname === '/paiement/success' && (!orderId && !paiementToken)) {
         url.pathname = '/';
         const response = NextResponse.redirect(url)
-        response.cookies.set('flashMessage', 'cette page n est pas disponnible si aucun paiement n a été effectué' , { path: '/' })
+        response.cookies.set('flashMessage', 'cette page n est pas disponnible si aucun paiement n a été effectué', { path: '/' })
+        return response;
+    }
+
+    if (url.pathname === '/forgot/change' && !searchParams.get('token')) {
+        url.pathname = '/forgot';
+        const response = NextResponse.redirect(url);
+        response.cookies.set('flashMessage', 'Jeton de réinitialisation invalide.', { path: '/' });
         return response;
     }
 
@@ -118,5 +125,6 @@ export const config = {
         '/paiement',
         '/admin/:path*',
         '/validation',
+        '/forgot/change',
     ],
 };

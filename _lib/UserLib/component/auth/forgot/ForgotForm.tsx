@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, FormEvent } from 'react';
-import {forgotPassword} from "@lib/UserLib/service/auth";
+import { forgotPassword } from "@lib/UserLib/service/auth";
 
 const ForgotPassword: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -22,39 +22,51 @@ const ForgotPassword: React.FC = () => {
     };
 
     return (
-        <section className="min-h-screen flex flex-col text-center justify-center items-center w-full">
-            <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">Mot de passe oublié</h2>
-            <form onSubmit={handleSubmit} className="space-y-6 bg-white shadow-2xl p-10 w-1/2">
-                <div>
-                    <label
-                        className="block text-gray-700 text-sm font-medium mb-2"
-                        htmlFor="email"
-                    >
-                        Adresse e-mail
-                    </label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Entrez votre adresse e-mail"
-                    />
+        <div className="flex flex-col items-center justify-center h-screen">
+            <div className="bg-white shadow-2xl bg-opacity-50 rounded-lg text-center">
+            <div className="p-8">
+                    <h2 className="text-3xl md:text-4xl font-bold w-full title_section_contrats">
+                        Mot de passe oublié
+                    </h2>
+                    <p className="text-sm md:text-base w-11/12 my-3">
+                        Entrez votre adresse e-mail <br /> pour recevoir un lien de réinitialisation.
+                    </p>
                 </div>
-                <div>
-                    <button
-                        type="submit"
-                        className="text-white w-full py-2 px-4 bg-blue-600 font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                        Envoyer le lien de réinitialisation
-                    </button>
-                </div>
-                {error && <p className="text-red-600 text-sm text-center mt-4">{error}</p>}
-                {success && <p className="text-green-600 text-sm text-center mt-4">{success}</p>}
-            </form>
-        </section>
+                <form onSubmit={handleSubmit} className={`flex flex-col space-y-4 mb-10`}>
+                    <div className="group w-3/4 md:w-2/3 mx-auto bg-[#F5F5F5] border-gray-300 border rounded-md">
+                        <input
+                            className='py-2 px-1 input'
+                            type="text"
+                            name="query"
+                            required
+                            autoComplete="off"
+                            autoCorrect="off"
+                            autoCapitalize="off"
+                            spellCheck="false"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Adresse e-mail"
+                        />
+
+                        <span className="highlight"></span>
+                        <span className="bar"></span>
+                        <label className='labelAnimation label-p'>
+                            Adresse e-mail
+                        </label>
+                    </div>
+                    <div>
+                        <button
+                            type="submit"
+                            className="bg-primary-color text-white py-2 px-6 rounded-md hover:bg-red-900 transition"
+                        >
+                            Envoyer le lien de réinitialisation
+                        </button>
+                    </div>
+                    {error && <p className="text-red-600 text-sm text-center mt-4">{error}</p>}
+                    {success && <p className="text-green-600 text-sm text-center mt-4">{success}</p>}
+                </form>
+            </div>
+        </div>
     );
 };
 

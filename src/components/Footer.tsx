@@ -43,10 +43,10 @@ function Footer() {
                                 <Link href="/privacy">Politique de confidentialité</Link>
                             </li>
                             <li className="footer__legal-pages list__item">
-                                <Link href="/terms-of-use">Conditions générales d&apos;utilisation</Link>
+                                <Link href="/terms-of-uses">Conditions générales d&apos;utilisation</Link>
                             </li>
                             <li className="footer__legal-pages list__item">
-                                <Link href="/terms-of-sale">Conditions générales de vente</Link>
+                                <Link href="/terms-of-sales">Conditions générales de vente</Link>
                             </li>
                             <li className="footer__legal-pages list__item">
                                 <Link href="/legal-mentions">Mentions légales</Link>

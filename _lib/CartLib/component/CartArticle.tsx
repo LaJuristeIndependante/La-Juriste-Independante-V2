@@ -25,7 +25,7 @@ const Article: React.FC<{
                 <div className="flex items-center">
                     <button
                         onClick={() => onDecrement(item._id)}
-                        className="bg-red-500 text-white w-8 h-8 flex items-center justify-center rounded-full hover:bg-red-600 transition-colors shadow-md"
+                        className="bg-primary-color text-white w-8 h-8 flex items-center justify-center rounded-full hover:bg-red-900 transition-colors shadow-md"
                     >
                         -
                     </button>
