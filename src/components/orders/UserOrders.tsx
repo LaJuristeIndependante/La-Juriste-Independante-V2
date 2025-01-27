@@ -91,7 +91,7 @@ const SectionUserOrder = () => {
                                         <strong>Date:</strong> {new Date(order.createdAt).toLocaleDateString()}
                                     </p>
                                     <p className="text-md mb-2">
-                                        <strong>Statut:</strong> {order.status}
+                                        <strong>Statut:</strong> {order.status === "pending" ? "en attente" : order.status}
                                     </p>
                                     <p className="text-md mb-2">
                                         <strong>Articles:</strong>
@@ -109,10 +109,10 @@ const SectionUserOrder = () => {
                                         <>
                                             <button
                                                 onClick={() => handleDeleteOrder(order._id)}
-                                                className="px-5 py-2 bg-red-500 text-primary rounded-lg hover:bg-red-600 transition duration-200"
+                                                className="px-5 py-2 bg-primary-color text-secondary-color rounded-lg hover:bg-red-900 transition duration-200 flex items-center"
                                             >
-                                                <FiTrash2 className="mr-2" />
                                                 Supprimer
+                                                <FiTrash2 className="mr-2" />
                                             </button>
                                             <button
                                                 onClick={() => handlePaymentRedirect(order._id)}
