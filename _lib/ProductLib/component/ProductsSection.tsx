@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { ProductData } from "@lib/ProductLib/type/Product";
+import { ProductOnProductPageProps } from "@lib/ProductLib/type/Product";
 import { fetchAllProducts } from "@lib/ProductLib/service/produit";
 import { getAllProfessions } from "@lib/ProfessionLib/service/professionService";
 import { SlArrowRight } from "react-icons/sl";
@@ -9,10 +9,10 @@ import BubbleDecoration from "@lib/ProductLib/component/BubbleDecoration";
 import BackgroundBubbles from "@/components/utils/décors/BubbleBackground";
 import TitleSectionModels from "@lib/ProductLib/component/TitleSectionModels";
 import Link from "next/link";
-import { ProfessionData } from "@lib/ProfessionLib/type/Profession";
+import { Profession } from "@lib/ProfessionLib/type/Profession";
 import { useMediaQuery } from "react-responsive";
 
-const ProductCard = ({ product }: { product: ProductData }) => {
+const ProductCard = ({ product }: { product: ProductOnProductPageProps }) => {
     const truncateDescription = (description: string) => {
         if (description.length > 200) {
             return description.substring(0, 150) + "...";
@@ -53,20 +53,13 @@ const ProductCard = ({ product }: { product: ProductData }) => {
 
 export default function ProductSection() {
     const searchParams = useSearchParams();
-    const [professions, setProfessions] = useState<ProfessionData[]>([]);
-    const professionFilter = searchParams.get("profession") || "";
-    const largeDesktop = useMediaQuery({ query: "(min-width: 1300px)" });
-
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            console.log(window.innerWidth);
-        }
-    }, []);
-
-    const [products, setProducts] = useState<ProductData[]>([]);
+    const [professions, setProfessions] = useState<Profession[]>([]);
+    const [professionFilter, setProfessionFilter] = useState<string>("");
+    const [products, setProducts] = useState<ProductOnProductPageProps[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [filteredProducts, setFilteredProducts] = useState<ProductData[]>([]);
-
+    const [filteredProducts, setFilteredProducts] = useState<ProductOnProductPageProps[]>([]);
+    const professionName = professions.find((profession) => profession._id === professionFilter)?.name;
+    const largeDesktop = useMediaQuery({ query: "(min-width: 1300px)" });
     useEffect(() => {
         const fetchProductsWithProfessions = async () => {
             setIsLoading(true);
@@ -74,18 +67,8 @@ export default function ProductSection() {
                 const allProducts = await fetchAllProducts();
                 const allProfessions = await getAllProfessions();
                 setProfessions(allProfessions);
-                const professionMap = allProfessions.reduce((map, profession) => {
-                    map[profession._id] = profession.name;
-                    return map;
-                }, {} as Record<string, string>);
-                const structuredProducts = allProducts.map((product) => ({
-                    ...product,
-                    profession: {
-                        _id: product.profession as string,
-                        name: professionMap[product.profession as string] || "Unknown Profession",
-                    },
-                }));
-                setProducts(structuredProducts as ProductData[]);
+                setProducts(allProducts as ProductOnProductPageProps[]);
+                setFilteredProducts(allProducts as ProductOnProductPageProps[]);
             } catch (error) {
                 console.error("Erreur lors de la récupération des données:", error);
             } finally {
@@ -96,37 +79,38 @@ export default function ProductSection() {
         fetchProductsWithProfessions();
     }, []);
 
-    const filteredProductsList = professionFilter
-        ? products.filter((product) => product.profession?.name.toLowerCase().includes(professionFilter.toLowerCase().replace("-", " ")))
-        : products;
+    useEffect(() => {
+        const professionParam = searchParams.get("profession") || "";
+        setProfessionFilter(professionParam);
+    }, [searchParams]);
 
-    const handleChange = (professionName: string) => {
-        const url = new URL(window.location.href);
-        url.searchParams.delete("profession");
-        window.history.replaceState({}, "", url.toString());
-
-        if (professionName === "") {
-            setFilteredProducts(products);
-        } else {
-            const filtered = products.filter((product) =>
-                product.profession?.name.toLowerCase().includes(professionName.toLowerCase().replace("-", " "))
+    useEffect(() => {
+        if (professionFilter) {
+            console.log("Profession filter:", professionFilter);
+            const filtered = products.filter(
+                (product) => product.profession === professionFilter
             );
             setFilteredProducts(filtered);
+        } else {
+            setFilteredProducts(products);
         }
-    }
+    }, [professionFilter, products]);
 
     return (
         <section className="relative min-h-screen w-full mx-auto flex flex-col items-start gap-8 p-4 md:p-8">
-            <TitleSectionModels professionName={professionFilter || ""} professions={professions} handleChange={handleChange} />
+            <TitleSectionModels
+                professionName={professionName || ""}
+                professions={professions}
+            />
             {isLoading ? (
                 <div className="w-full flex items-center justify-center border rounded-lg border-dashed border-black py-4 px-2">
                     <div className="w-full flex flex-col items-center justify-center min-h-[200px]">
                         <p className="text-xl md:text-2xl font-semibold text-center animate-pulse">Chargement...</p>
                     </div>
                 </div>
-            ) : filteredProductsList.length > 0 ? (
+            ) : filteredProducts.length > 0 ? (
                 <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 border rounded-lg border-dashed border-black py-4 px-2">
-                    {filteredProductsList.map((product, index) => (
+                    {filteredProducts.map((product, index) => (
                         <ProductCard key={product._id || index} product={product} />
                     ))}
                 </div>
@@ -137,7 +121,7 @@ export default function ProductSection() {
                 </div>
             )}
             {!largeDesktop ? (
-             <BackgroundBubbles page="contracts" />
+                <BackgroundBubbles page="contracts" />
 
             ) : (
                 <BackgroundBubbles page="contracts-large-destock" />

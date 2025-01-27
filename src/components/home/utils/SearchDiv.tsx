@@ -42,10 +42,6 @@ export default function SearchDiv() {
         }
     }, [searchString, professions]);
 
-    const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearchString(e.target.value);
-    };
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (searchString) {
@@ -53,11 +49,10 @@ export default function SearchDiv() {
         }
     };
 
-    const handleSelectProfession = (professionName: string) => {
-        setSearchString(professionName);
+    const handleSelectProfession = (profession : Profession) => {
+        setSearchString(profession.name);
         setInputClicked(false);
-        const slugifiedProfessionName = professionName.toLowerCase().replace(/\s+/g, '-');
-        router.push(`/products?profession=${encodeURIComponent(slugifiedProfessionName)}`);
+        router.push(`/products?profession=${encodeURIComponent(profession._id)}`);
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -133,7 +128,7 @@ export default function SearchDiv() {
                     <div
                         key={profession._id}
                         className="bg-[#E8E8E8] p-3 rounded-xl cursor-pointer"
-                        onClick={() => handleSelectProfession(profession.name)}
+                        onClick={() => handleSelectProfession(profession)}
                     >
                         {profession.name}
                     </div>
@@ -149,7 +144,7 @@ export default function SearchDiv() {
                 <li
                     key={index}
                     className="p-2 cursor-pointer hover:bg-gray-100"
-                    onClick={() => handleSelectProfession(profession.name)}
+                    onClick={() => handleSelectProfession(profession)}
                 >
                     {profession.name}
                 </li>

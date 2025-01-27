@@ -1,24 +1,22 @@
 'use client';
 import React, { useEffect, useState, useRef, ChangeEvent, KeyboardEvent } from 'react';
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import gif from '@public/images/models-page/contract-search.gif';
 import line from "@public/images/Utils/redline.png";
-import { ProfessionData } from '@lib/ProfessionLib/type/Profession';
+import { Profession } from '@lib/ProfessionLib/type/Profession';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { useMediaQuery } from 'react-responsive';
-import { ProfileData } from '@lib/UserLib/type/UserType';
 
 interface TitleSectionModelsProps {
     professionName: string;
-    professions: ProfessionData[];
-    handleChange: (profession: string) => void;
+    professions: Profession[];
 }
 
-const TitleSectionModels: React.FC<TitleSectionModelsProps> = ({ professionName, professions, handleChange }) => {
+const TitleSectionModels: React.FC<TitleSectionModelsProps> = ({ professionName, professions }) => {
     const router = useRouter();
     const [searchString, setSearchString] = useState<string>('');
-    const [filteredProfessions, setFilteredProfessions] = useState<ProfessionData[]>([]);
+    const [filteredProfessions, setFilteredProfessions] = useState<Profession[]>([]);
     const inputRef = useRef<HTMLInputElement | null>(null);
     const divRef = useRef<HTMLFormElement>(null);
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
@@ -65,17 +63,14 @@ const TitleSectionModels: React.FC<TitleSectionModelsProps> = ({ professionName,
         }
     };
 
-    const handleSelectProfession = (professionName: string) => {
-        setSearchString(professionName);
-        handleChange(professionName);
-        const slugifiedProfessionName = encodeURIComponent(professionName.toLowerCase().replace(/\s+/g, '-'));
-        router.push(`/products?profession=${slugifiedProfessionName}`);
+    const handleSelectProfession = (profession: Profession) => {
+        setSearchString(profession.name); // Met à jour le champ de recherche
+        router.push(`/products?profession=${profession._id}`); // Met à jour l'URL avec l'ID
     };
 
     const clearSearch = () => {
-        console.log('clear search');
         setSearchString('');
-        handleChange('');
+        router.push('/products');
     };
 
     return (
@@ -93,6 +88,7 @@ const TitleSectionModels: React.FC<TitleSectionModelsProps> = ({ professionName,
                     )}
                 </h2>
                 <p className={`text-lg sm:text-base md:text-lg font-light md:w-2/3 text-center md:text-left`}>
+                    {/* eslint-disable-next-line react/no-unescaped-entities */}
                     Je mets à votre disposition des modèles types prêts à l'emploi, spécialement conçus pour répondre aux exigences uniques de votre secteur professionnel.
                 </p>
                 <form
@@ -119,7 +115,7 @@ const TitleSectionModels: React.FC<TitleSectionModelsProps> = ({ professionName,
                                 <DropdownMenuItem
                                     key={index}
                                     className="cursor-pointer px-4 py-2 hover:bg-gray-100"
-                                    onSelect={() => handleSelectProfession(profession.name)}
+                                    onSelect={() => handleSelectProfession(profession)}
                                 >
                                     {profession.name}
                                 </DropdownMenuItem>

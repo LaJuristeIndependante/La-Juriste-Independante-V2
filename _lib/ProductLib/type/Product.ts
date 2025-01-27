@@ -1,4 +1,4 @@
-import {Profession} from "@lib/ProfessionLib/type/Profession";
+import { Profession } from "@lib/ProfessionLib/type/Profession";
 
 export interface ProductDetail {
     _id: string;
@@ -25,6 +25,15 @@ export interface ProductData {
         name: string;
     };
 }
+
+export interface ProductOnProductPageProps {
+    _id: string;
+    name: string;
+    price: number;
+    description: string;
+    profession: string;
+}
+
 
 export interface ProductPageProps {
     params: {
