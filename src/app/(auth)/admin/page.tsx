@@ -38,7 +38,7 @@ const AdminPage: React.FC = () => {
         router.push("/admin/profession");
     };
 
-    const handleContrats = () => {
+    const handleProducts = () => {
         router.push("/admin/product");
     };
 
@@ -117,13 +117,13 @@ const AdminPage: React.FC = () => {
                         <IoIosArrowForward className="text-2xl" />
                     </button>
                     <button
-                        onClick={handleContrats}
+                        onClick={handleProducts}
                         className="flex items-center justify-between w-full h-24 bg-gray-100 hover:bg-gray-200 font-bold py-2 px-4 rounded-lg shadow-lg transition-colors duration-300"
                     >
                         <div className="flex items-center space-x-4">
                             <FaFileContract className="text-3xl" />
                             <div className="text-left">
-                                <p className="text-lg font-semibold">Contrats</p>
+                                <p className="text-lg font-semibold">Modèles</p>
                                 <p className="text-sm text-gray-600">
                                     {products.length + " "}
                                     disponible{products.length > 1 ? "s" : ""}

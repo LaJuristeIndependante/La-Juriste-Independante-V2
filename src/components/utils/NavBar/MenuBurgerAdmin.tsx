@@ -35,8 +35,8 @@ const MenuBurger: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         router.push("/admin/professions");
     };
 
-    const handleContrats = () => {
-        router.push("/admin/contrats");
+    const handleProducts = () => {
+        router.push("/admin/products");
     };
 
     const handleComptes = () => {
@@ -49,9 +49,8 @@ const MenuBurger: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
     return (
         <div
-            className={`absolute top-0 right-0 min-h-screen h-full w-96 bg-white shadow-xl transform transition-transform ease-in-out duration-300 z-50 ${
-                isVisible ? 'translate-x-0 flex flex-col' : 'translate-x-full'
-            }`}
+            className={`absolute top-0 right-0 min-h-screen h-full w-96 bg-white shadow-xl transform transition-transform ease-in-out duration-300 z-50 ${isVisible ? 'translate-x-0 flex flex-col' : 'translate-x-full'
+                }`}
             style={{ maxHeight: '100vh' }}
         >
             {/* Bouton pour fermer */}
@@ -65,7 +64,7 @@ const MenuBurger: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             <div className="flex flex-col items-center p-6 ">
                 <Image src={LJIAdmin} alt={"la juriste"} className="text-6xl text-gray-600" />
                 <h2 className="text-2xl font-semibold mt-4">Administrator</h2>
-                <p className="text-gray-500 mt-2">27 contrats • 5 commandes</p>
+                <p className="text-gray-500 mt-2">27 products • 5 commandes</p>
                 <div className="flex space-x-6 mt-4">
                     <button className="flex flex-col items-center">
                         <FaShieldAlt className="text-red-500 text-3xl" />
@@ -95,13 +94,13 @@ const MenuBurger: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     <IoIosArrowForward className="text-2xl" />
                 </button>
                 <button
-                    onClick={handleContrats}
+                    onClick={handleProducts}
                     className="flex items-center justify-between w-full h-24 bg-gray-100 hover:bg-gray-200 font-bold py-2 px-4 rounded-lg shadow-lg transition-colors duration-300"
                 >
                     <div className="flex items-center space-x-4">
                         <FaFileContract className="text-3xl" />
                         <div className="text-left">
-                            <p className="text-lg font-semibold">Contrats</p>
+                            <p className="text-lg font-semibold">Products</p>
                             <p className="text-sm text-gray-600">27 disponibles, 14 réservés</p>
                         </div>
                     </div>
