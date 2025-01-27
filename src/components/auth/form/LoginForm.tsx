@@ -79,11 +79,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick }) => {
                         >
                             Se connecter
                         </button>
-                        <button type="button"
+                        {/* <button type="button"
                             className="sideBar_logged-section_googleConnexionButton rounded-full ml-2 w-11 h-10 border-2 border-[#f1f1f1] flex items-center justify-center hover:bg-gray-200"
                             onClick={() => signIn("google")}>
                             <Image src={google_icon} alt="google icon" width={24} height={24} className="w-6 h-6" />
-                        </button>
+                        </button> */}
                     </div>
                 </form>
             </div>
