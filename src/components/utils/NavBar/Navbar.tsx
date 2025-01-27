@@ -18,7 +18,7 @@ function Navbar() {
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
     const pathname = usePathname();
     const [isAuthSideBarVisible, setAuthSideBarVisible] = useState<boolean>(false);
-    const [typeButton, setTypeButton] = useState<'auth' | 'cart' | 'menuBurger'>('auth');
+    const [] = useState<'auth' | 'cart' | 'menuBurger'>('auth');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [menuBurgerIsVisible, setMenuBurgerIsVisible] = useState<boolean>(false);
     const session = useSession().data;
@@ -37,7 +37,6 @@ function Navbar() {
 
     useEffect(() => {
         const handleScroll = () => {
-            const scrollPosition = window.scrollY;
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -48,20 +47,6 @@ function Navbar() {
         };
     }, []);
 
-    const handleNavClick = (targetId: string) => {
-        router.push('/');
-
-        setTimeout(() => {
-            const targetElement = document.getElementById(targetId);
-
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop,
-                    behavior: "smooth",
-                });
-            }
-        }, 100);
-    };
 
     return (
         <header>

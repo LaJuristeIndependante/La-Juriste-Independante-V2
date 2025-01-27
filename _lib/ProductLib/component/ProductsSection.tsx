@@ -60,6 +60,7 @@ export default function ProductSection() {
     const [filteredProducts, setFilteredProducts] = useState<ProductOnProductPageProps[]>([]);
     const professionName = professions.find((profession) => profession._id === professionFilter)?.name;
     const largeDesktop = useMediaQuery({ query: "(min-width: 1300px)" });
+    
     useEffect(() => {
         const fetchProductsWithProfessions = async () => {
             setIsLoading(true);
@@ -86,7 +87,6 @@ export default function ProductSection() {
 
     useEffect(() => {
         if (professionFilter) {
-            console.log("Profession filter:", professionFilter);
             const filtered = products.filter(
                 (product) => product.profession === professionFilter
             );

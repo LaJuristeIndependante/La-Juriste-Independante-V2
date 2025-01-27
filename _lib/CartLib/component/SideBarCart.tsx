@@ -218,7 +218,7 @@ const SideBarCart: React.FC<SidebarProps> = ({isOpen, onClose}) => {
                             </div>
                         </div>
                         <button
-                            className="text-white bg-red-600 font-semibold w-full py-3 rounded-lg hover:bg-bg-tertiary transition-colors"
+                            className="text-white bg-primary-color font-semibold w-full py-3 rounded-lg hover:bg-bg-tertiary transition-colors"
                             onClick={handleCheckout}
                         >
                             Passer la commande

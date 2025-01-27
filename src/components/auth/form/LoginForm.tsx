@@ -1,11 +1,12 @@
 "use client";
 import React, { FormEvent, useState, ChangeEvent, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { signIn } from 'next-auth/react';
-import Image from 'next/image';
+// import Image from 'next/image';
 import id_icon from '@public/images/auth/people-id-icon.svg';
-import google_icon from '@public/images/auth/google-icon.svg';
+// import google_icon from '@public/images/auth/google-icon.svg';
 import InputAnimation from '../../common/input/InputAnimation';
+import Link from 'next/link';
 import PasswordAnimation from '../../common/input/PasswordAnimation';
 
 interface LoginFormProps {
@@ -14,12 +15,28 @@ interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick, success }) => {
+    const url = usePathname();
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [showPassword, setShowPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
     const router = useRouter();
     const [successMessage, setSuccessMessage] = useState<string>('');
+    const [isMobile, setIsMobile] = useState<boolean>(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 767);
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+    const isInForgotPage = url === '/forgot';
 
     useEffect(() => {
         if (success) {
@@ -78,7 +95,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick, success })
                         boolean={true}
                         value={password}
                     />
-
+                    <Link className='mr-60 md:mr-52 text-xs -mt-5 mb-2 hover:underline' href="/forgot">Mot de passe oublié ?</Link>
+                    {isMobile && isInForgotPage && (
+                        <p className='text-xs text-green-500'>Fermer la sidebar</p>
+                    )}
                     <div className="sideBar_logged-section_user-actions flex items-center justify-center w-full mt-3">
                         <button
                             className="text-white bg-black w-full p-2 hover:bg-gray-800 mt-1 rounded-lg"

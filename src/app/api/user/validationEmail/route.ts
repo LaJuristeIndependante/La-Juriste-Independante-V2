@@ -35,91 +35,39 @@ export async function POST(request: NextRequest) {
             },
         });
 
+        const emailHtml = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f7f7f7; border-radius: 10px;">
+            <h2 style="color: #333333; text-align: center;">Validation de votre compte</h2>
+            <p style="font-size: 16px; color: #555555;">
+            Bonjour ${userName},
+            </p>
+            <p style="font-size: 16px; color: #555555;">
+            Merci de vous être inscrit sur notre site ! Pour finaliser votre inscription et commencer à utiliser tous nos services, veuillez confirmer votre adresse email en cliquant sur le bouton ci-dessous :
+            </p>
+            <div style="text-align: center; margin: 20px 0;">
+            <a href="${verificationLink}" style="display: inline-block; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #232222; text-decoration: none; border-radius: 5px;">
+            Confirmer mon adresse email
+            </a>
+            </div>
+            <p style="font-size: 14px; color: #999999; text-align: center;">
+            Si vous n'avez pas créé de compte chez nous, vous pouvez ignorer cet email en toute sécurité.
+            </p>
+            <p style="font-size: 14px; color: #999999; text-align: center;">
+            Merci,<br />L'équipe de support
+            </p>
+            <div style="text-align: center; padding: 10px; font-size: 12px; color: #999999;">
+                <p>&copy; 2024 lajuristeindependante. Tous droits réservés.</p>
+            </div>
+        </div>
+        `;
+
         const mailOptions = {
             from: process.env.GMAIL_USER,
             to: session.user.email,
             subject: 'Validation de votre compte',
             text: `Cliquez sur ce lien pour valider votre compte : ${verificationLink}`,
-            html: `<!DOCTYPE html>
-        <html lang="fr">
-        <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Confirmation d'Email</title>
-        <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .header {
-            text-align: center;
-            padding: 10px 0;
-            background-color: #A00C30;
-            color: #ffffff;
-            border-radius: 8px 8px 0 0;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        .content {
-            padding: 20px;
-            text-align: center;
-        }
-        .content p {
-            font-size: 16px;
-            line-height: 1.5;
-        }
-        .button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 25px;
-            font-size: 16px;
-            color: #ffffff;
-            background-color: #232222;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 10px;
-            font-size: 12px;
-            color: #999999;
-        }
-        </style>
-        </head>
-        <body>
-        <div class="container">
-        <div class="header">
-            <h1>Bienvenue chez la juriste indépendante</h1>
-        </div>
-        <div class="content">
-            <p>Bonjour ${userName},</p>
-            <p>Merci de vous être inscrit sur notre site ! Pour finaliser votre inscription et commencer à utiliser tous nos services, veuillez confirmer votre adresse email en cliquant sur le bouton ci-dessous :</p>
-            <a href="${verificationLink}" class="button" style="color: white">Confirmer mon adresse email</a>
-            <p>Si vous n'avez pas créé de compte chez nous, vous pouvez ignorer cet email en toute sécurité.</p>
-        </div>
-        <div class="footer">
-            <p>&copy; 2024 [Nom de l'Entreprise]. Tous droits réservés.</p>
-        </div>
-        </div>
-        </body>
-        </html>
-        `,
+            html: emailHtml,
         };
-
         const info = await transporter.sendMail(mailOptions);
 
         console.log('Email sent: ', info.response);

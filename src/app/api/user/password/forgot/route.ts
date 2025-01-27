@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
                     Nous avons reçu une demande de réinitialisation de votre mot de passe. Cliquez sur le bouton ci-dessous pour réinitialiser votre mot de passe :
                 </p>
                 <div style="text-align: center; margin: 20px 0;">
-                    <a href="${resetUrl}" style="display: inline-block; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #3577B4; text-decoration: none; border-radius: 5px;">
+                    <a href="${resetUrl}" style="display: inline-block; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #232222;; text-decoration: none; border-radius: 5px;">
                         Réinitialiser mon mot de passe
                     </a>
                 </div>
@@ -57,6 +57,9 @@ export async function POST(req: NextRequest) {
                 <p style="font-size: 14px; color: #999999; text-align: center;">
                     Merci,<br />L'équipe de support
                 </p>
+                <div style="text-align: center; padding: 10px; font-size: 12px; color: #999999;">
+                    <p>&copy; 2024 lajuristeindependante. Tous droits réservés.</p>
+                </div>
             </div>
         `;
 

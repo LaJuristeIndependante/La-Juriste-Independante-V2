@@ -7,10 +7,9 @@ const ChangePassword: React.FC = () => {
 
 
     return (
-        <main className="h-screen relative" style={{ background: "#3577B4" }}>
-            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50" style={{ backgroundImage: "url('/assets/image/bg/bg-montains.svg')" }}></div>
+        <main className="h-screen relative">
             <div className="flex items-center justify-center h-full w-full z-10">
-                <ResetForm/>
+                <ResetForm />
             </div>
         </main>
     );
