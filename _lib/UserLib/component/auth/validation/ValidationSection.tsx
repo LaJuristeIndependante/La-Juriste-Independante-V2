@@ -39,11 +39,11 @@ const EmailValidationSection: React.FC = () => {
     };
 
     const handleReturnToShop = () => {
-        router.push("/");
+        router.refresh();
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen">
+        <section className="flex flex-col items-center justify-center min-h-screen">
             <div className="bg-white shadow-2xl bg-opacity-50 rounded-lg text-center">
                 <div className="p-8">
                     <h2 className="text-3xl md:text-4xl font-bold w-full mb-12 md:mb-6 title_section_contrats">
@@ -84,7 +84,7 @@ const EmailValidationSection: React.FC = () => {
                     {error && <p className="mt-4 text-red-500">{error}</p>}
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 
