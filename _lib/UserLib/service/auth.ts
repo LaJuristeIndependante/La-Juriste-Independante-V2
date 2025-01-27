@@ -157,9 +157,9 @@ export async function resetPassword(token: string, password: string): Promise<vo
  *     console.error('Failed to send validation email:', error.message);
  *   });
  */
-export async function sendValidationEmail(): Promise<void> {
+export async function sendValidationEmail(userName: string): Promise<void> {
     try {
-        const response = await axios.post("/api/user/validationEmail");
+        const response = await axios.post("/api/user/validationEmail", { userName });
 
         if (response.status !== 200) {
             throw new Error("Échec de l'envoi de l'email de validation");

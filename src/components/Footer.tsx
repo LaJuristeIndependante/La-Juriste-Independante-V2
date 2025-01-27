@@ -37,19 +37,19 @@ function Footer() {
                         </ul>
                     </div>
                     <div className="footer_legal-pages flex flex-col justify-start space-y-2 ">
-                        <h3 className="footer__legal-pages__title font-semibold text-2xl">Légal</h3>
+                        <h3 className="footer__legal-pages__title font-semibold text-2xl">Documents légaux</h3>
                         <ul className="footer__legal-pages__list space-y-1">
                             <li className="footer__legal-pages list__item">
                                 <Link href="/privacy">Politique de confidentialité</Link>
                             </li>
                             <li className="footer__legal-pages list__item">
-                                <Link href="/terms-of-uses">Conditions d&apos;utilisation</Link>
+                                <Link href="/terms-of-use">Conditions générales d&apos;utilisation</Link>
                             </li>
                             <li className="footer__legal-pages list__item">
-                                <Link href="/terms-of-sales">Conditions de vente</Link>
+                                <Link href="/terms-of-sale">Conditions générales de vente</Link>
                             </li>
                             <li className="footer__legal-pages list__item">
-                                <Link href="/legals-mention">Mentions légales</Link>
+                                <Link href="/legal-mentions">Mentions légales</Link>
                             </li>
                         </ul>
                     </div>
