@@ -16,10 +16,10 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ message: 'Non autorisé' }, { status: 401 });
     }
 
-    const userEmail = session.user.email;
+    const { userName } = await request.json();
 
     try {
-        const user = await User.findOne({ email: userEmail });
+        const user = await User.findOne({ email: session.user.email });
         if (!user) {
             return NextResponse.json({ message: 'Utilisateur non trouvé' }, { status: 404 });
         }
@@ -37,16 +37,16 @@ export async function POST(request: NextRequest) {
 
         const mailOptions = {
             from: process.env.GMAIL_USER,
-            to: userEmail,
+            to: session.user.email,
             subject: 'Validation de votre compte',
             text: `Cliquez sur ce lien pour valider votre compte : ${verificationLink}`,
             html: `<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmation d'Email</title>
-    <style>
+        <html lang="fr">
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Confirmation d'Email</title>
+        <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
         .header {
             text-align: center;
             padding: 10px 0;
-            background-color: #3577B4;
+            background-color: #A00C30;
             color: #ffffff;
             border-radius: 8px 8px 0 0;
         }
@@ -87,28 +87,26 @@ export async function POST(request: NextRequest) {
             padding: 12px 25px;
             font-size: 16px;
             color: #ffffff;
-            background-color: #3577B4;
+            background-color: #232222;
             text-decoration: none;
             border-radius: 4px;
         }
-        .button:hover {
-            background-color: #2b5e8e;
-        }
+        
         .footer {
             text-align: center;
             padding: 10px;
             font-size: 12px;
             color: #999999;
         }
-    </style>
-</head>
-<body>
-    <div class="container">
+        </style>
+        </head>
+        <body>
+        <div class="container">
         <div class="header">
-            <h1>Bienvenue chez [Nom de l'Entreprise]</h1>
+            <h1>Bienvenue chez la juriste indépendante</h1>
         </div>
         <div class="content">
-            <p>Bonjour ${user.name},</p>
+            <p>Bonjour ${userName},</p>
             <p>Merci de vous être inscrit sur notre site ! Pour finaliser votre inscription et commencer à utiliser tous nos services, veuillez confirmer votre adresse email en cliquant sur le bouton ci-dessous :</p>
             <a href="${verificationLink}" class="button" style="color: white">Confirmer mon adresse email</a>
             <p>Si vous n'avez pas créé de compte chez nous, vous pouvez ignorer cet email en toute sécurité.</p>
@@ -116,10 +114,10 @@ export async function POST(request: NextRequest) {
         <div class="footer">
             <p>&copy; 2024 [Nom de l'Entreprise]. Tous droits réservés.</p>
         </div>
-    </div>
-</body>
-</html>
-`,
+        </div>
+        </body>
+        </html>
+        `,
         };
 
         const info = await transporter.sendMail(mailOptions);

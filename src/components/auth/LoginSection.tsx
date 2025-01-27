@@ -6,18 +6,28 @@ import logo_la_juriste_independante from '@public/images/common/logo-la-juriste-
 import RegisterForm from '@/components/auth/form/RegisterForm';
 import LoginForm from '@/components/auth/form/LoginForm';
 
-function LoginSection() {
+interface LoginSectionProps {
+    closeSidebar: () => void;
+}
+
+const LoginSection: React.FC<LoginSectionProps> = ({ closeSidebar }) => {
     const [registerSection, setRegisterSection] = useState(false);
+    const [successMessage, setSuccessMessage] = useState<string>('');
+
 
     const handleOnRegisterClick = () => {
-        console.log('register');
         setRegisterSection(true);
     };
 
-    const handleOnLoginClick = () => {
-        console.log('login');
+    const handleOnSuccessLoginClick = (text: string) => {
+        setSuccessMessage(text);
         setRegisterSection(false);
     };
+
+    const handleOnLoginClick = () => {
+        setRegisterSection(false);
+    }
+
 
 
     return (
@@ -25,9 +35,9 @@ function LoginSection() {
             <Image src={logo_la_juriste_independante} alt="logo la juriste indépendante" />
             <p className="font-special cursive-letters text-4xl mt-1">La Juriste indépendante</p>
             {!registerSection ? (
-                <LoginForm handleOnRegisterClick={handleOnRegisterClick} />
+                <LoginForm handleOnRegisterClick={handleOnRegisterClick} success={successMessage || ""} />
             ) : (
-                <RegisterForm handleOnLoginClick={handleOnLoginClick} />
+                <RegisterForm handleOnLoginClick={handleOnLoginClick} handleOpenLogin={handleOnSuccessLoginClick} />
 
             )}
         </div>

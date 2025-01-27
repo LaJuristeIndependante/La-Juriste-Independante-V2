@@ -13,9 +13,10 @@ import people_id_icon from '@public/images/auth/people-id-icon.svg';
 
 interface RegisterFormProps {
     handleOnLoginClick: () => void;
+    handleOpenLogin :  (text: string) => void;
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({ handleOnLoginClick }) => {
+const RegisterForm: React.FC<RegisterFormProps> = ({ handleOnLoginClick, handleOpenLogin }) => {
     const router = useRouter();
     const [username, setUsername] = useState<string>('');
     const [firstName, setFirstName] = useState<string>('');
@@ -57,11 +58,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ handleOnLoginClick }) => {
 
         try {
             const response = await register(data);
-            console.log('Réponse:', response);
             if (response?.error) {
                 setErrorMessage(response.error);
             } else {
-                router.push('/');
+                handleOpenLogin('Connectez-vous pour valider votre compte');
             }
         } catch (error: any) {
             console.error('Erreur lors de l’inscription:', error);
@@ -153,14 +153,15 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ handleOnLoginClick }) => {
                     />
                 </div>
                 <div className="sideBar_logged-section_user-actions flex items-center justify-center w-full mt-3">
-                    {errorMessage && <p className='text-red-500 mt-2 text-center mb-4'>{errorMessage}</p>}
+                   
                     <button className="text-white bg-black w-11/12 p-2 hover:bg-gray-800 mt-1 rounded-lg" type='submit'>
                         S&apos;inscrire
                     </button>
-                    <button className="sideBar_logged-section_googleConnexionButton rounded-full ml-2 w-11 h-10 border-2 border-[#f1f1f1] flex items-center justify-center hover:bg-gray-200">
+                    {/* <button className="sideBar_logged-section_googleConnexionButton rounded-full ml-2 w-11 h-10 border-2 border-[#f1f1f1] flex items-center justify-center hover:bg-gray-200">
                             <Image src={google_icon} alt="google icon" width={24} height={24} className="w-6 h-6" />
-                    </button>
+                    </button> */}
                 </div>
+                {errorMessage && <p className='text-red-500 mt-2 text-center mb-4'>{errorMessage}</p>}
             </form>
             <div className="sideBar_logged-section_noAccount mt-4">
                 <p className='text-center text-sm'>

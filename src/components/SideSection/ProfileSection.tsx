@@ -19,7 +19,7 @@ const ProfileSection: React.FC<{ closeSidebar: () => void }> = ({ closeSidebar }
     }
 
     return (
-        <LoginSection />
+        <LoginSection closeSidebar={closeSidebar} />
     );
 };
 

@@ -1,5 +1,5 @@
 "use client";
-import React, { FormEvent, useState, ChangeEvent } from 'react';
+import React, { FormEvent, useState, ChangeEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
@@ -10,14 +10,22 @@ import PasswordAnimation from '../../common/input/PasswordAnimation';
 
 interface LoginFormProps {
     handleOnRegisterClick: () => void;
+    success: string;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick, success }) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [showPassword, setShowPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
     const router = useRouter();
+    const [successMessage, setSuccessMessage] = useState<string>('');
+
+    useEffect(() => {
+        if (success) {
+            setSuccessMessage(success);
+        }
+    }, [success]);
 
     const handleEmailChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setEmail(e.target.value);
@@ -48,7 +56,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick }) => {
             <p className="text-sm">
                 Connectez-vous pour partager vos impressions avec les autres acheteurs.
             </p>
-            {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
             <div className="sideBar_connexion-section__inputs w-full">
                 <form
                     className="flex flex-col items-center justify-center w-full border-none rounded-sm mt-8"
@@ -85,6 +92,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleOnRegisterClick }) => {
                             <Image src={google_icon} alt="google icon" width={24} height={24} className="w-6 h-6" />
                         </button> */}
                     </div>
+                    {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
+                    {successMessage && <p className='text-green-500 mt-2 text-center mb-4'>{successMessage}</p>}
                 </form>
             </div>
             <p className="text-xs text-center mt-4">
