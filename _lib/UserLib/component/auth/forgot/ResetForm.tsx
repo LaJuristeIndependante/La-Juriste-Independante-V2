@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, FormEvent, useEffect } from 'react';
+import React, { useState, FormEvent, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { resetPassword } from "@lib/UserLib/service/auth";
 
@@ -57,14 +57,10 @@ function ResetForm() {
         }
     }
 
-    // useEffect(() => {
-    //     if (!token) {
-    //         router.push('/forgot');
-    //     }
-    // }, [token]);
-
     return (
-        <div className="max-w-md w-full bg-white shadow-2xl rounded-lg text-center py-2">
+        <>
+        <Suspense fallback={<div>Loading...</div>}>
+            <div className="max-w-md w-full bg-white shadow-2xl rounded-lg text-center py-2">
             <h2 className="text-3xl mb-5 text-center md:text-4xl font-bold w-full title_section_contrats">
                 Réinitialiser <br /> le mot de passe
             </h2>
@@ -85,8 +81,7 @@ function ResetForm() {
                         autoCorrect="off"
                         autoCapitalize="off"
                         spellCheck="false"
-                        placeholder="Entrez un nouveau mot de passe"
-                    />
+                        placeholder="Entrez un nouveau mot de passe" />
                     <span className="highlight"></span>
                     <span className="bar"></span>
                     <label className='labelAnimation label-p'>
@@ -106,8 +101,7 @@ function ResetForm() {
                         autoCorrect="off"
                         autoCapitalize="off"
                         spellCheck="false"
-                        placeholder="Confirmez votre nouveau mot de passe"
-                    />
+                        placeholder="Confirmez votre nouveau mot de passe" />
                     <span className="highlight"></span>
                     <span className="bar"></span>
                     <label className='labelAnimation label-p'>
@@ -119,8 +113,7 @@ function ResetForm() {
                         type="checkbox"
                         id="showPassword"
                         checked={showPassword}
-                        onChange={() => setShowPassword(!showPassword)}
-                    />
+                        onChange={() => setShowPassword(!showPassword)} />
                     <label htmlFor="showPassword" className="ml-2 text-sm">
                         Afficher les mots de passe
                     </label>
@@ -134,7 +127,9 @@ function ResetForm() {
                 {error && <p className="text-red-600 text-sm text-center mt-4">{error}</p>}
                 {success && <p className="text-green-600 text-sm text-center mt-4">{success}</p>}
             </form>
-        </div>
+            </div>
+        </Suspense>
+        </>
     );
 }
 

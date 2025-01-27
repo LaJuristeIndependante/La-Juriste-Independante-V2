@@ -12,10 +12,6 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: 'Token ou mot de passe manquant.' }, { status: 400 });
         }
 
-        // Vérification des données reçues
-        console.log('Token reçu:', token);
-        console.log('Mot de passe reçu:', password);
-
         await connectDB();
 
         const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string);
