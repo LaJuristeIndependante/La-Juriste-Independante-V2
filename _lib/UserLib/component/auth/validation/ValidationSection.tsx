@@ -47,8 +47,14 @@ const EmailValidationSection: React.FC = () => {
             <div className="bg-white shadow-2xl bg-opacity-50 rounded-lg text-center">
                 <div className="p-8">
                     <h2 className="text-3xl md:text-4xl font-bold w-full mb-12 md:mb-6 title_section_contrats">
-                        Bienvenue dans l'aventure !</h2>
-                    <p className="mb-6 max-w-md">Cliquez sur valider pour recevoir un mail et valider votre compte, sinon vous pouvez supprimer votre compte... </p>
+                        Bienvenue dans l'aventure !
+                    </h2>
+                    {session?.user?.isVerified ? (
+                        <p className="mb-6 max-w-md">Votre compte est vérifié, vous pouvez maintenant profiter de nos services !</p>
+                    ) : (
+
+                        <p className="mb-6 max-w-md">Cliquez sur valider pour recevoir un mail et valider votre compte, sinon vous pouvez supprimer votre compte... </p>
+                    )}
                     <div className="space-x-4">
                         {session?.user?.isVerified ? (
                             <button
