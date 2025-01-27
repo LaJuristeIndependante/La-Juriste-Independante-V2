@@ -55,6 +55,13 @@ export default function SearchDiv() {
         router.push(`/products?profession=${encodeURIComponent(profession._id)}`);
     };
 
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Escape') {
+            setSearchString('');
+            setInputClicked(false);
+        }
+    };
+
     const handleInputClick = () => {
         setInputClicked(true);
     };

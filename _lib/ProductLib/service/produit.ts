@@ -140,9 +140,39 @@ export async function deleteProduct(id: string): Promise<void> {
  */
 export async function updateProduct(id: string, updatedProduct: FormData): Promise<ProductDetail> {
     try {
+        console.log('Données envoyées pour mise à jour :', Array.from(updatedProduct.entries()));
+
         const response = await axios.patch(`/api/products/${id}`, updatedProduct, {
             headers: {
-                'Content-Type': 'multipart/form-data',  // Let Axios handle this correctly
+                'Content-Type': 'multipart/form-data', // Axios gère cela correctement
+            },
+        });
+        return response.data;
+    } catch (error: any) {
+        console.error('Erreur lors de la mise à jour du produit:', error.response?.data || error.message);
+        throw new Error(error.response?.data?.message || 'Erreur lors de la mise à jour du produit');
+    }
+}
+
+/**
+ * Met à jour un produit existant en fonction de son identifiant.
+ *
+ * @param {string} id - L'identifiant du produit à mettre à jour.
+ * @param {Partial<ProductDetail>} updatedProduct - Un objet contenant les propriétés à mettre à jour.
+ * @returns {Promise<ProductDetail>} - Une promesse qui se résout avec les détails du produit mis à jour.
+ * @throws {Error} - Lance une erreur si la mise à jour échoue.
+ *
+ * @example
+ *
+ * updateProduct('productId123', { name: 'New Name', price: '99.99' })
+ *   .then((updatedProduct) => console.log('Produit mis à jour:', updatedProduct))
+ *   .catch((error) => console.error('Erreur lors de la mise à jour du produit:', error));
+ */
+export async function updateProductNoProxy(id: string, updatedProduct: FormData): Promise<ProductDetail> {
+    try {
+        const response = await axios.patch(`/api/productNoProxy/${id}`, updatedProduct, {
+            headers: {
+                'Content-Type': 'multipart/form-data', // Axios gère cela correctement
             },
         });
         return response.data;
@@ -150,6 +180,7 @@ export async function updateProduct(id: string, updatedProduct: FormData): Promi
         throw new Error(error.response?.data?.message || 'Erreur lors de la mise à jour du produit');
     }
 }
+
 
 /**
  * Télécharge le PDF d'un produit spécifique par son identifiant.
