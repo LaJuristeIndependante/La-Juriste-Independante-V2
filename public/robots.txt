@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://www.lajuristeindependante.com
-
-# Sitemaps
-Sitemap: https://www.lajuristeindependante.com/sitemap.xml
