@@ -1,5 +1,6 @@
+"use client"
+
 import React from 'react';
-// import ProfessionSearchComponent from '@/components/home/utils/ProfessionSearchComponent';
 import TitleSection from '@/components/home/utils/TitleSection';
 import SearchDiv from "@/components/home/utils/SearchDiv";
 

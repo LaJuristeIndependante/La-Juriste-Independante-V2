@@ -7,6 +7,18 @@ import CleanUpOrders from "@lib/OrderLib/component/CleanupOrder";
 import ClientProviders from './(provider)/ClientProviders';
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react"
+import {Metadata} from "next";
+
+export const metadata : Metadata = {
+    title: {
+        default: "La juriste indépendante",
+        template: "%s - La juriste indépendante"
+    },
+    description :"Bienvenue sur mon site ! Je suis une juriste indépendante spécialisée dans l'accompagnement juridique des micro-entrepreneurs.",
+    twitter: {
+        card: "summary_large_image"
+    }
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode; }) {
     return (
