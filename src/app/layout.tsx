@@ -8,12 +8,17 @@ import ClientProviders from './(provider)/ClientProviders';
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react"
 import {DefaultSeo} from "next-seo";
+import Head from "next/head";
 
 export default function RootLayout({ children }: { children: React.ReactNode; }) {
     return (
         <html lang="fr">
             <head>
                 <link rel="icon" href="/favicon.ico" />
+                <meta name="robots" content="index, follow" />
+                <meta name="author" content="La Juriste Indépendante" />
+                <meta name="keywords" content="juriste, droit, avocat, conseils juridiques, droit des affaires, droit du travail" />
+
                 <DefaultSeo
                     title="La Juriste Indépendante - Votre experte en droit"
                     description="Trouvez l’accompagnement juridique dont vous avez besoin avec La Juriste Indépendante. Conseils personnalisés et expertise en droit."

@@ -1,4 +1,3 @@
-/** @type {import('next-sitemap').IConfig} */
 const config = {
     siteUrl: "https://www.lajuristeindependante.com",
     generateRobotsTxt: true,
