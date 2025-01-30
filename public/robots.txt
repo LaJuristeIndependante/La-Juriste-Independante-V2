@@ -2,11 +2,6 @@
 User-agent: *
 Allow: /
 
-# *
-User-agent: *
-Disallow: /admin
-Disallow: /dashboard
-
 # Host
 Host: https://www.lajuristeindependante.com
 
