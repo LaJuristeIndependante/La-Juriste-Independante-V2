@@ -3,6 +3,10 @@ import {Metadata} from "next";
 
 export const metadata: Metadata = {
     title: "Politique de condition de ventes",
+    robots:{
+        index: false,
+        follow: true,
+    }
 };
 
 const CGUPage = () => {
