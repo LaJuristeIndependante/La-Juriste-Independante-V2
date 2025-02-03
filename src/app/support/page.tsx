@@ -1,6 +1,11 @@
 import React from 'react';
 import LeftSection from '@/components/support-page/LeftSection';
 import RightSection from '@/components/support-page/RightSection';
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+    title: "Support",
+};
 
 const SupportPage: React.FC = () => {
 
