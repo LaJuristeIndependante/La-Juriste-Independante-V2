@@ -1,4 +1,9 @@
 import UserOrders from "@/components/orders/UserOrders";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+    title: "Commandes",
+};
 
 export default function orderPage() {
     return (

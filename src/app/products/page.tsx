@@ -1,26 +1,20 @@
-"use client";
 
-import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import {Metadata} from "next";
 
 const ProductSection = dynamic(() => import("@lib/ProductLib/component/ProductsSection"), {
     ssr: false,  
 });
 
-export default function ProductPage() {
-    const [isLoading, setIsLoading] = useState(true);
+export const metadata: Metadata = {
+    title: "Produits",
+};
 
-    useEffect(() => {
-        setIsLoading(false);
-    }, []);
+export default function ProductPage() {
 
     return (
         <main className="min-h-screen h-auto flex flex-col items-center justify-center">
-            {isLoading ? (
-                    <p className="text-3xl">Chargement...</p>
-            ) : (
-                <ProductSection />
-            )}
+            <ProductSection />
         </main>
     );
 }
