@@ -136,7 +136,7 @@ function RightSection() {
                         className="mr-2"
                         required
                     />
-                    <label className="text-black">J'accepte la politique de confidentialité</label>
+                    <label className="text-black">J&apos;accepte la politique de confidentialité</label>
                 </div>
                 <button type="submit"
                         className='w-full bg-[#A00C30] text-white focus:outline-none py-2 rounded-md hover:bg-black mb-4'>
