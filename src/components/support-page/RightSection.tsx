@@ -136,7 +136,7 @@ function RightSection() {
                         className="mr-2"
                         required
                     />
-                    <label className="text-black">Consentement*</label>
+                    <label className="text-black">J'accepte la politique de confidentialité</label>
                 </div>
                 <button type="submit"
                         className='w-full bg-[#A00C30] text-white focus:outline-none py-2 rounded-md hover:bg-black mb-4'>
@@ -146,7 +146,8 @@ function RightSection() {
             {showPopup && (
                 <ValidationPopup
                     title="Le consentement lors d'un envoi"
-                    text="Lorem ipsum dolor sit amet. Et velit praesentium quo voluptas impedit vel nulla quam! Qui perferendis repudiandae cum quam sequi et sunt quasi et rerum iusto ex eius modi. Qui laboriosam quasi rem corrupti sunt vel amet aliquam et quidem iure est omnis laboriosam. Et odio sint rem esse doloribus aut internos autem cum placeat corporis!"
+                    text="Si vous voulez en savoir plus."
+                    link='privacy'
                     onClose={() => setShowPopup(false)}
                 />
             )}
