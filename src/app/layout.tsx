@@ -8,6 +8,8 @@ import ClientProviders from './(provider)/ClientProviders';
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react"
 import {Metadata} from "next";
+import { SpeedInsights } from "@vercel/speed-insights/next"
+
 
 export const metadata : Metadata = {
     title: {
@@ -66,6 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode; })
                 </noscript>
                 <ClientProviders>
                     <Analytics />
+                    <SpeedInsights />
                     <CleanUpOrders />
                     <ClientNavbar />
                     {children}
