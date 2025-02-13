@@ -194,17 +194,28 @@ export default function ProductPage({ params }: ProductPageProps) {
                                     <label htmlFor="installments" className="text-sm font-medium text-gray-700">
                                         Nombre de paiements
                                     </label>
-                                    <select
-                                        id="installments"
-                                        name="installments"
-                                        value={installments}
-                                        onChange={(e) => setInstallments(Number(e.target.value))}
-                                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm rounded-md text-gray-700"
-                                    >
-                                        <option value={1}>1 fois</option>
-                                        <option value={2}>2 fois</option>
-                                        <option value={3}>3 fois</option>
-                                    </select>
+                                    <div className="relative mt-1">
+                                        <select
+                                            id="installments"
+                                            name="installments"
+                                            value={installments}
+                                            onChange={(e) => setInstallments(Number(e.target.value))}
+                                            className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-colors duration-200"
+                                        >
+                                            <option value={1}>1 fois</option>
+                                            <option value={2}>2 fois</option>
+                                            <option value={3}>3 fois</option>
+                                        </select>
+                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                            <svg
+                                                className="fill-current h-4 w-4"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20"
+                                            >
+                                                <path d="M7 10l5 5 5-5H7z" />
+                                            </svg>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         ) : (
