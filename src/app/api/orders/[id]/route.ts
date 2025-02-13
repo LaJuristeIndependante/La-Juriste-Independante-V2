@@ -12,11 +12,6 @@ export async function PUT(request: Request, { params }: { params: { id: string }
         // Parse the request body to get personal info and status
         const { name, email, phone, address, status } = await request.json();
 
-        // Ensure status is being updated to 'paid'
-        if (status !== 'paid') {
-            return NextResponse.json({ error: 'Invalid status update' }, { status: 400 });
-        }
-
         // Update the order with the new data
         const updatedOrder = await Order.findByIdAndUpdate(
             id,

@@ -24,6 +24,7 @@ export default function ProductPage({ params }: ProductPageProps) {
     const { data: session } = useSession();
     const router = useRouter();
     const [professions, setProfessions] = useState<Profession[]>([]);
+    const [installments, setInstallments] = useState<number>(1);
 
     useEffect(() => {
         const loadProduct = async () => {
@@ -105,13 +106,14 @@ export default function ProductPage({ params }: ProductPageProps) {
                     name: product.name,
                     price: product.price,
                     quantity: 1,
-                    pdfFile: product.pdfFile,
                 }],
                 amount: product.price,
             });
-
-            console.log(result);
-            router.push(`/paiement?orderId=${result.orderId}`);
+            if(installments === 1) {
+                router.push(`/paiement?orderId=${result.orderId}`);
+            } else {
+                router.push(`/paiement/paiement-intent?orderId=${result.orderId}&installments=${installments}`)
+            }
         } catch (error) {
             console.error('Order creation failed:', error);
         }
@@ -188,6 +190,22 @@ export default function ProductPage({ params }: ProductPageProps) {
                                         className={"flex-1 border-black rounded-2xl border-2 p-4 font-bold text-xl"}>
                                     panier
                                 </button>
+                                <div className="flex flex-col text-left">
+                                    <label htmlFor="installments" className="text-sm font-medium text-gray-700">
+                                        Nombre de paiements
+                                    </label>
+                                    <select
+                                        id="installments"
+                                        name="installments"
+                                        value={installments}
+                                        onChange={(e) => setInstallments(Number(e.target.value))}
+                                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm rounded-md text-gray-700"
+                                    >
+                                        <option value={1}>1 fois</option>
+                                        <option value={2}>2 fois</option>
+                                        <option value={3}>3 fois</option>
+                                    </select>
+                                </div>
                             </div>
                         ) : (
                             // eslint-disable-next-line react/no-unescaped-entities
