@@ -31,8 +31,8 @@ export async function POST(request: NextRequest) {
             payment_method_types: ['card'],
             customer: customer.id,
             mode: "payment",
-            success_url: `https://${process.env.NEXTAUTH_URL}/paiement/success?token=${customer.id}&orderId=${orderId}`,
-            cancel_url: `https://${process.env.NEXTAUTH_URL}?token=`+customer.id,
+            success_url: `${process.env.NEXTAUTH_URL}/paiement/success?token=${customer.id}&orderId=${orderId}`,
+            cancel_url: `${process.env.NEXTAUTH_URL}/paiement/cancel?token=${customer.id}`,
             line_items: [{
                 quantity: 1,
                 price_data: {

@@ -6,14 +6,12 @@ import {CardElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import {fetchOrderDetails, updateOrderPersonalInfo} from "@lib/OrderLib/service/orders";
 import axios from "axios";
 
-/**
- * 1) Composant qui gère le formulaire + useStripe()
- */
 const PaiementIntentForm = () => {
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [step, setStep] = useState(1);
     const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
+    const [accepted, setAccepted] = useState(false);
 
     const [personalInfo, setPersonalInfo] = useState({
         name: "",
@@ -173,17 +171,72 @@ const PaiementIntentForm = () => {
 
     };
 
+    if (!orderDetails && !errorMessage) {
+        return (
+            <div className="flex flex-col justify-center items-center min-h-screen">
+                <svg
+                    className="animate-spin h-12 w-12 text-red-500"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                >
+                    <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                    ></circle>
+                    <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                    ></path>
+                </svg>
+                <p className="mt-4 text-xl text-gray-700">
+                    Commande en cours de création...
+                </p>
+            </div>
+        );
+    }
+
+    if (orderDetails?.status === 'paid') {
+        return (
+            <div className="flex flex-col justify-center items-center min-h-screen">
+                <svg
+                    className="animate-bounce h-16 w-16 text-green-500"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M5 13l4 4L19 7"
+                    />
+                </svg>
+                <h1 className="mt-4 text-2xl font-bold text-green-700">
+                    La commande a déjà été payée
+                </h1>
+            </div>
+        );
+    }
+
     return (
-        <div className="p-8 mx-auto">
-            <h2 className="text-2xl font-bold text-center mb-6">Finalisez votre commande</h2>
+        <div className="bg-white px-8 py-3 rounded-lg max-w-3xl mx-auto space-y-6">
+            <h2 className="text-lg sm:text-base md:text-lg font-light text-center">Finalisez votre commande</h2>
 
             {step === 1 && (
-                <div className="space-y-4 text-black">
+                <div className="space-y-4 text-black shadow-lg px-36 py-10 rounded-lg">
                     <h3 className="text-lg font-bold mb-2">Votre facture</h3>
-                    <p>Montant à payer: €{orderDetails?.amount.toFixed(2)}</p>
+                    <p className="text-lg sm:text-base md:text-lg font-light text-center">Montant à payer:
+                        €{orderDetails?.amount.toFixed(2)}</p>
                     <button
                         onClick={() => setStep(2)}
-                        className="text-white w-full py-4 bg-red-500 mt-4 rounded-lg font-bold"
+                        className="text-white w-full py-4 bg-primary-color hover:bg-black mt-4 rounded-lg font-bold"
                     >
                         Suivant
                     </button>
@@ -199,7 +252,7 @@ const PaiementIntentForm = () => {
                         value={personalInfo.name}
                         onChange={handleInputChange}
                         placeholder="Nom complet"
-                        className="w-full p-2 mb-2 border rounded-md"
+                        className="w-full p-2 mb-2 bg-[#F5F5F5] border rounded-md text-base"
                     />
                     <input
                         type="email"
@@ -207,7 +260,7 @@ const PaiementIntentForm = () => {
                         value={personalInfo.email}
                         onChange={handleInputChange}
                         placeholder="Email"
-                        className="w-full p-2 mb-2 border rounded-md"
+                        className="w-full p-2 mb-2 bg-[#F5F5F5] border rounded-md text-base"
                     />
                     <input
                         type="text"
@@ -215,7 +268,7 @@ const PaiementIntentForm = () => {
                         value={personalInfo.phone}
                         onChange={handleInputChange}
                         placeholder="Téléphone"
-                        className="w-full p-2 mb-2 border rounded-md"
+                        className="w-full p-2 mb-2 bg-[#F5F5F5] border rounded-md text-base"
                     />
                     <input
                         type="text"
@@ -223,7 +276,7 @@ const PaiementIntentForm = () => {
                         value={personalInfo.address.line1}
                         onChange={handleAddressChange}
                         placeholder="Adresse ligne 1"
-                        className="w-full p-2 mb-2 border rounded-md"
+                        className="w-full p-2 mb-2 bg-[#F5F5F5] border rounded-md text-base"
                     />
                     <input
                         type="text"
@@ -231,7 +284,7 @@ const PaiementIntentForm = () => {
                         value={personalInfo.address.line2}
                         onChange={handleAddressChange}
                         placeholder="Adresse ligne 2 (facultatif)"
-                        className="w-full p-2 mb-2 border rounded-md"
+                        className="w-full p-2 mb-2 bg-[#F5F5F5] border rounded-md text-base"
                     />
                     <input
                         type="text"
@@ -239,7 +292,7 @@ const PaiementIntentForm = () => {
                         value={personalInfo.address.city}
                         onChange={handleAddressChange}
                         placeholder="Ville"
-                        className="w-full p-2 mb-2 border rounded-md"
+                        className="w-full p-2 mb-2 bg-[#F5F5F5] border rounded-md text-base"
                     />
                     <input
                         type="text"
@@ -247,7 +300,7 @@ const PaiementIntentForm = () => {
                         value={personalInfo.address.postalCode}
                         onChange={handleAddressChange}
                         placeholder="Code postal"
-                        className="w-full p-2 mb-2 border rounded-md"
+                        className="w-full p-2 mb-2 bg-[#F5F5F5] border rounded-md text-base"
                     />
                     <input
                         type="text"
@@ -255,7 +308,7 @@ const PaiementIntentForm = () => {
                         value={personalInfo.address.country}
                         onChange={handleAddressChange}
                         placeholder="Pays"
-                        className="w-full p-2 mb-2 border rounded-md"
+                        className="w-full p-2 mb-2 bg-[#F5F5F5] border rounded-md text-base"
                     />
                     <div className="flex justify-between mt-4">
                         <button
@@ -289,20 +342,39 @@ const PaiementIntentForm = () => {
                         <div className="border p-4 rounded">
                             <CardElement/>
                         </div>
-                        <div className="flex space-x-6">
-                            <button
-                                type="submit"
-                                disabled={!stripe || loading}
-                                className="bg-red-500 text-white py-2 px-4 rounded font-semibold hover:bg-red-600 disabled:opacity-50"
-                            >
-                                {loading ? "Traitement..." : `Payer la 1re échéance`}
-                            </button>
+
+                        {/* Case à cocher pour accepter les conditions */}
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                id="acceptTerms"
+                                className="h-4 w-4 text-red-600 border-gray-300 rounded"
+                                checked={accepted}
+                                onChange={(e) => setAccepted(e.target.checked)}
+                            />
+                            <label htmlFor="acceptTerms" className="text-sm text-gray-700">
+                                {/* eslint-disable-next-line react/no-unescaped-entities */}
+                                J'accepte les{" "}
+                                <a href="/terms-of-sales" target="_blank" className="underline">
+                                    conditions générales
+                                </a>
+                            </label>
+                        </div>
+
+                        <div className="flex justify-between items-center mt-4 gap-10 w-full">
                             <button
                                 onClick={() => setStep(2)}
                                 type="button"
-                                className="text-white w-1/3 py-2 bg-gray-500 rounded-lg font-bold"
+                                className="text-white py-2 px-6 bg-black rounded-lg font-bold"
                             >
                                 Précédent
+                            </button>
+                            <button
+                                type="submit"
+                                disabled={!stripe || loading || !accepted}
+                                className="bg-red-500 text-white py-2 px-4 rounded font-semibold hover:bg-red-600 disabled:opacity-50"
+                            >
+                                {loading ? "Traitement..." : "Payer la 1re échéance"}
                             </button>
                         </div>
                     </form>
