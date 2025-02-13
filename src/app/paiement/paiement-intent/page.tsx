@@ -5,12 +5,9 @@ export const dynamic = "force-dynamic";
 import React, {Suspense} from "react";
 import {Elements} from "@stripe/react-stripe-js";
 import {loadStripe} from "@stripe/stripe-js";
+
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "");
 
-/**
- * 2) Composant "wrapper" qui met <Elements> autour
- *    et exporte le tout par défaut
- */
 export default function PaiementIntentPage() {
     return (
         <section className={"min-h-screen flex justify-center items-center w-full"}>

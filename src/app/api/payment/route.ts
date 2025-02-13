@@ -1,6 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
 import Stripe from "stripe";
 import convertToSubcurrency from "@lib/StripeLib/convertToSubcurrency";
+import * as process from "node:process";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "", {
     apiVersion:"2024-06-20",
@@ -30,8 +31,8 @@ export async function POST(request: NextRequest) {
             payment_method_types: ['card'],
             customer: customer.id,
             mode: "payment",
-            success_url: `http://localhost:3000/paiement/success?token=${customer.id}&orderId=${orderId}`,
-            cancel_url: "http://localhost:3000?token="+customer.id,
+            success_url: `https://${process.env.NEXTAUTH_URL}/paiement/success?token=${customer.id}&orderId=${orderId}`,
+            cancel_url: `https://${process.env.NEXTAUTH_URL}?token=`+customer.id,
             line_items: [{
                 quantity: 1,
                 price_data: {
